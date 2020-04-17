@@ -12,15 +12,6 @@ use Twig\Loader\FilesystemLoader;
 
 return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
-      return $response->withHeader('Location','usuarios');
-        // $loader = new FilesystemLoader(__DIR__ . '/../vistas');
-        // $twig = new Environment($loader);
-        // $response->getBody()->write($twig->render('index.twig'));
-        return $response;
-    });
-
-    $app->get('/usuarios', function (Request $request, Response $response) {
-      // return $response->withHeader('Location','usuarios');
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('index.twig'));
