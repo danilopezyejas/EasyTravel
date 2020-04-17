@@ -12,8 +12,9 @@ use Twig\Loader\FilesystemLoader;
 
 return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
-        
-        $response->getBody()->write("Hola");
+        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $twig = new Environment($loader);
+        $response->getBody()->write($twig->render('index.twig'));
         return $response;
     });
 
