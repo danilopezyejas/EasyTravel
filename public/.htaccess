@@ -1,12 +1,24 @@
 <IfModule mod_rewrite.c>
-  RewriteEngine On
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
 
-  RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
-  RewriteRule ^(.*) - [E=BASE:%1]
+    RewriteEngine On
 
-  RewriteBase /EasyTravel/public/
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^ index.php [QSA,L]
+    # Handle Front Controller...
+    RewriteBase /EasyTravel/public/
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    AddType 'text/css; charset=UTF-8' css
+
 </IfModule>
