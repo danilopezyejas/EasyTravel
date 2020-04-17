@@ -14,7 +14,7 @@ return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        $response->getBody()->write($twig->render('index.twig'));
+        $response->getBody()->write("hola");
         return $response;
     });
 
