@@ -11,10 +11,6 @@ $app = AppFactory::create();
 // Add Slim routing middleware
 $app->addRoutingMiddleware();
 
-// Set the base path to run the app in a subdirectory.
-// This path is used in urlFor().
-$app->add(new BasePathMiddleware($app));
-
 $app->addErrorMiddleware(true, true, true);
 
 // Define app routes
