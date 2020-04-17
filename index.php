@@ -1,12 +1,4 @@
 <?php
 
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-Hola
-  </body>
-</html>
+echo "Hola";
 ?>
