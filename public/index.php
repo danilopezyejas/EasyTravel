@@ -42,7 +42,7 @@ $app->setBasePath('/EasyTravel/public');
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
 $middleware($app);
-echo "string";
+
 // Register routes
 $routes = require __DIR__ . '/../app/routes.php';
 $routes($app);
@@ -72,4 +72,4 @@ $errorMiddleware->setDefaultErrorHandler($errorHandler);
 // Run App & Emit Response
 $response = $app->handle($request);
 $responseEmitter = new ResponseEmitter();
-// $responseEmitter->emit($response);
+$responseEmitter->emit($response);
