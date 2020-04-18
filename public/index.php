@@ -37,7 +37,6 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
-// $app->setBasePath('/EasyTravel/public');
 
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
