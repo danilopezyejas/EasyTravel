@@ -9,7 +9,7 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';
-
+echo "string";
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
 
@@ -37,7 +37,7 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
-$app->setBasePath('EasyTravel/public');
+$app->setBasePath('/EasyTravel/public');
 
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
