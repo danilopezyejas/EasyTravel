@@ -14,9 +14,8 @@ return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        // $response->getBody()->write($twig->render('index.twig'));
-        // return $response;
-        return $response->withHeader('Location','users');
+        $response->getBody()->write($twig->render('index.twig'));
+        return $response;
     });
 
     $app->group('/users', function (Group $group) {
