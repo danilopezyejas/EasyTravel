@@ -69,7 +69,7 @@ $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, false, false);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
-// // Run App & Emit Response
-// $response = $app->handle($request);
-// $responseEmitter = new ResponseEmitter();
+// Run App & Emit Response
+$response = $app->handle($request);
+$responseEmitter = new ResponseEmitter();
 // $responseEmitter->emit($response);
