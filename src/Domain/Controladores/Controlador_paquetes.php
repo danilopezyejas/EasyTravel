@@ -1,24 +1,14 @@
 <?php
-namespace APP\Domain\Controlador_paquetes;
 
-class Controlador_paquetes{
+namespace App\Domain\Controladores;
 
-  private $tabla;
-  private $db;
-  private $conectar;
-  private $modelo;
+class Controlador_Paquetes{
 
   private $precioMax;
   private $precioMin;
   private $destino;
   private $tematica;
   private $fecha_viaje;
-
-  public function __construct($tabla) {
-    $this->tabla=(string) $tabla;
-    $this->db=DB::conexion();
-    $this->modelo=get_class($this);
-}
 
   public function ingresarDestino(string $destino)
   {
@@ -42,12 +32,30 @@ class Controlador_paquetes{
 
   public function listarPaquetes()
   {
-    return $setPaquetes;
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=SAN');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+
+    $headers = array();
+    $headers[] = 'Authorization: Bearer tdKubhrH84jmuGAegWK1vB87UAkG';
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+    echo $result;
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close($ch);
+
+    // return $setPaquetes;
   }
 
   public function comprarPaquete(string $idPaquete)
   {
-    // code...
+
   }
 
 }

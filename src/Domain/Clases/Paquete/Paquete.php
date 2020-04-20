@@ -2,7 +2,7 @@
 
 namespace APP\Domain\Clases\Paquete;
 
-class Paquete extends Controlador_paquetes
+class Paquete extends Clase_Base
 {
   private $id;
   private $tipo_transporte;
@@ -13,8 +13,8 @@ class Paquete extends Controlador_paquetes
                 $this->$key=$value;
             }
         }
-        // $tabla="peliculas";
-        // parent::__construct($tabla);
+        $tabla="paquete";
+        parent::__construct($tabla);
     }
 
   public function getId()
