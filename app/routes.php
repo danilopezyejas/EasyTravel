@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
 use App\Domain\Controladores\Controlador_Paquetes;
@@ -20,6 +19,10 @@ return function (App $app) {
         return $response;
     });
 
+    $app->group('/paquetes', function (Group $group) {
+        $group->get('', Controlador_Paquetes::class);
+        $group->get('/', Controlador_Paquetes::class);
+    });
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Controladores;
 
-class Controlador_Paquetes{
+final class Controlador_Paquetes{
 
   private $precioMax;
   private $precioMin;
@@ -10,6 +10,19 @@ class Controlador_Paquetes{
   private $tematica;
   private $fecha_viaje;
 
+  public function __construct($obj=NULL) {
+        if(isset($obj)){
+            foreach ($obj as $key => $value) {
+                $this->$key=$value;
+            }
+        }
+        // $tabla="paquete";
+        // parent::__construct($tabla);
+    }
+public function getAlgo()
+{
+
+}
   public function ingresarDestino(string $destino)
   {
     // code...
