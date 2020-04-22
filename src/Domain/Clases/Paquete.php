@@ -1,6 +1,8 @@
 <?php
 namespace App\Domain\Clases;
 
+use App\Domain\Clases\Clase_Base as CB;
+
 class Paquete extends Clase_Base
 {
   private $tabla;
@@ -35,14 +37,16 @@ class Paquete extends Clase_Base
 
   public function setTransporte(int $tipo_transporte)
   {
-    // code...
+
   }
 
-  public function getListaPquetes(string $token):string
+  public function getListaPquetes():string
       {
+  // Obtengo el token
+            $token = CB::getToken();
 
             $ch = curl_init();
-        //Preparo el curl para hacer la consulta
+//Preparo el curl para hacer la consulta
             curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=MAD');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -50,7 +54,7 @@ class Paquete extends Clase_Base
             $headers = array();
             $headers[] = 'Authorization: Bearer '.$token;
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        //Obtengo toda la informacion en json
+//Obtengo toda la informacion en json
             $resultado = curl_exec($ch);
 
             if (curl_errno($ch)) {
@@ -64,6 +68,7 @@ class Paquete extends Clase_Base
             foreach ($variable as $key => $value) {
               $setPaquetes = array('nombre' => $value['hotel'] );
               foreach ($setPaquetes as $key => $value2) {
+// Estoy probando aca tendria que crear los alojamientos con lo que obtengo
                 $alojamiento = array('nombre'=>$value2['name']);
               }
           }
