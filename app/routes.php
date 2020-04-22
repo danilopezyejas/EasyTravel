@@ -28,6 +28,20 @@ return function (App $app) {
         return $response;
     });
 
+    $app->get('/registro', function (Request $request, Response $response) {
+        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $twig = new Environment($loader);
+        $response->getBody()->write($twig->render('registro.twig'));
+        return $response;
+    });
+
+    $app->get('/login', function (Request $request, Response $response) {
+        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $twig = new Environment($loader);
+        $response->getBody()->write($twig->render('login.twig'));
+        return $response;
+    });
+
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
         $group->get('/', ListUsersAction::class);

@@ -5,14 +5,19 @@
   		<title>Easy Travel</title>
   		<meta charset="utf-8" />
   		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		  <link rel="stylesheet" href="assets/css/main.css" />
+		  <link rel="stylesheet" href="assets/index/css/main.css" />
     {% endblock %}
 	</head>
   {% block body %}
   	<body class="is-preload">
   		<div class="nav_login">
-  			<input type="button" id="" class="registrarse" value="Registrarse">
-  			<input type="button" id="" class="login" value="Login">
+  			<form class="" action="login" method="get">
+  				<input type="submit" id="login" class="login" value="Login">
+  			</form>
+				<form class="" action="registro" method="get">
+					<input type="submit" id="" class="registrarse" value="Registrarse">
+				</form>
+
   		</div>
 
   		<!-- Header -->
@@ -28,7 +33,7 @@
   				<input type="search" name="tematica" placeholder="Tematica">
   				<input type="submit" value="Buscar" class="boton_formulario"/>
   			</form>
-      {% endblock %}  
+      {% endblock %}
 
   		{% block footer %}
   			<footer id="footer">
@@ -41,7 +46,7 @@
       {% endblock %}
 
   		{% block head_js %}
-  			<script src="assets/js/main.js"></script>
+  			<script src="assets/index/js/main.js"></script>
       {% endblock %}
 
   	</body>
