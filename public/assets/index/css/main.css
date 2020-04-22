@@ -870,7 +870,7 @@ input[type="radio"] + label:before {
       left: 3.5em; }
 
     .nav_login{
-      bottom: 16em;
+      bottom: 14em;
       right: 1em;
       }}
   @media screen and (max-width: 736px) {
