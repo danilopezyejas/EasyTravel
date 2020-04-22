@@ -142,8 +142,8 @@
 			// Note: If you're *not* using AJAX, get rid of this event listener.
 				$form.addEventListener('submit', function(event) {
 
-					event.stopPropagation();
-					event.preventDefault();
+					// event.stopPropagation();
+					// event.preventDefault();
 
 					// Hide message.
 						$message._hide();
@@ -163,7 +163,7 @@
 								$submit.disabled = false;
 
 							// Show message.
-								$message._show('success', 'Thank you!');
+								$message._show('success', 'Buscando!');
 								//$message._show('failure', 'Something went wrong. Please try again.');
 
 						}, 750);
