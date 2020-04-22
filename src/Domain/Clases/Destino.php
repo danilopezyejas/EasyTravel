@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Domain\Clases;
 
 class Destino extends Clase_Base
 {
@@ -8,16 +8,18 @@ class Destino extends Clase_Base
   private $nombre;
   private $ubicacion;
   private $descripcion;
-  
+
   public function __construct($obj=NULL) {
         if(isset($obj)){
             foreach ($obj as $key => $value) {
                 $this->$key=$value;
             }
         }
-        $tabla="alojamiento";
+        $tabla="destino";
         parent::__construct($tabla);
       }
+
+
 }
 
  ?>

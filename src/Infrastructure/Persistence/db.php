@@ -1,5 +1,7 @@
 <?php
-  require_once ('..\..\..\config\config.php');
+namespace App\Infrastructure\Persistence;
+
+require_once ('..\..\..\config\config.php');
 
   class DB{
     private $dbHost = '127.0.0.1';

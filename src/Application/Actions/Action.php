@@ -108,6 +108,16 @@ abstract class Action
     }
 
     /**
+     * @param  array|object|null $data
+     * @return Response
+     */
+    protected function respondWithData_HTML($data = null): Response
+    {
+        $payload = new ActionPayload(200, $data);
+        return $this->respond($payload);
+    }
+
+    /**
      * @param ActionPayload $payload
      * @return Response
      */
