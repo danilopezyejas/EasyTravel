@@ -11,6 +11,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+
 return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
@@ -19,8 +20,17 @@ return function (App $app) {
         return $response;
     });
 
-    // $app->group('/paquetes', function (Group $group) {
-    //   $group->get('', CP::class)->listarPaquetes();
+    // $app->group('/prueba', function(Group $group){
+    //     $group->get('', function ( Request $request, Response $response ){
+    //       $response->getBody()->write("Funciono");
+    //       return $response;
+    //     });
+    //     $group->get('/', function ( Request $request, Response $response ){
+    //       $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+    //       $twig = new Environment($loader);
+    //       $response->getBody()->write($twig->render('listado.twig'));
+    //       return $response;
+    //     });
     // });
 
     $app->POST('/paquetes', function (Request $request, Response $response, array $args) {
