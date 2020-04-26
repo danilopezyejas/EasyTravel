@@ -39,7 +39,7 @@ $callableResolver = $app->getCallableResolver();
 
 //<<<<<<< HEAD
 // descomentar para ejecutar en localhost
- //$app->setBasePath('/EasyTravel/public');
+$app->setBasePath('/EasyTravel/public');
 //=======
 // descomentar para ejecutar en localhost////////////////////////////////////////////////////////////////////////////////////////////
  // $app->setBasePath('/EasyTravel/public');
