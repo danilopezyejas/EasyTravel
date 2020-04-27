@@ -37,8 +37,13 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
+//<<<<<<< HEAD
 // descomentar para ejecutar en localhost
- $app->setBasePath('/EasyTravel/public');
+$app->setBasePath('/EasyTravel/public');
+//=======
+// descomentar para ejecutar en localhost////////////////////////////////////////////////////////////////////////////////////////////
+ // $app->setBasePath('/EasyTravel/public');
+//>>>>>>> 14a097ac2dd23ad59b80a846247cc2ee8c604729
 
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
