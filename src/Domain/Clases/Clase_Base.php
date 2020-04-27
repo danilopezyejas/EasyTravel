@@ -1,7 +1,7 @@
 <?php
 namespace App\Domain\Clases;
 
-use App\Infrastructure\Persistence\db as DB;
+use App\Infrastructure\Persistence\DB as DB;
 
 class Clase_Base
 {
@@ -11,9 +11,9 @@ class Clase_Base
   private $modelo;
 
   public function __construct($tabla) {
-    // $this->tabla=(string) $tabla;
-    // $this->db=DB::conexion();
-    // $this->modelo=get_class($this);
+    $this->tabla=(string) $tabla;
+    $this->db=DB::conexionDB();
+    $this->modelo=get_class($this);
   }
 
   public static function getToken()

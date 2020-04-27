@@ -34,7 +34,7 @@ return function (App $app) {
     // });
 
     $app->POST('/paquetes', function (Request $request, Response $response, array $args) {
-        // CP::listarPaquetes();
+         CP::listarPaquetes();
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('listado.twig'));
