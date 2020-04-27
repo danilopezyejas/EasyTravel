@@ -80,7 +80,7 @@ return function (App $app) {
       //la funcion sha1 codifica la contrasña
       $pass = password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT);
 
-     $sql = "INSERT INTO usuario (nombre, apellido, nickname, correo, password) VALUES
+     $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
              (:nombre, :apellidos, :nickname, :correo, :pass)";
 
     try{
@@ -90,7 +90,7 @@ return function (App $app) {
 
       $resultado->bindParam(':nombre', $nombre);
       $resultado->bindParam(':apellidos', $apellidos);
-      $resultado->bindParam(':email', $correo);
+      $resultado->bindParam(':correo', $correo);
       $resultado->bindParam(':nickname', $nickname);
       $resultado->bindParam(':pass', $pass);
 
