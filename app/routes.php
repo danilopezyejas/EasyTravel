@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
 use App\Domain\Controladores\Controlador_Paquetes as CP;
@@ -23,8 +26,9 @@ return function (App $app) {
     //   $group->get('', CP::class)->listarPaquetes();
     // });
 
-    $app->POST('/paquetes', function (Request $request, Response $response, array $args) {
-        $response->getBody()->write( CP::listarPaquetes());
+    $app->post('/paquetes', function (Request $request, Response $response, array $args) {
+
+        $response->getBody()->write($_POST['tematica']);
         return $response;
     });
 
@@ -35,8 +39,8 @@ return function (App $app) {
     });
 
     $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-    $name = $args['name'];
-    $response->getBody()->write("Hello, $name");
-    return $response;
-});
+        $name = $args['name'];
+        $response->getBody()->write("Hello, $name");
+        return $response;
+    });    
 };
