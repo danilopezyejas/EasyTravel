@@ -25,19 +25,27 @@
 					<div class="row">
 						<div class="col-md-4">
 							<!-- Start Sign In Form -->
-							<form action="#" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
+							<form action="guardar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
 								<h2>Registrarse</h2>
 								<div class="form-group">
+									<label for="name" class="sr-only">Nickname</label>
+									<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off">
+								</div>
+								<div class="form-group">
 									<label for="name" class="sr-only">Nombre</label>
-									<input type="text" class="form-control" id="name" placeholder="Nombre" autocomplete="off">
+									<input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off">
+								</div>
+								<div class="form-group">
+									<label for="name" class="sr-only">Apellido</label>
+									<input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<label for="email" class="sr-only">Email</label>
-									<input type="email" class="form-control" id="email" placeholder="Email" autocomplete="off">
+									<input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<label for="password" class="sr-only">Password</label>
-									<input type="password" class="form-control" id="password" placeholder="Password" autocomplete="off">
+									<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<label for="re-password" class="sr-only">Repita Password</label>
