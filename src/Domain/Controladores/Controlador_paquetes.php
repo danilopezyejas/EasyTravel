@@ -43,10 +43,13 @@ class Controlador_Paquetes{
     // code...
   }
 
-  public static function listarPaquetes()
+  public static function listarPaquetes($destino_buscado)
   {
     $paquetes = new Paquete();
     $listaPaquetes = $paquetes->getListaPquetes();
+    if (isset($_POST['destino'])){
+      $listaPaquetes = $paquetes->getListaDestinos($destino_buscado);
+    }
 
     return $listaPaquetes;
   }
