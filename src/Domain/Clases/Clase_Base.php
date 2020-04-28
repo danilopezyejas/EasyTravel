@@ -24,7 +24,7 @@ class Clase_Base
     curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/security/oauth2/token');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials&client_id=60v7nSAsBAqFhPJGZpLE9sRmS9z8L2b2&client_secret=phWvgwjtlHYnGv1L");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials&client_id=4IEGmwQwjg6z7SvseQeGP9ZM03BAwjlr&client_secret=vrF4p7A3HPy54quK");
 
     $headers = array();
     $headers[] = 'Content-Type: application/x-www-form-urlencoded';

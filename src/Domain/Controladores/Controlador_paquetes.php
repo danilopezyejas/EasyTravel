@@ -47,6 +47,9 @@ class Controlador_Paquetes{
   {
     $paquetes = new Paquete();
     $listaPaquetes = $paquetes->getListaPquetes();
+    if (isset($_POST['destino'])){
+      $listaPaquetes = $paquetes->getListaDestinos($_POST['destino']);
+    }
 
     return $listaPaquetes;
   }
