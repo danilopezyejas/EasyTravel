@@ -84,7 +84,7 @@ public function getListaDestinos($destino_buscado)
 
   $ch = curl_init();
   //Preparo el curl para hacer la consulta
-  curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/reference-data/locations/CHYD');
+  curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/reference-data/locations/'.$destino_buscado);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
   
