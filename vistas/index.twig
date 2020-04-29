@@ -19,35 +19,28 @@
 
   </div>
   <div class="banner">
-    <h2 class="banner__destino">Bienvenido a Easy Travel</h2>
-    <form class="banner__subtitle" action="./paquetes" method="POST">
-      <div>
-        <!--input type="search" name="destino" id="destino" placeholder="Destino"-->
-        <select name="destino" id="destino">
-          <option value="CSVQ">SEVILLA</option>
-          <option value="AJFK">NEW YORK</option>
-          <option value="CATL">ATLANTA</option>
-          <option value="CLAX">LOS ANGELES</option>
-          <option value="CANC">ANCHORAGE</option>
-          <option value="CMAD">MADRID</option>
-          <option value="CPHX">PHOENIX</option>
-          <option value="CBCN">BARCELONA</option>
-        </select>
-      </div>
-      <div>
-        <input type="number" name="precioMin" placeholder="Precio">
-      </div>
-      <div>
-        <input type="date" name="fecha" placeholder="Fecha">
-      </div>
-      <div>
-        <input type="search" name="tematica" placeholder="Tematica">
-      </div>
-      <div>
-        <input type="submit" value="Buscar" class="boton_formulario"/>
-      </div>
+    <header id="header">
+      <h1>Bienvenido a Easy Travel</h1>
+    </header>
+    <form id="signup-form" method="POST" action="paquetes" >
+      <select name="destino" id="destino">
+        <option value="CSVQ">SEVILLA</option>
+        <option value="AJFK">NEW YORK</option>
+        <option value="CATL">ATLANTA</option>
+        <option value="CLAX">LOS ANGELES</option>
+        <option value="CANC">ANCHORAGE</option>
+        <option value="CMAD">MADRID</option>
+        <option value="CPHX">PHOENIX</option>
+        <option value="CBCN">BARCELONA</option>
+      </select>
+      <input type="number" name="precioMin" placeholder="Monto">
+      <input type="date" name="fecha">
+      <input type="search" name="tematica" placeholder="Tematica">
+      <input type="submit" value="Buscar" class="boton_formulario"/>
     </form>
   </div>
+
+
 
   {% block footer %}
     <footer id="footer">
