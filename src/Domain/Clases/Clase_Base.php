@@ -1,7 +1,10 @@
 <?php
 namespace App\Domain\Clases;
 
-use App\Infrastructure\Persistence\db as DB;
+use App\Infrastructure\Persistence\DB as DB;
+
+require_once '..\src\config\config.php';
+
 
 class Clase_Base
 {
@@ -12,7 +15,7 @@ class Clase_Base
 
   public function __construct($tabla) {
     // $this->tabla=(string) $tabla;
-    // $this->db=DB::conexion();
+    // $this->db=DB::conexionDB();
     // $this->modelo=get_class($this);
   }
 
@@ -24,7 +27,7 @@ class Clase_Base
     curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/security/oauth2/token');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials&client_id=60v7nSAsBAqFhPJGZpLE9sRmS9z8L2b2&client_secret=phWvgwjtlHYnGv1L");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials&client_id=".CLIENT_ID."&client_secret=".CLIENT_SECRET);
 
     $headers = array();
     $headers[] = 'Content-Type: application/x-www-form-urlencoded';

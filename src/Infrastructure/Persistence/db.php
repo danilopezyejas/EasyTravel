@@ -1,6 +1,7 @@
 <?php
 namespace App\Infrastructure\Persistence;
 use PDO;
+
 //require_once ('config\config.php');
 
   class db{

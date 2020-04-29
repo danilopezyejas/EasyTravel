@@ -9,7 +9,7 @@ class Controlador_Paquetes{
 
   private $precioMax;
   private $precioMin;
-  private $destino;
+  private $destinos;
   private $tematica;
   private $fecha_viaje;
 
@@ -43,10 +43,16 @@ class Controlador_Paquetes{
     // code...
   }
 
-  public static function listarPaquetes()
+  public static function listarPaquetes(string $destino_buscado=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
   {
     $paquetes = new Paquete();
-    $listaPaquetes = $paquetes->getListaPquetes();
+    // $listaPaquetes = $paquetes->getListaPaquetes();
+    // if($destino_buscado){
+      $listaPaquetes = $paquetes->getListaDestinos($destino_buscado);
+    // }
+    // if($this->destinos){
+    //   $paquetes->getListaDestinos();
+    // }
 
     return $listaPaquetes;
   }
