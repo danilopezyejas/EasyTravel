@@ -3,7 +3,6 @@ namespace App\Domain\Clases;
 
 use App\Infrastructure\Persistence\DB as DB;
 
-require_once '..\src\config\config.php';
 
 
 class Clase_Base
@@ -21,13 +20,17 @@ class Clase_Base
 
   public static function getToken()
   {
-//Genero el token
+//Capturo las variables de entorno definidas con el heroku client
+    $my_client_id = getenv('CLIENT_ID');
+    $my_client_secret = getenv('CLIENT_SECRET');
+
+//Inicio curl
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/security/oauth2/token');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials&client_id=".CLIENT_ID."&client_secret=".CLIENT_SECRET);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials&client_id=".$my_client_id."&client_secret=".$my_client_secret);
 
     $headers = array();
     $headers[] = 'Content-Type: application/x-www-form-urlencoded';
