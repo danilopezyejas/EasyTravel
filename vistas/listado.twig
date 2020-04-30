@@ -1,4 +1,4 @@
-
+{% set derecha = false %}
 <!DOCTYPE html>
 <html lang="es">
 	<head>
@@ -26,22 +26,49 @@
 	<body>
 
 		<div id="fh5co-portfolio">
-			<div class="fh5co-portfolio-item ">
-				<div class="fh5co-portfolio-figure animate-box" style="background-image: url({# aca va la imagen #});"></div>
-				<div class="fh5co-portfolio-description">
-					<h2>Nombre del hotel</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-					<p><a href="#" class="btn btn-primary">Reservar</a></p>
-				</div>
-			</div>
-			<div class="fh5co-portfolio-item fh5co-img-right">
-				<div class="fh5co-portfolio-figure animate-box" style="background-image: url(images/work_2.jpg);"></div>
-				<div class="fh5co-portfolio-description">
-					<h2>Project Second</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-					<p><a href="#" class="btn btn-primary">Read the casetudy</a></p>
-				</div>
-			</div>
+			<h1>Descubrí {{destinos.name}} {{destinos.country}}</h1>
+			{% for item in alojamientos %}
+				{% if derecha == false %}
+					<div class="fh5co-portfolio-item ">
+						<div class="fh5co-portfolio-figure animate-box" style="background-image: url(imagenes/sevilla1.jpg);"></div>
+						<div class="fh5co-portfolio-description">
+
+							<h2>Opcion 1:</h2>
+							<p>Región: {{destinos.region}}</p>
+							<p>Latitud: {{destinos.latitude}}</p>
+							<p>Longitud: {{destinos.longitude}}</p>
+							<h2>Hopedate en: </h2>
+							<p><b>Hotel:</b> {{item.nombre}}</p>
+							<P><b>Estrellas:</b> {{item.estrellas}}</p>
+							<p><b>CheckIn:</b> {{item.chekIn}}  <b>CheckOut:</b> {{item.chekOut}}</p>
+							<p><b>Descripcion:</b> {{item.descripcion}}<p>
+							<p><b>Precio total:</b> {{item.precio}}</p>
+
+							<p><a href="#" class="btn btn-primary">Reservar</a></p>
+						</div>
+					</div>
+					{% set derecha = true %}
+				{% else %}
+					<div class="fh5co-portfolio-item fh5co-img-right">
+						<div class="fh5co-portfolio-figure animate-box" style="background-image: url(imagenes/sevilla1.jpg);"></div>
+						<div class="fh5co-portfolio-description">
+
+							<h2>Opcion 1:</h2>
+							<p>Región: {{destinos.region}}</p>
+							<p>Latitud: {{destinos.latitude}}</p>
+							<p>Longitud: {{destinos.longitude}}</p>
+							<h2>Hopedate en: </h2>
+							<p><b>Hotel:</b> {{item.nombre}}</p>
+							<P><b>Estrellas:</b> {{item.estrellas}}</p>
+							<p><b>CheckIn:</b> {{item.chekIn}}  <b>CheckOut:</b> {{item.chekOut}}</p>
+							<p><b>Descripcion:</b> {{item.descripcion}}<p>
+							<p><b>Precio total:</b> {{item.precio}}</p>
+
+						</div>
+					</div>
+					{% set derecha = false %}
+				{% endif %}
+			{% endfor %}
 			</div>
 
 	<!-- jQuery -->

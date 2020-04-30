@@ -12,6 +12,7 @@ class Controlador_Paquetes{
   private $destinos;
   private $tematica;
   private $fecha_viaje;
+  private $alojamientos;
 
   public function __construct($obj=NULL) {
         if(isset($obj)){
@@ -43,16 +44,23 @@ class Controlador_Paquetes{
     // code...
   }
 
-  public static function listarPaquetes(string $destino_buscado=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
+  public function listarPaquetes(string $destino_buscado=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
   {
     $paquetes = new Paquete();
     // $listaPaquetes = $paquetes->getListaPaquetes();
-    // if($destino_buscado){
-      $listaPaquetes = $paquetes->getListaDestinos($destino_buscado);
+    if($destino_buscado){
+      $this->destinos = $paquetes->getListaDestinos($destino_buscado);
+      $this->alojamientos = $paquetes->getListaAlojamientos("PAR");
+    }
+// Si el usuario no selecciono ningun destino entra al if
+    // if(!$this->destinos){
+    //   $this->destinos = $paquetes->getListaDestinos();
     // }
-    // if($this->destinos){
-    //   $paquetes->getListaDestinos();
-    // }
+    if (!$this->alojamientos) {
+      $this->alojamientos = $paquetes->getListaAlojamientos();
+    }
+    $listaPaquetes = array( 'destinos'=>$this->destinos,
+                            'alojamientos'=>$this->alojamientos);
 
     return $listaPaquetes;
   }
@@ -60,6 +68,14 @@ class Controlador_Paquetes{
   public function comprarPaquete(string $idPaquete)
   {
 
+  }
+
+  public function setDestinos($destinos=null){
+    $this->destinos = $destinos;
+  }
+
+  public function getDestinos(){
+    return $this->destinos;
   }
 
 
