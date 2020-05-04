@@ -29,26 +29,26 @@
 								<h2>Modificar Datos Usuario</h2>
 								<div class="form-group">
 									<label for="name" class="sr-only">Nickname</label>
-									<input type="text" class="form-control" name="nickname" id="nickname" readonly>
+									<input type="text" class="form-control" name="nickname" id="nickname" readonly value="{{ nickname }}">
 								</div>
 								<div class="form-group">
 									<label for="name" class="sr-only">Nombre</label>
-									<input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off"
+									<input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off" value="{{ nombre }}"
 									required="yes">
 								</div>
 								<div class="form-group">
 									<label for="name" class="sr-only">Apellido</label>
-									<input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off"
+									<input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off" value="{{ apellido }}"
 									required="yes">
 								</div>
 								<div class="form-group">
 									<label for="email" class="sr-only">Email</label>
-									<input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off"
+									<input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ correo }}"
 									required="yes">
 								</div>
 								<div class="form-group">
 									<label for="password" class="sr-only">Password</label>
-									<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes">
+									<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" value="{{ password }}"required="yes">
 								</div>
 								
 								<div class="form-group">

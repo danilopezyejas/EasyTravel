@@ -59,12 +59,7 @@ return function (App $app) {
         return $response;
     });
 
-    $app->get('/modificar', function (Request $request, Response $response) {
-        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
-        $twig = new Environment($loader);
-        $response->getBody()->write($twig->render('modificar.twig'));
-        return $response;
-    });
+    
     
     $app->get('/login', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
@@ -101,11 +96,11 @@ return function (App $app) {
     $usr->setNickname($request->getParsedBody()['nickname']);
     $usr->setCorreo($request->getParsedBody()['email']);  
     $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
+    //$usr->setContrasenia($request->getParsedBody()['password']);
 
     CU::guardarUsuario($usr);
          
     $response->getBody()->write($twig->render('index.twig'));
-    //$response->getBody()->write("Guarde,$nombre");
     return $response;
     });
     
@@ -116,13 +111,15 @@ return function (App $app) {
     
     $usr = new DTUsuario();
     $usr->setNickname($request->getParsedBody()['nickname']);    
-    $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
+    $usr->setContrasenia($request->getParsedBody()['password']);
     $nickname =CU::login($usr);
     if (sizeof($nickname) !== 0  ){
         $response->getBody()->write($twig->render('index.twig',$nickname));
     }else{
         $response->getBody()->write($twig->render('login.twig'));
     }
+//    $response->getBody()->write($nickname);
+            
      return $response;
     });
     
@@ -140,8 +137,23 @@ return function (App $app) {
     $nick =CU::modificar($usr);
     
     if (sizeof($nick) !== 0  ){
+        
+//    $response->getBody()->write($nick['nickname']);
     $response->getBody()->write($twig->render('index.twig',$nick));
     }
      return $response;
+    });
+    
+    $app->post('/modificarusr', function (Request $request, Response $response) {
+        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $twig = new Environment($loader);
+        
+        $usr = new DTUsuario();
+        $usr->setNickname($request->getParsedBody()['logueado']);
+        $usuario = CU::getUsuarioLogueado($usr);
+        
+//        $nombre = array('nombre'=> $usr->getNombre());
+        $response->getBody()->write($twig->render('modificar.twig',$usuario));
+        return $response;
     });
 };
