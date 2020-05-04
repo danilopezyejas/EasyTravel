@@ -22,7 +22,7 @@ class Controlador_Usuario{
 
   public static function modificar(DtUsuario $usr)
   {
-$usuario = new Usuario();
+    $usuario = new Usuario();
     $usuario->setNombre($usr->getNombre());
     $usuario->setApellido($usr->getApellido());
     $usuario->setCorreo($usr->getCorreo());
@@ -38,8 +38,12 @@ $usuario = new Usuario();
   {
 
   }
-  public function getUsuarioLogueado()
+  public static function getUsuarioLogueado(DtUsuario $usr)
   {
+    $usuario = new Usuario();
+    $usuario->setNickname($usr->getNickname());
+       
+    return  $usuario->logueado();
 
   }
   public function ingresoUsuario(DtUsuario $usuario)

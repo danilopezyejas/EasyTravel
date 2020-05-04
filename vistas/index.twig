@@ -13,15 +13,20 @@
       {% if nickname|length >0  %}
         <form class="" action="logout" method="get">      
         <input type="submit" id="logout" class="login" value="LogOut">
+        </form>
+        <form class="" action="modificarusr" method="post">
         <ul class="icons">
-            <li><label for="name" class="label">Usuario Logueado</label></li>
-            <li><a href="modificar">{{ nickname }}</a></li>
+            <li><label for="name" class="label" id="logueado" >Usuario Logueado: {{ nickname }}</label></li>
+            <li><input type="hidden" name="logueado" value="{{ nickname }}" id="logueado" >
+            <li><input type="submit" id="modificar" class="" value="Modificar Info.."></li>
         </ul>
+        </form>
       {% else %}
         <form class="" action="login" method="get">  
         <input type="submit" id="login" class="login" value="Login">
+        </form>
       {%  endif %}
-    </form>
+    
     <form class="" action="registro" method="get">
       <input type="submit" id="" class="registrarse" value="Registrarse">
     </form>
