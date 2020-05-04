@@ -3,3 +3,4 @@
 /logs/*
 !/logs/README.md
 /src/config/
+/nbproject/private/

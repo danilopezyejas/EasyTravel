@@ -1,5 +1,8 @@
 <?php
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 namespace App\Domain\Clases;
+use App\Infrastructure\Persistence\db as DB;
 
 class Usuario extends Clase_Base
 {
@@ -29,59 +32,151 @@ class Usuario extends Clase_Base
   }
   public function getId()
   {
-    // code...
+    return $this->id;
   }
-  public function setId(int $id)
+  public function setId($id)
   {
-    // code...
+    $this->id =$id;
   }
   public function getNombre()
   {
-    // code...
+    return $this->nombre;
   }
-  public function setNombre(int $nombre)
+  public function setNombre($nombre)
   {
-    // code...
+    $this->nombre = $nombre;
   }
   public function getApellido()
   {
-    // code...
+    return $this->apellido;
   }
-  public function setApellido(int $apellido)
+  public function setApellido($apellido)
   {
-    // code...
+    $this->apellido = $apellido;
   }
   public function getCorreo()
   {
-    // code...
+    return $this->correo;
   }
-  public function setCorreo(int $correo)
+  public function setCorreo($correo)
   {
-    // code...
+    $this->correo = $correo;
   }
   public function getNickname()
   {
-    // code...
+    return $this->nickname;
   }
-  public function setNickname(int $nickname)
+  public function setNickname($nickname)
   {
-    // code...
+    $this->nickname = $nickname;// code...
   }
   public function getContrasenia()
   {
-    // code...
+    return $this->contrasenia;
   }
-  public function setContrasenia(int $contrasenia)
+  public function setContrasenia($contrasenia)
   {
-    // code...
+    $this->contrasenia = $contrasenia;// code...
   }public function getResidencia()
   {
-    // code...
+    return $this->residencia;// code...
   }
   public function setResidecia(int $residencia)
   {
-    // code...
+    $this->residencia = $residencia;// code...
   }
-}
+
+
+  public function login(){
+        $db = new DB();
+        $db = $db->conexionDB();
+        $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname AND password= :password " );
+        $stmt->bindParam(':nikname', $this->nickname);
+        $stmt->bindParam(':password', $this->contrasenia);
+
+        $stmt->execute();
+        if($stmt->columnCount() < 1){
+            return '';
+        }    
+        $resultado = $stmt->fetch(); 
+        $retorno = array('nickname'=> $this->nickname);
+        
+//        Session::init();
+//        Session::set('usuario_logueado', true);
+//        Session::set('usuario_id', $res->id);
+//        Session::set('usuario_nombre', $res->nombre);
+//        Session::set('usuario_email', $res->email);
+        return $retorno;
+    }
+    public function agregar(){
+        
+        $nombre=$this->getNombre();
+        $apellido=$this->getApellido();
+        $nickname=$this->getNickname();
+        $correo=$this->getCorreo();
+        $pass = $this->getContrasenia();
+
+        
+     $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
+             (:nombre, :apellido, :nickname, :correo, :pass)";
+
+    try{
+      $db = new DB();
+      $db = $db->conexionDB();
+      $resultado = $db->prepare($sql);
+
+      $resultado->bindParam(':nombre', $nombre);
+      $resultado->bindParam(':apellido', $apellido);
+      $resultado->bindParam(':correo', $correo);
+      $resultado->bindParam(':nickname', $nickname);
+      $resultado->bindParam(':pass', $pass);
+
+      $resultado->execute();
+
+     $resultado = null;
+     $db = null;
+     return true;
+   }catch(PDOException $e){
+     $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+     return false;
+   }
+    
+    }
+     public function modificar(){
+//     try{  
+        $nombre=$this->getNombre();
+        $apellido=$this->getApellido();
+        $nickname=$this->getNickname();
+        $correo=$this->getCorreo();
+        $pass = $this->getContrasenia();
+
+        
+     $sql = "update usuario set nombre = :nombre, apellido= :apellido, correo=  :correo, password = :pass
+             where nikname= :nickname ";
+
+    
+      $db = new DB();
+      $db = $db->conexionDB();
+      $resultado = $db->prepare($sql);
+
+      $resultado->bindParam(':nombre', $nombre);
+      $resultado->bindParam(':apellido', $apellido);
+      $resultado->bindParam(':correo', $correo);
+      $resultado->bindParam(':nickname', $nickname);
+      $resultado->bindParam(':pass', $pass);
+
+      $resultado->execute();
+//       $resultado->fetch(); 
+
+     $retorno = array('nickname'=> $nickname);
+     return $retorno;
+     
+//   }catch(PDOException $e){
+//     $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+//     return false;
+//   }
+    
+    }
+  }
 
  ?>
