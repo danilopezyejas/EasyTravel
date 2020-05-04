@@ -3,7 +3,7 @@ namespace App\Domain\Clases;
 
 use App\Infrastructure\Persistence\DB as DB;
 
-require_once '..\src\config\config.php';
+//require_once '..\src\config\config.php';
 
 
 class Clase_Base

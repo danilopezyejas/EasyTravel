@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Domain\Controladores;
 
 use App\Domain\Clases\Usuario as Usuario;
+use App\Domain\Clases\DtUsuario as DtUsuario;
 
 class Controlador_Usuario{
 
@@ -20,11 +20,17 @@ class Controlador_Usuario{
         // parent::__construct($tabla);
     }
 
-  public function modificarDatos(DtUsuarios $modificacion)
+  public static function modificar(DtUsuario $usr)
   {
-    // code...
+$usuario = new Usuario();
+    $usuario->setNombre($usr->getNombre());
+    $usuario->setApellido($usr->getApellido());
+    $usuario->setCorreo($usr->getCorreo());
+    $usuario->setContrasenia($usr->getContrasenia());
+    $usuario->setNickname($usr->getNickname());
+    return  $usuario->modificar();
   }
-  public function mostraDatos()::DtUsuarios
+  public function mostraDatos()
   {
 
   }
@@ -32,23 +38,35 @@ class Controlador_Usuario{
   {
 
   }
-  public function getUsuarioLogueado()::DtUsuarios
+  public function getUsuarioLogueado()
   {
 
   }
-  public function ingresoUsuario(DtUsuarios $usuario)
+  public function ingresoUsuario(DtUsuario $usuario)
   {
 
   }
-  public function guardarUsuario()
+  public static function guardarUsuario(DtUsuario $usr)
   {
+    $usuario = new Usuario();
+    $usuario->setNombre($usr->getNombre());
+    $usuario->setApellido($usr->getApellido());
+    $usuario->setCorreo($usr->getCorreo());
+    $usuario->setContrasenia($usr->getContrasenia());
+    $usuario->setNickname($usr->getNickname());
+    return  $usuario->agregar();
+
 
   }
-  public function login()::bool
+  public static function login(DtUsuario $usr)
   {
-
+      $usuario = new Usuario();
+      $usuario->setNickname($usr->getNickname());
+      $usuario->setContrasenia($usr->getContrasenia());
+      return  $usuario->login();
   }
   public function logout()
   {
     
   }
+}

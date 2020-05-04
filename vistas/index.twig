@@ -10,8 +10,17 @@
 </head>
 <body>
   <div class="nav_login">
-    <form class="" action="login" method="get">
-      <input type="submit" id="login" class="login" value="Login">
+      {% if nickname|length >0  %}
+        <form class="" action="logout" method="get">      
+        <input type="submit" id="logout" class="login" value="LogOut">
+        <ul class="icons">
+            <li><label for="name" class="label">Usuario Logueado</label></li>
+            <li><a href="modificar">{{ nickname }}</a></li>
+        </ul>
+      {% else %}
+        <form class="" action="login" method="get">  
+        <input type="submit" id="login" class="login" value="Login">
+      {%  endif %}
     </form>
     <form class="" action="registro" method="get">
       <input type="submit" id="" class="registrarse" value="Registrarse">

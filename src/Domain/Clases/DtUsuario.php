@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Domain\Clases;
 
 class DtUsuario 
@@ -19,36 +20,63 @@ class DtUsuario
         }
   }
 
-  public function getId()
+ public function getId()
   {
-    // code...
+    return $this->id;
+  }
+  public function setId($id)
+  {
+    $this->id =$id;
   }
   public function getNombre()
   {
-    // code...
+    return $this->nombre;
+  }
+  public function setNombre($nombre)
+  {
+    $this->nombre = $nombre;
   }
   public function getApellido()
   {
-    // code...
+    return $this->apellido;
+  }
+  public function setApellido($apellido)
+  {
+    $this->apellido = $apellido;
   }
   public function getCorreo()
   {
-    // code...
+    return $this->correo;
   }
-  
+  public function setCorreo($correo)
+  {
+    $this->correo = $correo;
+  }
   public function getNickname()
   {
-    // code...
+    return $this->nickname;
   }
-  
+  public function setNickname($nickname)
+  {
+    $this->nickname = $nickname;// code...
+  }
   public function getContrasenia()
   {
-    // code...
+    return $this->contrasenia;
+  }
+  public function setContrasenia($contrasenia)
+  {
+    $this->contrasenia = $contrasenia;// code...
   }
   public function getResidencia()
   {
-    // code...
+    return $this->residencia;// code...
   }
+  public function setResidecia(int $residencia)
+  {
+    $this->residencia = $residencia;// code...
+  }
+
 }
 
  ?>

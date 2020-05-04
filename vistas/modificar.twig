@@ -25,11 +25,11 @@
 					<div class="row">
 						<div class="col-md-4">
 							<!-- Start Sign In Form -->
-							<form action="guardar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="registro">
-								<h2>Registrarse</h2>
+							<form action="modificar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="modificar">
+								<h2>Modificar Datos Usuario</h2>
 								<div class="form-group">
 									<label for="name" class="sr-only">Nickname</label>
-									<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off" required="yes">
+									<input type="text" class="form-control" name="nickname" id="nickname" readonly>
 								</div>
 								<div class="form-group">
 									<label for="name" class="sr-only">Nombre</label>
@@ -50,17 +50,7 @@
 									<label for="password" class="sr-only">Password</label>
 									<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes">
 								</div>
-								<div class="form-group">
-									<label for="re-password" class="sr-only">Repita Password</label>
-									<input type="password" class="form-control" id="re-password" name="re-password" placeholder="Repita Password" autocomplete="off" required="yes" oninput="comprobarClave()">
-									<label   name="re-password-check" id="re-password-check" ></label>
-								</div>
-								<div class="form-group">
-									<label for="remember"><input type="checkbox" id="remember"> Recuerdame</label>
-								</div>
-								<div class="form-group">
-									<p>Ya esta registrado? <a href="login">Login</a></p>
-								</div>
+								
 								<div class="form-group">
 									<input type="submit" value="Guardar" class="btn btn-primary" >
 								</div>
