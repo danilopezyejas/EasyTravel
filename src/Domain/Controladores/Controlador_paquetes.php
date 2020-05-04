@@ -50,7 +50,7 @@ class Controlador_Paquetes{
     // $listaPaquetes = $paquetes->getListaPaquetes();
     if($destino_buscado){
       $this->destinos = $paquetes->getListaDestinos($destino_buscado);
-      $this->alojamientos = $paquetes->getListaAlojamientos("MAD");
+      $this->alojamientos = $paquetes->getListaAlojamientos("JFK");
     }
 // Si el usuario no selecciono ningun destino entra al if
     // if(!$this->destinos){
