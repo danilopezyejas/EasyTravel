@@ -4,7 +4,6 @@ namespace App\Domain\Clases;
 use App\Infrastructure\Persistence\DB as DB;
 
 
-
 class Clase_Base
 {
   private $tabla;

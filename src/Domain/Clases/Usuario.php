@@ -1,5 +1,9 @@
 <?php
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 namespace App\Domain\Clases;
+use App\Infrastructure\Persistence\db as DB;
+use PDO;
 
 class Usuario extends Clase_Base
 {
@@ -29,59 +33,156 @@ class Usuario extends Clase_Base
   }
   public function getId()
   {
-    // code...
+    return $this->id;
   }
-  public function setId(int $id)
+  public function setId($id)
   {
-    // code...
+    $this->id =$id;
   }
   public function getNombre()
   {
-    // code...
+    return $this->nombre;
   }
-  public function setNombre(int $nombre)
+  public function setNombre($nombre)
   {
-    // code...
+    $this->nombre = $nombre;
   }
   public function getApellido()
   {
-    // code...
+    return $this->apellido;
   }
-  public function setApellido(int $apellido)
+  public function setApellido($apellido)
   {
-    // code...
+    $this->apellido = $apellido;
   }
   public function getCorreo()
   {
-    // code...
+    return $this->correo;
   }
-  public function setCorreo(int $correo)
+  public function setCorreo($correo)
   {
-    // code...
+    $this->correo = $correo;
   }
   public function getNickname()
   {
-    // code...
+    return $this->nickname;
   }
-  public function setNickname(int $nickname)
+  public function setNickname($nickname)
   {
-    // code...
+    $this->nickname = $nickname;// code...
   }
   public function getContrasenia()
   {
-    // code...
+    return $this->contrasenia;
   }
-  public function setContrasenia(int $contrasenia)
+  public function setContrasenia($contrasenia)
   {
-    // code...
+    $this->contrasenia = $contrasenia;// code...
   }public function getResidencia()
   {
-    // code...
+    return $this->residencia;// code...
   }
   public function setResidecia(int $residencia)
   {
-    // code...
+    $this->residencia = $residencia;// code...
   }
-}
+public function logueado(){
+        try{
+        $db = new DB();
+        $db = $db->conexionDB();
+        $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname " );
+        $stmt->bindParam(':nikname', $this->nickname);
+        
+        $stmt->execute();
+        if($stmt->rowCount() < 1){
+            return array('nickname'=>'');
+        }    
+        $resultado = $stmt->fetch(); 
+        return  array('nickname'=> $resultado['nikname'],
+                        'nombre'=> $resultado['nombre'],
+                        'apellido'=> $resultado['apellido'],
+                        'correo'=> $resultado['correo'] );
+
+//        return $retorno;
+        }catch(PDOException $e){
+            return $e->getMessage();     
+        }
+    }
+
+  public function login(){
+      try{
+        $db = new DB();
+        $db = $db->conexionDB();
+        $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname " );
+        $stmt->bindParam(':nikname', $this->nickname);
+        $stmt->execute();
+        $user = $stmt->fetch();
+
+
+        if($user && password_verify($this->contrasenia, $user['password'])){
+            return array('nickname'=> $user['nikname']);    
+            
+        }    
+        else{       
+                return  array('nickname'=>'');
+        }
+        }catch(PDOException $e){
+            return $e->getMessage();     
+        }
+    }
+    
+    public function agregar(): ? bool{
+
+    try{
+        $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
+             (:nombre, :apellido, :nickname, :correo, :pass)";
+        $db = new DB();
+        $db = $db->conexionDB();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':nombre', $this->nombre);
+        $resultado->bindParam(':apellido', $this->apellido);
+        $resultado->bindParam(':correo', $this->correo);
+        $resultado->bindParam(':nickname', $this->nickname);
+        $resultado->bindParam(':pass', $this->contrasenia);
+
+        $resultado->execute();
+
+        $resultado = null;
+        $db = null;
+        return true;
+   }catch(PDOException $e){
+      return $e->getMessage();
+     
+   }
+    
+    }
+     public function modificar(){
+     try{  
+   
+     $sql = "update usuario set nombre = :nombre, apellido= :apellido, correo=  :correo, password = :pass
+             where nikname= :nickname ";
+
+    
+      $db = new DB();
+      $db = $db->conexionDB();
+      $resultado = $db->prepare($sql);
+
+      $resultado->bindParam(':nombre', $this->nombre);
+      $resultado->bindParam(':apellido', $this->apellido);
+      $resultado->bindParam(':correo', $this->correo);
+      $resultado->bindParam(':nickname', $this->nickname);
+      $resultado->bindParam(':pass', $this->contrasenia);
+
+      $resultado->execute();
+      return array('nickname'=> $this->nickname);
+           
+          
+   }catch(PDOException $e){
+     return $e->getMessage();
+   }
+    
+    }
+  }
 
  ?>
