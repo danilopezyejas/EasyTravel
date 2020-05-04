@@ -43,9 +43,10 @@ return function (App $app) {
         // CP::listarPaquetes();
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        $destinos = CP::listarPaquetes($_POST['destino']);
+        $cp = new CP;
+        $destinos = $cp->listarPaquetes($_POST['destino']);
         //var_dump($destinos);
-        $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+        $response->getBody()->write($twig->render('listado.twig',$destinos));
         // $response->getBody()->write($twig->render('usuarios_listados.twig', $datos));
         //$response->getBody($destinos);
         return $response;

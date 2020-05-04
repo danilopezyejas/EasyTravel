@@ -26,22 +26,21 @@
 		<div id="fh5co-portfolio">
 			<div class="fh5co-portfolio-item ">
 				<div class="fh5co-portfolio-figure animate-box" style="background-image: url({# aca va la imagen #});"></div>
-				<div class="fh5co-portfolio-description">
-                    <h1>{{name}} ({{idCity}})</h1>
-                    <h2>País: {{country}}</h2>
-                    <h3>Región: {{region}}</h3>
-                    <p>Latitud: {{latitude}}</p>
-                    <p>Longitud: {{longitude}}</p>
-                </div>
-            </div>
-            <div class="fh5co-portfolio-item ">
-				<div class="fh5co-portfolio-figure animate-box" style="background-image: url({# aca va la imagen #});"></div>
-				<div class="fh5co-portfolio-description">
-                    <h1>Descubrí {{name}}</h1>
-                    <h3>Nuestros paquetes</h3>
-                    <p>acá van los paquetes relacionados con el destino</p>
-                </div>
-            </div>
+					<div class="fh5co-portfolio-description">
+						<h1>Descubrí {{destinos.name}}</h1>
+
+						{% for item in alojamientos %}
+							<h3>{{item.nombre}}</h3>
+							<h3>{{item.estrellas}}</h3>
+							<h1>{{destinos.name}} ({{destinos.idCity}})</h1>
+							<h2>País: {{destinos.country}}</h2>
+							<h3>Región: {{destinos.region}}</h3>
+							<p>Latitud: {{destinos.latitude}}</p>
+							<p>Longitud: {{destinos.longitude}}</p>
+						{% endfor %}
+					</div>
+        </div>
+      <div class="fh5co-portfolio-item ">
             <div class="fh5co-portfolio-item ">
 				<div class="fh5co-portfolio-figure animate-box"></div>
 				<div class="fh5co-portfolio-description">
