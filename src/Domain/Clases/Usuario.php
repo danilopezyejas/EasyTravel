@@ -28,7 +28,7 @@ class Usuario extends Clase_Base
 
   public function getPaquetesComprados()
   {
-    
+
   }
   public function getId()
   {
@@ -97,26 +97,26 @@ class Usuario extends Clase_Base
         $stmt->execute();
         if($stmt->columnCount() < 1){
             return '';
-        }    
-        $resultado = $stmt->fetch(); 
+        }
+        $resultado = $stmt->fetch();
         $retorno = array('nickname'=> $this->nickname);
-        
+
 //        Session::init();
 //        Session::set('usuario_logueado', true);
 //        Session::set('usuario_id', $res->id);
 //        Session::set('usuario_nombre', $res->nombre);
 //        Session::set('usuario_email', $res->email);
-        return $retorno;
+        return $resultado;
     }
     public function agregar(){
-        
+
         $nombre=$this->getNombre();
         $apellido=$this->getApellido();
         $nickname=$this->getNickname();
         $correo=$this->getCorreo();
         $pass = $this->getContrasenia();
 
-        
+
      $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
              (:nombre, :apellido, :nickname, :correo, :pass)";
 
@@ -140,21 +140,21 @@ class Usuario extends Clase_Base
      $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
      return false;
    }
-    
+
     }
      public function modificar(){
-//     try{  
+//     try{
         $nombre=$this->getNombre();
         $apellido=$this->getApellido();
         $nickname=$this->getNickname();
         $correo=$this->getCorreo();
         $pass = $this->getContrasenia();
 
-        
+
      $sql = "update usuario set nombre = :nombre, apellido= :apellido, correo=  :correo, password = :pass
              where nikname= :nickname ";
 
-    
+
       $db = new DB();
       $db = $db->conexionDB();
       $resultado = $db->prepare($sql);
@@ -166,16 +166,16 @@ class Usuario extends Clase_Base
       $resultado->bindParam(':pass', $pass);
 
       $resultado->execute();
-//       $resultado->fetch(); 
+//       $resultado->fetch();
 
      $retorno = array('nickname'=> $nickname);
      return $retorno;
-     
+
 //   }catch(PDOException $e){
 //     $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
 //     return false;
 //   }
-    
+
     }
   }
 
