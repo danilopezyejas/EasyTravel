@@ -6,8 +6,8 @@ use PDO;
 
   class db{
     private $dbHost = '127.0.0.1';
-    private $dbUser = 'root';
-    private $dbpass = 'pao2930';
+    private $dbUser = 'admin';
+    private $dbpass = 'admin';
     private $dbName = 'easytravel';
 
     /*public function conexionDB()
