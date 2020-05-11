@@ -3,6 +3,7 @@
 namespace App\Domain\Controladores;
 
 use App\Domain\Clases\Paquete as Paquete;
+use App\Domain\Clases\Destino;
 
 class Controlador_Paquetes{
 
@@ -47,18 +48,27 @@ class Controlador_Paquetes{
   public function listarPaquetes(string $destino_buscado=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
   {
     $paquetes = new Paquete();
-    // $listaPaquetes = $paquetes->getListaPaquetes();
+    $destino = new Destino();
+    $destinos = $destino->getDestinos();
+ini_set('max_execution_time', 3600);
+set_time_limit(3600);
     if($destino_buscado){
-      $this->destinos = $paquetes->getListaDestinos($destino_buscado);
-      $this->alojamientos = $paquetes->getListaAlojamientos("MAD");
+//Lo recorremos
+      foreach ((array) $destinos as $value) {
+          $destino_buscado = $value[0];
+          // $this->destinos = $paquetes->getListaDestinos($destino_buscado);
+            $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado);
+      }
+//falta restaurant y vuelo
+//y hacer las convinaciones con varios for
     }
 // Si el usuario no selecciono ningun destino entra al if
     // if(!$this->destinos){
     //   $this->destinos = $paquetes->getListaDestinos();
     // }
-    if (!$this->alojamientos) {
-      $this->alojamientos = $paquetes->getListaAlojamientos();
-    }
+    // if (!$this->alojamientos) {
+    //   $this->alojamientos = $paquetes->getListaAlojamientos();
+    // }
     $listaPaquetes = array( 'destinos'=>$this->destinos,
                             'alojamientos'=>$this->alojamientos);
 

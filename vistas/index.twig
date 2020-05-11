@@ -11,7 +11,7 @@
 <body>
   <div class="nav_login">
       {% if nickname|length >0  %}
-        <form class="" action="logout" method="get">      
+        <form class="" action="logout" method="get">
         <input type="submit" id="logout" class="login" value="LogOut">
         </form>
         <form class="" action="modificarusr" method="post">
@@ -22,11 +22,11 @@
         </ul>
         </form>
       {% else %}
-        <form class="" action="login" method="get">  
+        <form class="" action="login" method="get">
         <input type="submit" id="login" class="login" value="Login">
         </form>
       {%  endif %}
-    
+
     <form class="" action="registro" method="get">
       <input type="submit" id="" class="registrarse" value="Registrarse">
     </form>
@@ -39,15 +39,11 @@
     <form id="signup-form" method="POST" action="paquetes" >
       <select name="destino" id="destino">
         <option value="MAD">MADRID</option>
-        <option value="ATL">ATLANTA</option>
         <option value="LAX">LOS ANGELES</option>
-        <option value="ANC">ANCHORAGE</option>
-        <option value="MAD">MADRID</option>
         <option value="PHX">PHOENIX</option>
-        <option value="BCN">BARCELONA</option>
       </select>
       <input type="number" name="precioMin" placeholder="Monto">
-      <input type="date" name="fecha">
+      <input type="date" name="fecha" min="11-05-2020">
       <input type="search" name="tematica" placeholder="Tematica">
       <input type="submit" value="Buscar" class="boton_formulario"/>
     </form>
