@@ -2,6 +2,7 @@
 namespace App\Domain\Clases;
 
 use App\Domain\Clases\Clase_Base;
+use App\Infrastructure\Persistence\db as DB;
 
 class Alojamiento extends Clase_Base
 {
@@ -13,6 +14,7 @@ class Alojamiento extends Clase_Base
   private $checkOut;
   private $precio;
   private $descripcion;
+  private $idDestino;
 
   public function __construct($obj=NULL) {
         if(isset($obj)){
@@ -24,6 +26,10 @@ class Alojamiento extends Clase_Base
         parent::__construct($tabla);
       }
 
+  public function setIdDestino($idDestino)
+  {
+    return $this->idDestino;
+  }
   public function setNombre($nombre)
   {
     $this->nombre = $nombre;
@@ -73,6 +79,68 @@ class Alojamiento extends Clase_Base
   {
     return $this->descripcion;
   }
+  public function getIdDestino()
+  {
+    return $this->idDestino;
+  }
+
+  public function agregar(){
+    $nombre=$this->getNombre();
+    $idDestino = $this->getIdDestino();
+
+    if(!$this->existe($nombre, $idDestino)){
+      $estrellas=$this->getEstrellas();
+      $checkIn=$this->getCheckIn();
+      $checkOut=$this->getCheckOut();
+      $precio = $this->getPrecio();
+      $descripcion = $this->getDescripcion();
+
+      $sql = "INSERT INTO alojamiento (nombre, estrellas, checkIn, checkOut, precio, descripcion, idDestino) VALUES
+             (:nombre, :estrellas, :checkIn, :checkOut, :precio, :descripcion, :idDestino)";
+
+      try{
+        $db = new DB();
+        $db = $db->conexionDB();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':nombre', $nombre);
+        $resultado->bindParam(':estrellas', $estrellas);
+        $resultado->bindParam(':checkIn', $checkIn);
+        $resultado->bindParam(':checkOut', $checkOut);
+        $resultado->bindParam(':precio', $precio);
+        $resultado->bindParam(':descripcion', $descripcion);
+        $resultado->bindParam(':idDestino', $idDestino);
+
+        $resultado->execute();
+        $resultado = null;
+        $db = null;
+        return true;
+      }catch(PDOException $e){
+        $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+        return false;
+      }
+    }
+  }
+
+  public function existe($nombre, $idDestino){
+        $db = new DB();
+        $db = $db->conexionDB();
+        $stmt = $db->prepare( "SELECT * from  alojamiento WHERE nombre= :nombre AND idDestino = :idDestino" );
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':idDestino', $idDestino);
+
+        $stmt->execute();
+        if($stmt->columnCount() < 1){
+            return '';
+        }
+        $resultado = $stmt->fetch();
+
+        if($resultado){
+          return true;
+        }else{
+          return false;
+        }
+    }
 }
 
  ?>

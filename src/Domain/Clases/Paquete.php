@@ -50,12 +50,13 @@ class Paquete extends Clase_Base
 public function getListaAlojamientos($destino_buscado)
 {
 // Obtengo el token
-   $this->token = CB::getToken();
+   // $this->token = CB::getToken();
+   $this->token = 'Y7CONf9kstjdTHMlD0JP88hDJBbX';
 
    $ch = curl_init();
 //Preparo el curl para hacer la consulta
-//GET https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=PAR&adults=1&radius=5&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE
-   curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&adults=1&radius=5&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
+//                                https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=PHX&checkInDate=2020-09-20&roomQuantity=1&adults=2&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=NONE
+   curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&adults=1&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
@@ -71,27 +72,79 @@ public function getListaAlojamientos($destino_buscado)
    curl_close($ch);
 
    $json_response=json_decode($resultado, true);
+   if(isset($json_response["data"])){
    $variable=$json_response["data"];
    $alojamientos=[];
 // Devuelvo todos los alojamientos que hay en la ciudad que eleji
+if($variable){
    foreach ($variable as $key => $value) {
+     if(isset($value['hotel'])){
      if($value['hotel'] != NULL) {
-       $datos1 = array('nombre'=>$value['hotel']['name'],'estrellas'=>$value['hotel']['rating'],'descripcion'=>$value['hotel']['description']['text']);
+       if(isset($value['hotel']['name'])){
+       $nombre = array('nombre'=>$value['hotel']['name']);
+       }else{
+         $nombre= array('nombre'=>"");
+       }
+       if(isset($value['hotel']['rating'])){
+         $estrellas = array('estrellas'=>$value['hotel']['rating']);
+       }else{
+         $estrellas = array('estrellas'=>"");
+       }
+       if(isset($value['hotel']['description'])){
+         $descripcion = array('descripcion'=>$value['hotel']['description']['text']);
+       }else{
+         $descripcion = array('descripcion'=>"Sin descripcion.");
+       }
      }
+   }else{
+     $descripcion = array('descripcion'=>"Sin descripcion.");
+     $estrellas = array('estrellas'=>"");
+     $nombre= array('nombre'=>"");
+   }
+   if(isset($value['offers'])){
      if($value['offers'] != NULL){
-       $datos2 = array('chekIn'=>$value['offers'][0]['checkInDate'], 'chekOut'=>$value['offers'][0]['checkOutDate'], 'precio'=>$value['offers'][0]['price']['total']);
+        if(isset($value['offers'][0]['checkInDate'])){
+          $checkIn = array('checkIn'=>$value['offers'][0]['checkInDate']);
+        }else{
+          $checkIn = array('checkIn'=>"");
+        }
+        if(isset($value['offers'][0]['checkOutDate'])){
+          $checkOut = array('checkOut'=>$value['offers'][0]['checkOutDate']);
+        }else{
+          $checkOut = array('checkOut'=>"");
+        }
+        if(isset($value['offers'][0]['price']['total'])){
+          $precio = array('precio'=>$value['offers'][0]['price']['total']);
+        }else{
+          $precio = array('precio'=>"");
+        }
      }
-     $datos = array_merge($datos1,$datos2);
+   }else{
+     $precio = array('precio'=>"");
+     $checkOut = array('checkOut'=>"");
+     $checkIn = array('checkIn'=>"");
+   }
+   if($destino_buscado == NULL){
+     $idDestino = array('idDestino' => "otro");
+   }else{
+     $idDestino = array('idDestino' => $destino_buscado);
+   }
+     $datos = array_merge($nombre,$descripcion,$estrellas,$checkIn,$checkOut,$precio,$idDestino);
      $nuevoAlojamiento = new Alojamiento($datos);
+     $nuevoAlojamiento->agregar($nuevoAlojamiento);
      $alojamientos[]=$nuevoAlojamiento;
     }
+  }
   return $alojamientos;
+}
 }
 
 
 public function getListaDestinos($destino_buscado)
 {
-  $this->token = CB::getToken();
+
+  // $this->token = CB::getToken();
+  $this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
 
   $ch = curl_init();
   //Preparo el curl para hacer la consulta
@@ -111,16 +164,30 @@ public function getListaDestinos($destino_buscado)
   curl_close($ch);
 
   $json_response=json_decode($resultado, true);
-  $destinos = array('name' => $json_response["data"]["address"]["cityName"],
-                    'idLocation' => $json_response["data"]["id"],
-                    'idCity' => $json_response ["data"]["address"]["cityCode"],
-                    'iataCode' => $json_response ["data"]["iataCode"],
-                    'timeZone' => $json_response ["data"]["timeZoneOffset"],
-                    'latitude' => $json_response ["data"]["geoCode"]["latitude"],
-                    'longitude' => $json_response ["data"]["geoCode"]["longitude"],
-                    'country' => $json_response ["data"]["address"]["countryName"],
-                    'region' => $json_response ["data"]["address"]["regionCode"]);
+  if($json_response != NULL){
+    if(isset($json_response["data"])){
+    $destinos = array('ciudad' => $json_response["data"]["address"]["cityName"],
+                      'idLocation' => $json_response["data"]["id"],
+                      'idCity' => $json_response ["data"]["address"]["cityCode"],
+                      'iataCode' => $json_response ["data"]["iataCode"],
+                      'timeZone' => $json_response ["data"]["timeZoneOffset"],
+                      'latitud' => $json_response ["data"]["geoCode"]["latitude"],
+                      'longitud' => $json_response ["data"]["geoCode"]["longitude"],
+                      'pais' => $json_response ["data"]["address"]["countryName"],
+                      'region' => $json_response ["data"]["address"]["regionCode"],
+                      'id' =>$destino_buscado);
+                    }else{
+                      $destinos = array('id' => "XXX");
+                    }
+  }else{
+    $destinos = array('id' => "XXX");
+  }
+  if($destino_buscado != NULL){
+  $nuevoDestino = new Destino($destinos);
+  $nuevoDestino->agregar($nuevoDestino);
+}
   return $destinos;
+
 }
 }//cierre de la clase paquete
 
