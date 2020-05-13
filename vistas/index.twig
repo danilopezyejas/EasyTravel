@@ -1,47 +1,12 @@
-<!doctype html>
-<html lang="es">
-<head>
-  {% block head %}
-    <title>Easy Travel</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/index/css/main.css" />
-  {% endblock %}
-</head>
-<body>
-  <div class="nav_login">
-      {% if nickname|length >0  %}
-        <form class="" action="logout" method="get">
-        <input type="submit" id="logout" class="login" value="LogOut">
-        </form>
-        <form class="" action="modificarusr" method="post">
-        <ul class="icons">
-            <li><label for="name" class="label" id="logueado" >Usuario Logueado: {{ nickname }}</label></li>
-            <li><input type="hidden" name="logueado" value="{{ nickname }}" id="logueado" >
-            <li><input type="submit" id="modificar" class="" value="Modificar Info.."></li>
-        </ul>
-        </form>
-      {% else %}
-        <form class="" action="login" method="get">
-        <input type="submit" id="login" class="login" value="Login">
-        </form>
-      {%  endif %}
-
-    <form class="" action="registro" method="get">
-      <input type="submit" id="" class="registrarse" value="Registrarse">
-    </form>
+{% include 'cabecera.twig' %}
 
   </div>
   <div class="banner">
     <header id="header">
       <h1>Bienvenido a Easy Travel</h1>
     </header>
-    <form id="signup-form" method="POST" action="paquetes" >
-      <select name="destino" id="destino">
-        <option value="MAD">MADRID</option>
-        <option value="LAX">LOS ANGELES</option>
-        <option value="PHX">PHOENIX</option>
-      </select>
+    <form id="signup-form" method="POST" action="paquetes" autocomplete="off">
+      <input id="destino" type="text" name="destino" placeholder="Destino">
       <input type="number" name="precioMin" placeholder="Monto">
       <input type="date" name="fecha" min="11-05-2020">
       <input type="search" name="tematica" placeholder="Tematica">
@@ -49,21 +14,4 @@
     </form>
   </div>
 
-
-
-  {% block footer %}
-    <footer id="footer">
-      <ul class="icons">
-        <li><a href="https://twitter.com/explore" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="https://www.instagram.com/?hl=es-la" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-      </ul>
-    </footer>
-  {% endblock %}
-
-  {% block head_js %}
-    <script src="assets/index/js/main.js"></script>
-  {% endblock %}
-</body>
-
-</html>
+{% include 'pie.twig' %}

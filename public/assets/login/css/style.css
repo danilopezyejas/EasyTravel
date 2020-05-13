@@ -74,7 +74,7 @@ a:hover {
   color: #000000;
 }
 .fh5co-form .form-group {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 .fh5co-form .form-group p {
   font-size: 14px;
@@ -92,7 +92,6 @@ a:hover {
 .fh5co-form .form-control {
   font-size: 16px;
   font-weight: 300;
-  height: 50px;
   padding-left: 0;
   padding-right: 0;
   border: none;

@@ -45,20 +45,16 @@ class Controlador_Paquetes{
     // code...
   }
 
-  public function listarPaquetes(string $destino_buscado=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
+  public function listarPaquetes(string $destino=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
   {
     $paquetes = new Paquete();
-    $destino = new Destino();
-    $destinos = $destino->getDestinos();
-ini_set('max_execution_time', 3600);
-set_time_limit(3600);
+    $destino_buscado = Destino::getDestinoPorCiudad($destino)['idDestino'];
+
     if($destino_buscado){
-//Lo recorremos
-      foreach ((array) $destinos as $value) {
-          $destino_buscado = $value[0];
-          // $this->destinos = $paquetes->getListaDestinos($destino_buscado);
-            $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado);
-      }
+
+      $this->destinos = $paquetes->getListaDestinos($destino_buscado);
+      $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado);
+
 //falta restaurant y vuelo
 //y hacer las convinaciones con varios for
     }
@@ -88,8 +84,11 @@ set_time_limit(3600);
     return $this->destinos;
   }
 
-
-
+  public static function getDestinosGuardados()
+  {
+    $destino = new Destino();
+    return $destino->getDestinosGuardados();
+  }
 
 }
 

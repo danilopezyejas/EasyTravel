@@ -1,0 +1,62 @@
+.listado{
+  padding: 3em;
+}
+.resultado{
+  padding: 1em;
+  padding-bottom: 4em;
+  display: block;
+  background-color: rgba(161, 161, 161, 0.2);
+  border-radius: .5em;
+  max-width: 1200px;
+  margin-bottom: 1em;
+}
+
+h2{
+  font-size: 1.5em;
+  font-weight: 1000;
+  font-family: sans-serif;
+  padding: .5em;
+}
+
+p{
+  font-size: 1.2em;
+  font-family: sans-serif;
+  text-indent: 1.5em;
+  padding: .05em;
+}
+.descripcion{
+  display: block;
+}
+
+.descripcion a{
+  float: right;
+  display: flex;
+}
+
+.imgDestino{
+  width: 30em;
+  height: auto;
+  padding: .5em;
+  background-color: rgb(205, 205, 205);
+  float: inline-end;
+}
+
+.reservar{
+  width: 8em;
+  height: 2.5em;
+  background-color: rgb(5, 82, 0);
+  color: rgb(255, 255, 255);
+  border-radius: .5em;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  font-weight: 1000;
+}
+.reservar:hover{
+  background-color: rgb(10, 108, 3);
+  font-size: 1.12em;
+}
+.reservar:focus{
+  background-color: rgb(7, 68, 2);
+  font-size: .9em;
+}

@@ -50,8 +50,7 @@ class Paquete extends Clase_Base
 public function getListaAlojamientos($destino_buscado)
 {
 // Obtengo el token
-   // $this->token = CB::getToken();
-   $this->token = 'Y7CONf9kstjdTHMlD0JP88hDJBbX';
+   $this->token = CB::getToken();
 
    $ch = curl_init();
 //Preparo el curl para hacer la consulta
@@ -131,7 +130,6 @@ if($variable){
    }
      $datos = array_merge($nombre,$descripcion,$estrellas,$checkIn,$checkOut,$precio,$idDestino);
      $nuevoAlojamiento = new Alojamiento($datos);
-     $nuevoAlojamiento->agregar($nuevoAlojamiento);
      $alojamientos[]=$nuevoAlojamiento;
     }
   }
@@ -143,8 +141,7 @@ if($variable){
 public function getListaDestinos($destino_buscado)
 {
 
-  // $this->token = CB::getToken();
-  $this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
+  $this->token = CB::getToken();
 
   $ch = curl_init();
   //Preparo el curl para hacer la consulta
@@ -180,11 +177,10 @@ public function getListaDestinos($destino_buscado)
                       $destinos = array('id' => "XXX");
                     }
   }else{
-    $destinos = array('id' => "XXX");
+    $destinos = array('id' => "XYX");
   }
   if($destino_buscado != NULL){
   $nuevoDestino = new Destino($destinos);
-  $nuevoDestino->agregar($nuevoDestino);
 }
   return $destinos;
 
