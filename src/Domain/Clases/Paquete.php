@@ -47,15 +47,21 @@ class Paquete extends Clase_Base
 
       }
 
-public function getListaAlojamientos($destino_buscado)
+public function getListaAlojamientos($destino_buscado=NULL,$fecha_buscada=NULL)
 {
 // Obtengo el token
    $this->token = CB::getToken();
 
    $ch = curl_init();
 //Preparo el curl para hacer la consulta
-//                                https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=PHX&checkInDate=2020-09-20&roomQuantity=1&adults=2&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=NONE
-   curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&adults=1&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
+   // if ($destino_buscado) {
+   //   // busqueda aleatoria
+   // }
+   if ($fecha_buscada) {
+     curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&checkInDate='.$fecha_buscada.'&roomQuantity=1&adults=2&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=NONE');
+   }else {
+     curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&adults=1&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
+   }
    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 

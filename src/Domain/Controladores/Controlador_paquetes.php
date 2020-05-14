@@ -45,15 +45,14 @@ class Controlador_Paquetes{
     // code...
   }
 
-  public function listarPaquetes(string $destino=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
+  public function listarPaquetes($destino=null, $precio_buscado=null, $fecha_buscada=null, $tematica_buscada=null)
   {
     $paquetes = new Paquete();
     $destino_buscado = Destino::getDestinoPorCiudad($destino)['idDestino'];
 
     if($destino_buscado){
-
       $this->destinos = $paquetes->getListaDestinos($destino_buscado);
-      $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado);
+      $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado,$fecha_buscada);
 
 //falta restaurant y vuelo
 //y hacer las convinaciones con varios for

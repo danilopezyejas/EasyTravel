@@ -8,7 +8,7 @@
     <form id="signup-form" method="POST" action="paquetes" autocomplete="off">
       <input id="destino" type="text" name="destino" placeholder="Destino">
       <input type="number" name="precioMin" placeholder="Monto">
-      <input type="date" name="fecha" min="11-05-2020">
+      <input id="fecha" type="date" name="fecha" min="{{ "now"|date("yy-m-d") }}">
       <input type="search" name="tematica" placeholder="Tematica">
       <input type="submit" value="Buscar" class="boton_formulario"/>
     </form>

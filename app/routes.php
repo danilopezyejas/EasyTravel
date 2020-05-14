@@ -48,7 +48,7 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $cp = new CP;
-        $destinos = $cp->listarPaquetes($_POST['destino']);
+        $destinos = $cp->listarPaquetes($_POST['destino'],2,$_POST['fecha']);
         $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
         return $response;
     });
