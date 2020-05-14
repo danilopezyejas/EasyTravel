@@ -11,4 +11,4 @@ function comprobarClave(){
     	//document.getElementById("re-password-check").innerHTML = "mal"
     	alerta.innerHTML ="mal"
     }
-} 
+}

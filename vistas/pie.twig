@@ -1,0 +1,20 @@
+{% block footer %}
+  <footer id="footer">
+    <ul class="icons">
+      <li><a href="https://twitter.com/explore" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+      <li><a href="https://www.instagram.com/?hl=es-la" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+      <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+    </ul>
+  </footer>
+{% endblock %}
+
+{% block head_js %}
+<script>
+  var d = "{{ listaDestinos|raw }}";
+</script>
+  <script src="assets/js/main.js"></script>
+  <script type="text/javascript" src="assets/js/scripts.js"></script>
+{% endblock %}
+</body>
+
+</html>

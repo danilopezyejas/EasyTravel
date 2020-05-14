@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Domain\Clases;
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -95,8 +96,14 @@ class Paquete extends Clase_Base {
 
         $ch = curl_init();
 //Preparo el curl para hacer la consulta
-//                                https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=PHX&checkInDate=2020-09-20&roomQuantity=1&adults=2&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=NONE
-        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=' . $destino_buscado . '&adults=1&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
+        // if ($destino_buscado) {
+        //   // busqueda aleatoria
+        // }
+        if ($fecha_buscada) {
+            curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=' . $destino_buscado . '&checkInDate=' . $fecha_buscada . '&roomQuantity=1&adults=2&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=NONE');
+        } else {
+            curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode=' . $destino_buscado . '&adults=1&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
@@ -223,14 +230,25 @@ class Paquete extends Clase_Base {
         if ($destino_buscado != NULL) {
             $nuevoDestino = new Destino($destinos);
             $nuevoDestino->agregar($nuevoDestino);
+        } else {
+            $precio = array('precio' => "");
+            $checkOut = array('checkOut' => "");
+            $checkIn = array('checkIn' => "");
         }
-        return $destinos;
+        if ($destino_buscado == NULL) {
+            $idDestino = array('idDestino' => "otro");
+        } else {
+            $idDestino = array('idDestino' => $destino_buscado);
+        }
+        $datos = array_merge($nombre, $descripcion, $estrellas, $checkIn, $checkOut, $precio, $idDestino);
+        $nuevoAlojamiento = new Alojamiento($datos);
+        $alojamientos[] = $nuevoAlojamiento;
     }
 
     public function getListaPuntosDeInteres($latitudbuscar, $longitudbuscar) {
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, 'https://www.triposo.com/api/20200405/local_highlights.json?latitude='.$latitudbuscar.'&longitude='.$longitudbuscar.'&poi_fields=all');
+        curl_setopt($ch, CURLOPT_URL, 'https://www.triposo.com/api/20200405/local_highlights.json?latitude=' . $latitudbuscar . '&longitude=' . $longitudbuscar . '&poi_fields=all');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         $resultado = curl_exec($ch);
@@ -240,10 +258,9 @@ class Paquete extends Clase_Base {
         curl_close($ch);
 
         //$json_response = json_decode($resultado, true);
-            $puntosdeinteres = array('id' => "XXX");
+        $puntosdeinteres = array('id' => "XXX");
         return $puntosdeinteres;
     }
-
 }
 
 //cierre de la clase paquete
