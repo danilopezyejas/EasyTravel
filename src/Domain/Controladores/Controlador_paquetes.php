@@ -14,6 +14,7 @@ class Controlador_Paquetes{
   private $tematica;
   private $fecha_viaje;
   private $alojamientos;
+  private $puntosdeinteres;
 
   public function __construct($obj=NULL) {
         if(isset($obj)){
@@ -48,6 +49,7 @@ class Controlador_Paquetes{
   public function listarPaquetes(string $destino_buscado=null, int $precio_buscado=null, date $fecha_buscada=null, string $tematica_buscada=null)
   {
     $paquetes = new Paquete();
+    //$listaPaquetes = $paquetes->getListaPuntosDeInteres();
     $destino = new Destino();
     $destinos = $destino->getDestinos();
 ini_set('max_execution_time', 3600);
@@ -69,8 +71,10 @@ set_time_limit(3600);
     // if (!$this->alojamientos) {
     //   $this->alojamientos = $paquetes->getListaAlojamientos();
     // }
+    $this->puntosdeinteres = $paquetes->getListaPuntosDeInteres("41.29694", "2.07833");
     $listaPaquetes = array( 'destinos'=>$this->destinos,
-                            'alojamientos'=>$this->alojamientos);
+                            'alojamientos'=>$this->alojamientos,
+                            'puntosdeinteres'=>$this->puntosdeinteres);
 
     return $listaPaquetes;
   }
