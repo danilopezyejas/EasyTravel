@@ -85,10 +85,13 @@
                 $("input#re-password").on("keyup",function(){
                   var p1 = $('#password').val();
                   var p2 = $('#re-password').val();
+                  console.log(p1);
+                  console.log("afueta"+p2);
 
                   if (p1 === p2){
                       $('#re-password').removeClass('form-control is-invalid');
                       $('#re-password').addClass('form-control is-valid');
+                      console.log("adentro"+p2);
                   }else {
                     $('#re-password').removeClass('form-control is-valid');
                      $('#re-password').addClass('form-control is-invalid');
