@@ -7,6 +7,7 @@ ini_set('display_errors', '1');
 
 use App\Domain\Clases\Clase_Base as CB;
 use App\Domain\Clases\Alojamiento;
+use DateTime;
 
 class Paquete extends Clase_Base {
 
@@ -29,52 +30,55 @@ class Paquete extends Clase_Base {
         // code...
     }
 
-    public function getTransporte($destino_buscado, $origen, $cantidadAdultos, $fechaSalida) {
-//    // $this->token = CB::getToken();
-//  $this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
-//
-//  $ch = curl_init();
-//  //Preparo el curl para hacer la consulta
-//  curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode='.$origen.'&destinationLocationCode='.$destino_buscado.'&departureDate='.$fechaSalida.'&adults='.$cantidadAdultos.'&max=1');
-//  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-//
-//  $headers = array();
-//  $headers[] = 'Authorization: Bearer '.$this->token;
-//  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-//  //Obtengo toda la informacion en json
-//  $resultado = curl_exec($ch);
-//
-//  if (curl_errno($ch)) {
-//      echo 'Error:' . curl_error($ch);
-//  }
-//  curl_close($ch);
-//
-//  $json_response=json_decode($resultado, true);
-//  if($json_response != NULL){
-//    if(isset($json_response["data"])){
-//    $vuelos = array('duracion' => $json_response["data"]["duration"],
-//                    'ultimaFechaParaComprar' => $json_response ["data"]["lastTicketingDate"],
-//                    'numeroDeLugaresDisponibles' => $json_response ["data"]["numberOfBookableSeats"],
-//                    'iataCodeOrigen' => $json_response["data"]["itineraries"]["segments"]["departure"]["iataCode"],
-//                    'fechaSalida' => $json_response["data"]["itineraries"]["segments"]["departure"]["at"],
-//                    'iataCodeDestino' => $json_response["data"]["itineraries"]["segments"]["arrival"]["iataCode"],
-//                    'fechaLlegada' => $json_response["data"]["itineraries"]["segments"]["arrival"]["at"],
-//                    'currency' => $json_response ["data"]["price"]["currency"],
-//                    'precioTotal' => $json_response ["data"]["price"]["total"],
-//                    'id'=>$json_response["data"]["itineraries"]["segments"]["departure"]["iataCode"]+$json_response["data"]["itineraries"]["segments"]["departure"]["at"]
-//                      );
-//                    }else{
-//                      $vuelos = array('id' => "XXX");
-//                    }
-//  }else{
-//    $vuelos = array('id' => "XXX");
-//  }
-//  if($destino_buscado != NULL){
-//  $nuevoVuelo = new Vuelo($vuelos);
-//  $nuevoDestino->agregar($nuevoDestino);
-//}
-//  return $destinos;
+    public function getTransporte($destino_buscado=NULL, $origen=NULL, $cantidadAdultos=NULL, $fechaSalida=NULL) {
+         $this->token = CB::getToken();
+        //$this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";         
+        $ch = curl_init();
+        //Preparo el curl para hacer la consulta
+        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2020-08-01&adults=1&max=11');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+        $headers = array();
+        $headers[] = 'Authorization: Bearer ' . $this->token;
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        //Obtengo toda la informacion en json
+        $resultado = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+
+        $json_response = json_decode($resultado, true);
+        if ($json_response != NULL) {
+            if (isset($json_response)) {
+                $aux = $json_response["data"]["0"];
+                $fechaSalida = $aux["itineraries"]["0"]["segments"]["0"]["departure"]["at"];
+                $fechaSalida = date("Y-m-d H:i", strtotime($fechaSalida));
+                $fechaLlegada = $aux["itineraries"]["0"]["segments"]["0"]["arrival"]["at"];
+                $fechaLlegada = date("Y-m-d H:i", strtotime($fechaLlegada));
+                $vuelos = array(
+                    'duracion' => $aux["itineraries"]["0"]["duration"],
+                    'ultimaFechaParaComprar' => $aux["lastTicketingDate"],
+                    'numeroDeLugaresDisponibles' => $aux["numberOfBookableSeats"],
+                    'iataCodeOrigen' => $aux["itineraries"]["0"]["segments"]["0"]["departure"]["iataCode"],
+                    'fechaSalida' => $fechaSalida,
+                    'iataCodeDestino' => $aux["itineraries"]["0"]["segments"]["0"]["arrival"]["iataCode"],
+                    'fechaLlegada' => $fechaLlegada,
+                    'currency' => $aux["price"]["currency"],
+                    'precioTotal' => $aux["price"]["total"],
+                    'id' => $aux["id"]
+                );
+           } 
+            else {
+                $vuelos = array('id' => "XXX");
+            }
+        } else {
+            $vuelos = array('id' => "XXX");
+        }
+        var_dump($vuelos);
+        return $vuelos;
     }
 
     public function setId(int $id) {
@@ -89,10 +93,10 @@ class Paquete extends Clase_Base {
         
     }
 
-    public function getListaAlojamientos($destino_buscado) {
+    public function getListaAlojamientos($destino_buscado = NULL, $fecha_buscada = NULL) {
 // Obtengo el token
-        // $this->token = CB::getToken();
-        $this->token = 'z5UAJO2n454wwRzYK8x3ZpnzGMyN';
+        $this->token = CB::getToken();
+        //$this->token = "jP3EwFjhBcMtGkGgGms6FQtNzPiR";
 
         $ch = curl_init();
 //Preparo el curl para hacer la consulta
@@ -178,7 +182,6 @@ class Paquete extends Clase_Base {
                     }
                     $datos = array_merge($nombre, $descripcion, $estrellas, $checkIn, $checkOut, $precio, $idDestino);
                     $nuevoAlojamiento = new Alojamiento($datos);
-                    $nuevoAlojamiento->agregar($nuevoAlojamiento);
                     $alojamientos[] = $nuevoAlojamiento;
                 }
             }
@@ -188,8 +191,8 @@ class Paquete extends Clase_Base {
 
     public function getListaDestinos($destino_buscado) {
 
-        // $this->token = CB::getToken();
-        $this->token = "207NEtAWDt1EvabCpeiyCgmlPRto";
+        $this->token = CB::getToken();
+        //$this->token = "H2eX2tPQ2pShv3nxbzaBfAEEwwyY";
 
         $ch = curl_init();
         //Preparo el curl para hacer la consulta
@@ -225,24 +228,12 @@ class Paquete extends Clase_Base {
                 $destinos = array('id' => "XXX");
             }
         } else {
-            $destinos = array('id' => "XXX");
+            $destinos = array('id' => "XYX");
         }
         if ($destino_buscado != NULL) {
             $nuevoDestino = new Destino($destinos);
-            $nuevoDestino->agregar($nuevoDestino);
-        } else {
-            $precio = array('precio' => "");
-            $checkOut = array('checkOut' => "");
-            $checkIn = array('checkIn' => "");
         }
-        if ($destino_buscado == NULL) {
-            $idDestino = array('idDestino' => "otro");
-        } else {
-            $idDestino = array('idDestino' => $destino_buscado);
-        }
-        $datos = array_merge($nombre, $descripcion, $estrellas, $checkIn, $checkOut, $precio, $idDestino);
-        $nuevoAlojamiento = new Alojamiento($datos);
-        $alojamientos[] = $nuevoAlojamiento;
+        return $destinos;
     }
 
     public function getListaPuntosDeInteres($latitudbuscar, $longitudbuscar) {
@@ -261,6 +252,7 @@ class Paquete extends Clase_Base {
         $puntosdeinteres = array('id' => "XXX");
         return $puntosdeinteres;
     }
+
 }
 
 //cierre de la clase paquete

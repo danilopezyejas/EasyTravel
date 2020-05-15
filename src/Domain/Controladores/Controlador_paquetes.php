@@ -15,6 +15,7 @@ class Controlador_Paquetes{
   private $fecha_viaje;
   private $alojamientos;
   private $puntosdeinteres;
+  private $vuelos;
 
   public function __construct($obj=NULL) {
         if(isset($obj)){
@@ -49,12 +50,14 @@ class Controlador_Paquetes{
   public function listarPaquetes($destino=null, $precio_buscado=null, $fecha_buscada=null, $tematica_buscada=null)
   {
     $paquetes = new Paquete();
-
+    
     $destino_buscado = Destino::getDestinoPorCiudad($destino)['idDestino'];
 
     if($destino_buscado){
       $this->destinos = $paquetes->getListaDestinos($destino_buscado);
       $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado,$fecha_buscada);
+      $this->vuelos = $paquetes->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
+      $this->puntosdeinteres = $paquetes->getListaPuntosDeInteres("41.29694", "2.07833");
 
 //falta restaurant y vuelo
 //y hacer las convinaciones con varios for
@@ -66,9 +69,9 @@ class Controlador_Paquetes{
     // if (!$this->alojamientos) {
     //   $this->alojamientos = $paquetes->getListaAlojamientos();
     // }
-    $this->puntosdeinteres = $paquetes->getListaPuntosDeInteres("41.29694", "2.07833");
     $listaPaquetes = array( 'destinos'=>$this->destinos,
                             'alojamientos'=>$this->alojamientos,
+                            'vuelos'=>$this->vuelos,
                             'puntosdeinteres'=>$this->puntosdeinteres);
 
     return $listaPaquetes;

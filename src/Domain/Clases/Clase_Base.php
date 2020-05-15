@@ -20,8 +20,8 @@ class Clase_Base
   public static function getToken()
   {
 //Capturo las variables de entorno definidas con el heroku client
-    $my_client_id = '4IEGmwQwjg6z7SvseQeGP9ZM03BAwjlr';//getenv('CLIENT_ID');
-    $my_client_secret = 'vrF4p7A3HPy54quK';//getenv('CLIENT_SECRET');
+    $my_client_id = getenv('CLIENT_ID');
+    $my_client_secret = getenv('CLIENT_SECRET');
 
 //Inicio curl
     $ch = curl_init();
