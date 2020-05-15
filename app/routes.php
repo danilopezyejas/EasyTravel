@@ -12,7 +12,6 @@ use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-//use App\Infrastructure\Persistence\db as DB;
 use App\Domain\Clases\DtUsuario as DTUsuario;
 
 require __DIR__ . '/../src/Infrastructure/Persistence/db.php';
@@ -21,8 +20,14 @@ require __DIR__ . '/../src/Infrastructure/Persistence/db.php';
 return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $listaDestinos = CP::getDestinosGuardados();
+        $destinos = "";
+        foreach ($listaDestinos as $key => $value) {
+          $destinos.=$value['ciudad'].',';
+        }
+        $datos = array('listaDestinos' => $destinos);
         $twig = new Environment($loader);
-        $response->getBody()->write($twig->render('index.twig'));
+        $response->getBody()->write($twig->render('index.twig',$datos));
         return $response;
     });
 
@@ -40,15 +45,11 @@ return function (App $app) {
     // });
 
     $app->post('/paquetes', function (Request $request, Response $response, array $args) {
-        // CP::listarPaquetes();
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $cp = new CP;
-        $destinos = $cp->listarPaquetes($_POST['destino']);
-        //var_dump($destinos);
-        $response->getBody()->write($twig->render('listado.twig',$destinos));
-        // $response->getBody()->write($twig->render('usuarios_listados.twig', $datos));
-        //$response->getBody($destinos);
+        $destinos = $cp->listarPaquetes($_POST['destino'],2,$_POST['fecha']);
+        $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
         return $response;
     });
 
@@ -59,8 +60,6 @@ return function (App $app) {
         return $response;
     });
 
-    
-    
     $app->get('/login', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
@@ -94,23 +93,23 @@ return function (App $app) {
     $usr->setNombre($request->getParsedBody()['nombre']);
     $usr->setApellido($request->getParsedBody()['apellido']);
     $usr->setNickname($request->getParsedBody()['nickname']);
-    $usr->setCorreo($request->getParsedBody()['email']);  
+    $usr->setCorreo($request->getParsedBody()['email']);
     $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
     //$usr->setContrasenia($request->getParsedBody()['password']);
 
     CU::guardarUsuario($usr);
-         
+
     $response->getBody()->write($twig->render('index.twig'));
     return $response;
     });
-    
-    
+
+
     $app->post('/entrar', function (Request $request, Response $response) {
     $loader = new FilesystemLoader(__DIR__ . '/../vistas');
     $twig = new Environment($loader);
-    
+
     $usr = new DTUsuario();
-    $usr->setNickname($request->getParsedBody()['nickname']);    
+    $usr->setNickname($request->getParsedBody()['nickname']);
     $usr->setContrasenia($request->getParsedBody()['password']);
     $nickname =CU::login($usr);
     if (sizeof($nickname) !== 0  ){
@@ -119,39 +118,39 @@ return function (App $app) {
         $response->getBody()->write($twig->render('login.twig'));
     }
 //    $response->getBody()->write($nickname);
-            
+
      return $response;
     });
-    
+
     $app->post('/modificar', function (Request $request, Response $response) {
     $loader = new FilesystemLoader(__DIR__ . '/../vistas');
     $twig = new Environment($loader);
-    
+
     $usr = new DTUsuario();
     $usr->setNickname($request->getParsedBody()['nickname']);
     $usr->setNombre($request->getParsedBody()['nombre']);
     $usr->setApellido($request->getParsedBody()['apellido']);
-    $usr->setCorreo($request->getParsedBody()['email']);  
+    $usr->setCorreo($request->getParsedBody()['email']);
     $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
-    
+
     $nick =CU::modificar($usr);
-    
+
     if (sizeof($nick) !== 0  ){
-        
+
 //    $response->getBody()->write($nick['nickname']);
     $response->getBody()->write($twig->render('index.twig',$nick));
     }
      return $response;
     });
-    
+
     $app->post('/modificarusr', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        
+
         $usr = new DTUsuario();
         $usr->setNickname($request->getParsedBody()['logueado']);
         $usuario = CU::getUsuarioLogueado($usr);
-        
+
 //        $nombre = array('nombre'=> $usr->getNombre());
         $response->getBody()->write($twig->render('modificar.twig',$usuario));
         return $response;

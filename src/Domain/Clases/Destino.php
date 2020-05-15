@@ -168,6 +168,36 @@ class Destino extends Clase_Base
     }
   }
 
+  public function getDestinosGuardados()
+  {
+    $db = new DB();
+    $db = $db->conexionDB();
+    $stmt = $db->prepare( "SELECT ciudad from  destino" );
+
+    $stmt->execute();
+    if($stmt->columnCount() < 1){
+        return NULL;
+    }else{
+      $resultado = $stmt->fetchAll();
+      return $resultado;
+    }
+  }
+
+  public static function getDestinoPorCiudad($ciudad)
+  {
+    $db = new DB();
+    $db = $db->conexionDB();
+    $stmt = $db->prepare( "SELECT idDestino from  destino WHERE ciudad = :ciudad" );
+    $stmt->bindParam(':ciudad', $ciudad);
+    $stmt->execute();
+    if($stmt->columnCount() < 1){
+        return NULL;
+    }else{
+      $resultado = $stmt->fetch();
+      return $resultado;
+    }
+  }
+
 }
 
  ?>

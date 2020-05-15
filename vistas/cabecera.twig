@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  {% block head %}
+    <title>Easy Travel</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/estilo.css" />
+  {% endblock %}
+</head>
+<body>
+  <div class="cabecera">
+    <a href="/EasyTravel/public/" >
+      <img class="logo" src="imagenes/easyTravel.png" alt="Logo easyTravel">
+    </a>
+    <div class="nav_login">
+
+      {% if nickname|length > 0  %}
+        <form class="" action="logout" method="get">
+        <input type="submit" id="logout" class="login" value="LogOut">
+        </form>
+        <form class="" action="modificarusr" method="post">
+        <ul class="icons">
+            <li><label for="name" class="label" id="logueado" >Usuario Logueado: {{ nickname }}</label></li>
+            <li><input type="hidden" name="logueado" value="{{ nickname }}" id="logueado" >
+            <li><input type="submit" id="modificar" class="" value="Modificar Info.."></li>
+        </ul>
+        </form>
+      {% else %}
+        <form class="" action="login" method="get">
+        <input type="submit" id="login" class="login" value="Login">
+        </form>
+      {%  endif %}
+
+    <form class="" action="registro" method="get">
+      <input type="submit" id="" class="registrarse" value="Registrarse">
+    </form>
+  </div>
+  </div>
