@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 {% include 'cabecera.twig' %}
 		<div class="listado">
       <h1>Descubrí {{destinos.ciudad}} {{destinos.pais}}</h1>
@@ -10,52 +9,6 @@
 							<p>Región: europa</p>
 							<p>Latitud: 43.555</p>
 							<p>Longitud: -23.5899</p>
-=======
-	<!-- Google Webfonts -->
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,500' rel='stylesheet' type='text/css'>
-
-	<!-- Theme Style -->
-	<link rel="stylesheet" href="assets/listado/css/style.css">
-	<!-- Modernizr JS -->
-	<script src="assets/listado/js/modernizr-2.6.2.min.js"></script>
-	</head>
-	<body>
-		<div id="fh5co-portfolio">
-			<h1>Descubrí {{destinos.nombre}} {{destinos.pais}}</h1>
-                        <h1>{{puntosdeinteres.id}}</h1>
-			{% for item in alojamientos %}
-				{% if derecha == false %}
-					<div class="fh5co-portfolio-item ">
-						<div class="fh5co-portfolio-figure animate-box" style="background-image: url(imagenes/sevilla1.jpg);"></div>
-						<div class="fh5co-portfolio-description">
-
-							<h2>Opcion 1:</h2>
-							<p>Región: {{destinos.region}}</p>
-							<p>Latitud: {{destinos.latitud}}</p>
-							<p>Longitud: {{destinos.longitud}}</p>
-							<h2>Hopedate en: </h2>
-							<p><b>Hotel:</b> {{item.nombre}}</p>
-							<P><b>Estrellas:</b> {{item.estrellas}}</p>
-							<p><b>CheckIn:</b> {{item.chekIn}}  <b>CheckOut:</b> {{item.chekOut}}</p>
-							<p><b>Descripcion:</b> {{item.descripcion}}<p>
-							<p><b>Precio total:</b> {{item.precio}}</p>
-
-							<p><a href="#" class="btn btn-primary">Reservar</a></p>
-						</div>
-					</div>
-					{% set derecha = true %}
-				{% else %}
-					<div class="fh5co-portfolio-item fh5co-img-right">
-						<img src="imagenes/sevilla2.jpg" alt="imagen ">
-						<div class="fh5co-portfolio-figure animate-box" style="background-image: url(imagenes/sevilla1.jpg);"></div>
-						<div class="fh5co-portfolio-description">
-
-							<h2>Opcion 1:</h2>
-							<p>Región: {{destinos.region}}</p>
-							<p>Latitud: {{destinos.latitud}}</p>
-							<p>Longitud: {{destinos.longitud}}</p>
->>>>>>> c83d9c0f5d530a5fedad7f4659987189c0d98aec
 							<h2>Hopedate en: </h2>
 							<p><b>Hotel:</b> radison</p>
 							<P><b>Estrellas:</b> 3</p>
