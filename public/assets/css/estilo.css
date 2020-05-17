@@ -3,11 +3,11 @@
 }
 .resultado{
   padding: 1em;
-  padding-bottom: 4em;
+  padding-bottom: 2em;
   display: block;
   background-color: rgba(161, 161, 161, 0.2);
   border-radius: .5em;
-  max-width: 1200px;
+  max-width: 100%;
   margin-bottom: 1em;
 }
 
@@ -28,7 +28,7 @@ p{
   display: block;
 }
 
-.descripcion a{
+.descripcion .reservar{
   float: right;
   display: flex;
 }
@@ -40,23 +40,34 @@ p{
   background-color: rgb(205, 205, 205);
   float: inline-end;
 }
-
 .reservar{
   width: 8em;
   height: 2.5em;
+  border-color: darkgreen;
+  border-radius: .5em;
+  justify-content: center;
+}
+
+.reservar, .reservar input{
   background-color: rgb(5, 82, 0);
   color: rgb(255, 255, 255);
-  border-radius: .5em;
-  align-items: center;
-  justify-content: center;
   font-size: 1.1em;
   font-weight: 1000;
 }
-.reservar:hover{
+.reservar:hover, .reservar:hover input{
   background-color: rgb(10, 108, 3);
   font-size: 1.12em;
 }
-.reservar:focus{
+.reservar:focus, .reservar:focus input{
   background-color: rgb(7, 68, 2);
   font-size: .9em;
+}
+
+.reservar input{
+  border-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.fas.fa-spinner.fa-spin{
+  display: none;
 }

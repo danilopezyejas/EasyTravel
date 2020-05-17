@@ -52,19 +52,21 @@ public function getListaAlojamientos($destino_buscado=NULL,$fecha_buscada=NULL)
 // Obtengo el token
    $this->token = CB::getToken();
 
-   $ch = curl_init();
+//Cambio el formato de la fecha
+   $diaIda = substr($fecha_buscada, 3, 2);
+   $mesIda = substr($fecha_buscada, 0, 2);
+   $anioIda = substr($fecha_buscada, 6, 4);
+   $ida = $anioIda."-".$mesIda."-".$diaIda;
+   $diaVuelta = substr($fecha_buscada, 16, 2);
+   $mesVuelta = substr($fecha_buscada, 13, 2);
+   $anioVuelta = substr($fecha_buscada, 19, 4);
+   $vuelta = $anioVuelta."-".$mesVuelta."-".$diaVuelta;
+
 //Preparo el curl para hacer la consulta
-   // if ($destino_buscado) {
-   //   // busqueda aleatoria
-   // }
-   if ($fecha_buscada) {
-     curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&checkInDate='.$fecha_buscada.'&roomQuantity=1&adults=2&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=NONE');
-   }else {
-     curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&adults=1&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
-   }
+   $ch = curl_init();
+   curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$destino_buscado.'&adults=1&radius=50&radiusUnit=KM&paymentPolicy=NONE&includeClosed=false&bestRateOnly=true&view=FULL&sort=PRICE');
    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-
    $headers = array();
    $headers[] = 'Authorization: Bearer '.$this->token;
    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -100,6 +102,11 @@ if($variable){
        }else{
          $descripcion = array('descripcion'=>"Sin descripcion.");
        }
+       if(isset($value['hotel']['hotelId'])){
+         $idAlojamiento = array('idAlojamiento'=>$value['hotel']['hotelId']);
+       }else{
+         $idAlojamiento = array('idAlojamiento'=>"No definido");
+       }
      }
    }else{
      $descripcion = array('descripcion'=>"Sin descripcion.");
@@ -134,8 +141,11 @@ if($variable){
    }else{
      $idDestino = array('idDestino' => $destino_buscado);
    }
-     $datos = array_merge($nombre,$descripcion,$estrellas,$checkIn,$checkOut,$precio,$idDestino);
+     $checkIn = array('checkIn'=>$ida);
+     $checkOut = array('checkOut'=>$vuelta);
+     $datos = array_merge($nombre,$descripcion,$estrellas,$checkIn,$checkOut,$precio,$idDestino,$idAlojamiento);
      $nuevoAlojamiento = new Alojamiento($datos);
+     $nuevoAlojamiento->agregarDB();
      $alojamientos[]=$nuevoAlojamiento;
     }
   }

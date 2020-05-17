@@ -12,8 +12,14 @@
 <script>
   var d = "{{ listaDestinos|raw }}";
 </script>
+  <script src="assets/js/misScripts.js"></script>
   <script src="assets/js/main.js"></script>
-  <script type="text/javascript" src="assets/js/scripts.js"></script>
+  <script type="text/javascript" src="assets/js/autocompletar.js"></script>
+  <script type="text/javascript">
+    $('#fecha').daterangepicker({
+        "minDate": "{{ "now"|date("m")}}/{{ "now"|date("d")}}/{{ "now"|date("yy")}}"
+    });
+  </script>
 {% endblock %}
 </body>
 
