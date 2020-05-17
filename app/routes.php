@@ -49,7 +49,7 @@ return function (App $app) {
         $twig = new Environment($loader);
         $cp = new CP;
         $destinos = $cp->listarPaquetes($_POST['destino'],2,$_POST['fecha']);
-        $response->getBody()->write($twig->render('listadoDestino.twig',$destinos));
+        $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
         return $response;
     });
 
@@ -163,7 +163,7 @@ return function (App $app) {
         $response->getBody()->write($twig->render('modificar.twig',$usuario));
         return $response;
     });
-    
+
     $app->get('/paquetes/poi', function (Request $request, Response $response, array $args) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);

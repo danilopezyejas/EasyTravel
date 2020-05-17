@@ -50,7 +50,6 @@ class Controlador_Paquetes{
   public function listarPaquetes($destino=null, $precio_buscado=null, $fecha_buscada=null, $tematica_buscada=null)
   {
     $paquetes = new Paquete();
-    
     $destino_buscado = Destino::getDestinoPorCiudad($destino)['idDestino'];
 
     if($destino_buscado){
