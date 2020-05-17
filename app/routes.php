@@ -163,4 +163,15 @@ return function (App $app) {
         $response->getBody()->write($twig->render('modificar.twig',$usuario));
         return $response;
     });
+    
+    $app->get('/paquetes/poi', function (Request $request, Response $response, array $args) {
+        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $twig = new Environment($loader);
+        $cp = new CP;
+        $destinos = $cp->listarPaquetes();
+        $response->getBody()->write($twig->render('listado.twig',$destinos));
+        // $response->getBody()->write($twig->render('usuarios_listados.twig', $datos));
+        //$response->getBody($destinos);
+        return $response;
+    });
 };
