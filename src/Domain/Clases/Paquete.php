@@ -184,7 +184,7 @@ class Paquete extends Clase_Base {
            } else {
              $idDestino = array('idDestino' => $destino_buscado);
            }
-           $datos = array_merge($nombre, $descripcion, $estrellas, $checkIn, $checkOut, $precio, $idDestino);
+           $datos = array_merge($nombre, $descripcion, $estrellas, $checkIn, $checkOut, $precio, $idDestino, $idAlojamiento);
            $nuevoAlojamiento = new Alojamiento($datos);
            $alojamientos[] = $nuevoAlojamiento;
          }

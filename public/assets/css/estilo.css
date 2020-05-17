@@ -68,6 +68,6 @@ p{
   cursor: pointer;
 }
 
-.fas.fa-spinner.fa-spin{
+#paquete1 .fas.fa-spinner.fa-spin{
   display: none;
 }

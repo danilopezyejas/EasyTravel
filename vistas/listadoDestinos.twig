@@ -1,10 +1,11 @@
-{% set cantOpciones = 1 %}
+{% set cantOpciones = 0 %}
 
 {% include 'cabecera.twig' %}
 	{% if destinos %}
 		<div class="listado">
       <h1>Descubrí {{destinos.ciudad}} {{destinos.pais}}</h1>
 			{% for item in alojamientos %}
+				{% set cantOpciones = cantOpciones + 1 %}
 					<div class="resultado">
 						<img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
 						<div class="descripcion">
@@ -18,20 +19,19 @@
 							<p><b>CheckIn:</b> {{item.checkIn}}  <b>CheckOut:</b> {{item.checkOut}}</p>
 							<p><b>Descripcion:</b> {{item.descripcion}}<p>
 							<p><b>Precio total:</b> {{item.precio}}</p>
-							<form id="paquete" method="post" >
+							<form id="paquete-{{cantOpciones}}" onsubmit="guardarPaquete({{cantOpciones}});">
 								<div style="display: none;">
-									<input type="text" id="idAlojamiento" name="idAlojamiento" value="{{item.idAlojamiento}}">
-									<input type="text" id="idVuelo" name="idVuelo" value="IDVuelo">
-									<input type="text" id="idDestino" name="idDestino" value="{{destinos.pais}}">
+									<input type="text" id="idAlojamiento-{{cantOpciones}}" name="idAlojamiento" value="{{item.idAlojamiento}}">
+									<input type="text" id="idVuelo-{{cantOpciones}}" name="idVuelo" value="IDVuelo">
+									<input type="text" id="idDestino-{{cantOpciones}}" name="idDestino" value="{{destinos.id}}">
 								</div>
-								<div class="reservar">
+								<div class="reservar" id="reservar-{{cantOpciones}}">
 									<i class="fas fa-spinner fa-spin"></i>
-									<input type="submit" id="btnReserva" class="btnReserva">
+									<input type="submit" id="btnReserva-{{cantOpciones}}" class="btnReserva">
 								</div>
 							</form>
 						</div>
 					</div>
-          {% set cantOpciones = cantOpciones + 1 %}
 			{% endfor %}
 				</div>
 	{% else %}
