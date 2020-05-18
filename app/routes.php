@@ -94,7 +94,7 @@ return function (App $app) {
     // para chequear que el nickname no existe
     $app->get('/nickname/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
-    
+
     $usr = new DTUsuario();
      $usr->setNickname($name);
     $nick =CU::existeNick($usr);
@@ -117,6 +117,7 @@ return function (App $app) {
     CU::guardarUsuario($usr);
 
     $response->getBody()->write($twig->render('index.twig'));
+    // return $response->withHeader('Location','/');
     return $response;
     });
 
@@ -160,10 +161,10 @@ return function (App $app) {
      return $response;
     });
 
-    $app->get('/modificarusr/{nick}', function (Request $request, Response $response,array $args) {       
+    $app->get('/modificarusr/{nick}', function (Request $request, Response $response,array $args) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        
+
         $nick = $args['nick'];
         $usr = new DTUsuario();
         //$usr->setNickname($request->getParsedBody()['logueado']);
