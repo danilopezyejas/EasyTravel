@@ -1,24 +1,64 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-class Paquete extends Clase_Base{
+namespace App\Domain\Clases;
 
-    private $idpdi;
+/**
+ * Description of PuntosDeInteres
+ *
+ * @author vanessa
+ */
+class PuntosDeInteres extends Clase_Base{
+
     private $nombre;
-    private $latitud;
-    private $longitud;
     private $puntaje;
     private $descripcion;
-    private $imagenes; //esto sería un array que tenga varias url de las imagenes
-    private $direccion;
-    private $sitioweb;
-    private $etiquetas;//un array que tiene distintas etiquetas (ej: restaurante, discoteca, museo, parque)
     private $idubicacion;
-}
+    
+    public function __construct() {
+        if (isset($obj)) {
+            foreach ($obj as $key => $value) {
+                $this->$key = $value;
+            }
+        }
+        $tabla = "puntos_de_interes";
+        parent::__construct($tabla);
+    }
+    
+    function getNombre() {
+        return $this->nombre;
+    }
 
-?>
+    function getPuntaje() {
+        return $this->puntaje;
+    }
+
+    function getDescripcion() {
+        return $this->descripcion;
+    }
+
+    function getIdubicacion() {
+        return $this->idubicacion;
+    }
+
+    function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    function setPuntaje($puntaje) {
+        $this->puntaje = $puntaje;
+    }
+
+    function setDescripcion($descripcion) {
+        $this->descripcion = $descripcion;
+    }
+
+    function setIdubicacion($idubicacion) {
+        $this->idubicacion = $idubicacion;
+    }
+}

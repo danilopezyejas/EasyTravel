@@ -18,53 +18,34 @@
 	<script src="assets/listado/js/modernizr-2.6.2.min.js"></script>
 	</head>
 	<body>
-		<div id="fh5co-portfolio">
-			<h1>Descubrí {{destinos.nombre}} {{destinos.pais}}</h1>
-                        <h1>{{puntosdeinteres.id}}</h1>
-			{% for item in alojamientos %}
-				{% if derecha == false %}
-					<div class="fh5co-portfolio-item ">
-						<div class="fh5co-portfolio-figure animate-box" style="background-image: url(imagenes/sevilla1.jpg);"></div>
-						<div class="fh5co-portfolio-description">
-
-							<h2>Opcion 1:</h2>
-							<p>Región: {{destinos.region}}</p>
-							<p>Latitud: {{destinos.latitud}}</p>
-							<p>Longitud: {{destinos.longitud}}</p>
-							<h2>Hopedate en: </h2>
-							<p><b>Hotel:</b> {{item.nombre}}</p>
-							<P><b>Estrellas:</b> {{item.estrellas}}</p>
-							<p><b>CheckIn:</b> {{item.chekIn}}  <b>CheckOut:</b> {{item.chekOut}}</p>
-							<p><b>Descripcion:</b> {{item.descripcion}}<p>
-							<p><b>Precio total:</b> {{item.precio}}</p>
-
-							<p><a href="#" class="btn btn-primary">Reservar</a></p>
-						</div>
-					</div>
-					{% set derecha = true %}
-				{% else %}
-					<div class="fh5co-portfolio-item fh5co-img-right">
-						<img src="imagenes/sevilla2.jpg" alt="imagen ">
-						<div class="fh5co-portfolio-figure animate-box" style="background-image: url(imagenes/sevilla1.jpg);"></div>
-						<div class="fh5co-portfolio-description">
-
-							<h2>Opcion 1:</h2>
-							<p>Región: {{destinos.region}}</p>
-							<p>Latitud: {{destinos.latitud}}</p>
-							<p>Longitud: {{destinos.longitud}}</p>
-							<h2>Hopedate en: </h2>
-							<p><b>Hotel:</b> {{item.nombre}}</p>
-							<P><b>Estrellas:</b> {{item.estrellas}}</p>
-							<p><b>CheckIn:</b> {{item.chekIn}}  <b>CheckOut:</b> {{item.chekOut}}</p>
-							<p><b>Descripcion:</b> {{item.descripcion}}<p>
-							<p><b>Precio total:</b> {{item.precio}}</p>
-							<p><a href="#" class="btn btn-primary">Reservar</a></p>
-						</div>
-					</div>
-					{% set derecha = false %}
-				{% endif %}
-			{% endfor %}
-			</div>
+            <div class=listado">
+                <h1>{{puntosdeinteres.id}}</h1>
+                {% for item in paquetes %}
+                        {% if derecha == false %}
+                            <div class="resultado">
+                                <img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
+                                <div class="descripcion">
+                                    <h2>{{item.id_destino}}</h2>
+                                    <p><b>Hotel:</b> {{item.id_alojamiento}}</p>
+                                    <p><b>Vuelo:</b> {{item.id_transporte}}</p>
+                                    <a href="#" class="reservar">Ver detalles</a>
+                                </div>
+                            </div>
+                            {% set derecha = true %}
+                        {% else %}
+                            <div class="resultado">
+                                <img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
+                                <div class="descripcion">
+                                    <h2>{{item.id_destino}}</h2>
+                                    <p><b>Hotel:</b> {{item.id_alojamiento}}</p>
+                                    <p><b>Vuelo:</b> {{item.id_transporte}}</p>
+                                    <a href="#" class="reservar">Ver detalles</a>
+                                </div>
+                            </div>
+                            {% set derecha = false %}
+                        {% endif %}
+                {% endfor %}
+            </div>
 
 	<!-- jQuery -->
 	<script src="assets/listado/js/jquery.min.js"></script>

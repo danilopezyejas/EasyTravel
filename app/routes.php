@@ -48,8 +48,12 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $cp = new CP;
-        $destinos = $cp->listarPaquetes($_POST['destino'],2,$_POST['fecha']);
-        $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+        $destinos = $cp->listarPaquetes($_POST['destino'],$_POST['precio'],$_POST['fecha'],$_POST['tematica']);
+        if($destinos["paquetes"]){
+            $response->getBody()->write($twig->render('listado.twig',$destinos));
+        }else{
+            $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+        }
         return $response;
     });
 
@@ -153,17 +157,6 @@ return function (App $app) {
 
 //        $nombre = array('nombre'=> $usr->getNombre());
         $response->getBody()->write($twig->render('modificar.twig',$usuario));
-        return $response;
-    });
-    
-    $app->get('/paquetes/poi', function (Request $request, Response $response, array $args) {
-        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
-        $twig = new Environment($loader);
-        $cp = new CP;
-        $destinos = $cp->listarPaquetes();
-        $response->getBody()->write($twig->render('listado.twig',$destinos));
-        // $response->getBody()->write($twig->render('usuarios_listados.twig', $datos));
-        //$response->getBody($destinos);
         return $response;
     });
 };

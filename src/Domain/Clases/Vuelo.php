@@ -123,52 +123,92 @@ class Vuelo extends Clase_Base{
         $this->tipoViajeros = $tipoViajeros;
     }
 
-function getVuelo($origen = null, $destino = null, $fechaSalida = null , $adultos = null){
-    
-    //si dentro de los parametros no llega ningun valor, o si alguno es null
-    //entonces lo que se hace es cargar las variales siguientes con unos valores predeterminados
-    //que se sabe de antemano sirven para esta llamada de api
-    //lo hice así, porque me parece que sirve tanto para si no llega ningun valor o si solo falta uno
-    if (!$origen){
-        $origen = "SYD";
-    }if (!$destino){
-        $destino = "BKK";
-    }if (!$fechaSalida){
-        $fechaSalida = 2020-08-01;
-    }if (!$adultos){
-        $adultos = 2;
-    } 
-    
-    // Obtengo el token
-   $this->token = CB::getToken();
+//function getVuelo($origen = null, $destino = null, $fechaSalida = null , $adultos = null){
+//    
+//    //si dentro de los parametros no llega ningun valor, o si alguno es null
+//    //entonces lo que se hace es cargar las variales siguientes con unos valores predeterminados
+//    //que se sabe de antemano sirven para esta llamada de api
+//    //lo hice así, porque me parece que sirve tanto para si no llega ningun valor o si solo falta uno
+//    if (!$origen){
+//        $origen = "SYD";
+//    }if (!$destino){
+//        $destino = "BKK";
+//    }if (!$fechaSalida){
+//        $fechaSalida = 2020-08-01;
+//    }if (!$adultos){
+//        $adultos = 2;
+//    } 
+//    
+//    // Obtengo el token
+//   $this->token = CB::getToken();
+//
+//   $ch = curl_init();
+////Preparo el curl para hacer la consulta
+//   curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?
+//       originLocationCode='.$origen.'&
+//       destinationLocationCode='.$destino.'&
+//       departureDate='.$fechaSalida.'&
+//       adults='.$adultos.'&
+//       max=3');
+//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+//
+//   $headers = array();
+//   $headers[] = 'Authorization: Bearer '.$this->token;
+//   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+////Obtengo toda la informacion en json
+//   $resultado = curl_exec($ch);
+//
+//   if (curl_errno($ch)) {
+//       echo 'Error:' . curl_error($ch);
+//   }
+//   curl_close($ch);
+//
+//    $json_response=json_decode($resultado, true);
+//    
+//   
+//}//cierra la funcion get vuelo
 
-   $ch = curl_init();
-//Preparo el curl para hacer la consulta
-   curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?
-       originLocationCode='.$origen.'&
-       destinationLocationCode='.$destino.'&
-       departureDate='.$fechaSalida.'&
-       adults='.$adultos.'&
-       max=3');
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
-   $headers = array();
-   $headers[] = 'Authorization: Bearer '.$this->token;
-   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-//Obtengo toda la informacion en json
-   $resultado = curl_exec($ch);
+  public function agregar(){
+    $nombre=$this->getNombre();
+    $idDestino = $this->getIdDestino();
 
-   if (curl_errno($ch)) {
-       echo 'Error:' . curl_error($ch);
-   }
-   curl_close($ch);
+    if(!$this->existe($nombre, $idDestino)){
+      $estrellas=$this->getEstrellas();
+      $checkIn=$this->getCheckIn();
+      $checkOut=$this->getCheckOut();
+      $precio = $this->getPrecio();
+      $descripcion = $this->getDescripcion();
 
-    $json_response=json_decode($resultado, true);
-    
-   
-}//cierra la funcion get vuelo
+      $sql = "INSERT INTO alojamiento (nombre, estrellas, checkIn, checkOut, precio, descripcion, idDestino) VALUES
+             (:nombre, :estrellas, :checkIn, :checkOut, :precio, :descripcion, :idDestino)";
 
+      try{
+        $db = new DB();
+        $db = $db->conexionDB();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':nombre', $nombre);
+        $resultado->bindParam(':estrellas', $estrellas);
+        $resultado->bindParam(':checkIn', $checkIn);
+        $resultado->bindParam(':checkOut', $checkOut);
+        $resultado->bindParam(':precio', $precio);
+        $resultado->bindParam(':descripcion', $descripcion);
+        $resultado->bindParam(':idDestino', $idDestino);
+
+        $resultado->execute();
+        $resultado = null;
+        $db = null;
+        return true;
+      }catch(PDOException $e){
+        $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+        return false;
+      }
+    }
+  }
+  
+  
 }//cierra la clase
 
 ?>

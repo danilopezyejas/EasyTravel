@@ -20,13 +20,19 @@
                                                         <h2>Tu vuelo: {{vuelos.id}} </h2>
 							<p><b>Salida:</b> {{vuelos.fechaSalida}}</p>
 							<p><b>Llegada:</b> {{vuelos.fechaLlegada}}</p>
-                                                        <p><b>Precio total: </b>{{vuelos.precioTotal}}</p>
+                                                        <p><b>Precio total: </b>{{puntosdeinteres.id}}</p>
                                                         
 							<a href="#" class="reservar">RESERVAR</a>
 						</div>
 					</div>
           {% set cantOpciones = cantOpciones + 1 %}
 			{% endfor %}
+					<div class="resultado">
+                                            <h2>Quiza te gustaria visitar: </h2>
+                                            <p><b>{{puntosdeinteres.nombre}}({{puntosdeinteres.idubicacion}})</b></p>
+                                            <p><b>Descripcion:</b> {{puntosdeinteres.descripcion}}<p>
+                                            <a href="#" class="reservar">RESERVAR</a>
+					</div>
 				</div>
 
         {% block footer %}
