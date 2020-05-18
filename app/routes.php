@@ -77,6 +77,7 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('login.twig'));
+        // return $response->withHeader('Location','usuarios');
         return $response;
     });
     $app->get('/logout', function (Request $request, Response $response) {
