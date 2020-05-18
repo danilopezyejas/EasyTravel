@@ -1,101 +1,153 @@
 <!DOCTYPE html>
 <html lang="es">
-	<head>
-	<meta charset="utf-8">
-	<title>Easy Travel</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <title>Easy Travel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="shortcut icon" href="favicon.ico">
 
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 
-	<link rel="stylesheet" href="assets/login/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/login/css/animate.css">
-	<link rel="stylesheet" href="assets/login/css/style.css">
+        <link rel="stylesheet" href="assets/login/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/login/css/animate.css">
+        <link rel="stylesheet" href="assets/login/css/style.css">
 
 
-	<!-- Modernizr JS -->
-	<script src="assets/login/js/modernizr-2.6.2.min.js"></script>
-	<script src="assets/login/js/easytravel.js"></script>
+        <!-- Modernizr JS -->
+        <script src="assets/login/js/modernizr-2.6.2.min.js"></script>
+        <script src="assets/login/js/easytravel.js"></script>
 
-	</head>
-	<body class="style-2">
-		<div class="container">
-					<div class="row">
-						<div class="col-md-4">
-							<!-- Start Sign In Form -->
-							<form action="guardar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="registro">
-								<h2>Registrarse</h2>
-								<div class="form-group">
-									<label for="name" class="sr-only">Nickname</label>
-									<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off" required="yes">
-								</div>
-								<div class="form-group">
-									<label for="name" class="sr-only">Nombre</label>
-									<input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off"
-									required="yes">
-								</div>
-								<div class="form-group">
-									<label for="name" class="sr-only">Apellido</label>
-									<input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off"
-									required="yes">
-								</div>
-								<div class="form-group">
-									<label for="email" class="sr-only">Email</label>
-									<input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off"
-									required="yes">
-								</div>
-								<div class="form-group">
-									<label for="password" class="sr-only">Password</label>
-									<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes">
-								</div>
-								<div class="form-group">
-									<label for="re-password" class="sr-only">Repita Password</label>
-									<input type="password" class="form-control" id="re-password" name="re-password" placeholder="Repita Password" autocomplete="off" required="yes" oninput="comprobarClave()">
-									<label   name="re-password-check" id="re-password-check" ></label>
-								</div>
-								<div class="form-group">
-									<label for="remember"><input type="checkbox" id="remember"> Recuerdame</label>
-								</div>
-								<div class="form-group">
-									<p>Ya esta registrado? <a href="login">Login</a></p>
-								</div>
-								<div class="form-group">
-									<input type="submit" value="Guardar" class="btn btn-primary" >
-								</div>
-							</form>
+    </head>
+    <body class="style-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- Start Sign In Form -->
+                    <form action="guardar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="registro">
+                        <h2>Registrarse</h2>
+                        <div class="form-group">
+                            <label for="name" class="sr-only">Nickname</label>
+                            <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off" required pattern=".{8,}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="sr-only">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off"
+                                   required  pattern=".{2,}">
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="sr-only">Apellido</label>
+                            <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off"
+                                   required  pattern=".{3,}">
+                        </div> 
+                        <div class="form-group">
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off"
+                                   required  pattern=".{8,}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="sr-only">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes" pattern=".{6,}">
+                        </div>
+                        <div class="form-group">
+                            <label for="re-password" class="sr-only">Repita Password</label>
+                            <input type="password" class="form-control" id="re-password" name="re-password" placeholder="Repita Password" autocomplete="off" required="yes">
+                            <label   name="re-password-check" id="re-password-check" ></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="remember"><input type="checkbox" id="remember"> Recuerdame</label>
+                        </div>
+                        <div class="form-group">
+                            <p>Ya esta registrado? <a href="login">Login</a></p>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" id="guardar" value="Guardar" class="btn btn-primary" >
+                        </div>
+                    </form>
 
-						</div>
-					</div>
-				</div>
+                </div>
+            </div>
+        </div>
 
-	<!-- jQuery -->
-	<script src="assets/login/js/jquery.min.js"></script>
-	<!-- Bootstrap -->
-	<script src="assets/login/js/bootstrap.min.js"></script>
-	<!-- Placeholder -->
-	<script src="assets/login/js/jquery.placeholder.min.js"></script>
-	<!-- Waypoints -->
-	<script src="assets/login/js/jquery.waypoints.min.js"></script>
-	<!-- Main JS -->
-	<script src="assets/login/js/main.js"></script>
+        <!-- jQuery -->
+        <script src="assets/login/js/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="assets/login/js/bootstrap.min.js"></script>
+        <!-- Placeholder -->
+        <script src="assets/login/js/jquery.placeholder.min.js"></script>
+        <!-- Waypoints -->
+        <script src="assets/login/js/jquery.waypoints.min.js"></script>
+        <!-- Main JS -->
+        <script src="assets/login/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){
-		$("input#re-password").on("keyup",function(){
-			var p1 = $('#password').val()
-			var p2 = $('#re-password').val()
+        <script type="text/javascript">
+            $(document).ready(function () {
 
-			if (p1 == p2){
-					$('#re-password').removeClass('form-control is-invalid')
-					$('#re-password').addClass('form-control is-valid')
-			}else {
-				$('#re-password').removeClass('form-control is-valid')
-				 $('#re-password').addClass('form-control is-invalid')
-			}
-		})
-});
-</script>
-	</body>
+                $("input#re-password").on("keyup", function () {
+                    var p1 = $('#password').val();
+                    var p2 = $('#re-password').val();
+                    $('#re-password-check').text("Contraseñas NO Coinciden").hide();
+
+                    if (p1 === p2) {
+                        $('#re-password').removeClass('label-warning');
+                        $('#re-password').addClass('form-control ');
+
+                    } else {
+                        $('#re-password').removeClass('form-control');
+                        $('#re-password').addClass('form-control label-warning');
+
+                    }
+                });
+                $(":submit").click(function () {
+                    //$.get('nickname/'+$('#nickname').val(),function(data){
+                    //    console.log('paso  get');
+                    //alert("Envia: " + data );
+                    //});
+                    $.ajax({
+                        url: 'nickname/' + $('#nickname').val(),
+                        type: 'get',
+                        async: false,
+                        success: function (data) {
+
+                            //Swal.fire({title: `${data}`});
+                           
+                            if (data === $('#nickname').val() ){
+                                //aca va si es distinto
+                                Swal.fire({title: 'Nickname: ' + data + ' ya utilizado'});
+                                // alert("Nickname: " + data + " ya utilizado");
+                                $('#nickname').val('');
+                                 $('#nickname').focus();
+                            } else{    
+                            
+                            var p1 = $('#password').val();
+                            var p2 = $('#re-password').val();
+                            console.log('paso     ' + p1);
+
+                            if (p1 !== p2 ) {
+                                $('#re-password').removeClass('form-control');
+                                $('#re-password').addClass('form-control label-warning');
+                                $('#re-password-check').text("Contraseñas NO Coinciden").show();
+                                $('#re-passwort').focus();
+                                event.preventDefault();
+                            } else {
+                                Swal.fire({title: 'Registro Guardado'});
+                                //event.preventDefault();
+                                //alert("Registro guardado  ");
+                            }
+                        }
+                        },
+                        error: function () {
+                            alert("Error");
+                        }
+                    })
+
+                });
+
+            });
+
+        </script>
+
+    </body>
 </html>

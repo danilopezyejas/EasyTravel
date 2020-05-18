@@ -3,6 +3,7 @@
 //ini_set('display_errors', '1');
 namespace App\Domain\Clases;
 use App\Infrastructure\Persistence\db as DB;
+use PDO;
 
 class Usuario extends Clase_Base
 {
@@ -86,96 +87,132 @@ class Usuario extends Clase_Base
     $this->residencia = $residencia;// code...
   }
 
-
-  public function login(){
+  public function logueado(){
+        try{
         $db = new DB();
         $db = $db->conexionDB();
-        $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname AND password= :password " );
+        $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname " );
         $stmt->bindParam(':nikname', $this->nickname);
-        $stmt->bindParam(':password', $this->contrasenia);
-
+        
         $stmt->execute();
-        if($stmt->columnCount() < 1){
-            return '';
+        if($stmt->rowCount() < 1){
+            return array('nickname'=>'');
+        }    
+        $resultado = $stmt->fetch(); 
+        return  array('nickname'=> $resultado['nikname'],
+                        'nombre'=> $resultado['nombre'],
+                        'apellido'=> $resultado['apellido'],
+                        'correo'=> $resultado['correo'] );
+
+//        return $retorno;
+        }catch(PDOException $e){
+            return $e->getMessage();     
         }
-        $resultado = $stmt->fetch();
-        $retorno = array('nickname'=> $this->nickname);
-
-//        Session::init();
-//        Session::set('usuario_logueado', true);
-//        Session::set('usuario_id', $res->id);
-//        Session::set('usuario_nombre', $res->nombre);
-//        Session::set('usuario_email', $res->email);
-        return $retorno;
     }
-    public function agregar(){
+//<<<<<<< HEAD
 
-        $nombre=$this->getNombre();
-        $apellido=$this->getApellido();
-        $nickname=$this->getNickname();
-        $correo=$this->getCorreo();
-        $pass = $this->getContrasenia();
+  public function login(){
+      try{
+        $db = new DB();
+        $db = $db->conexionDB();
+        $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname " );
+        $stmt->bindParam(':nikname', $this->nickname);
+        $stmt->execute();
+        $user = $stmt->fetch();
 
 
-     $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
-             (:nombre, :apellido, :nickname, :correo, :pass)";
+
+        if($user && password_verify($this->contrasenia, $user['password'])){
+            return array('nickname'=> $user['nikname']);    
+            
+        }    
+        else{       
+                return  array('nickname'=>'');
+        }
+        }catch(PDOException $e){
+            return $e->getMessage();     
+        }
+    }
+    
+    public function agregar(): ? bool{
 
     try{
-      $db = new DB();
-      $db = $db->conexionDB();
-      $resultado = $db->prepare($sql);
+        $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
+             (:nombre, :apellido, :nickname, :correo, :pass)";
+        $db = new DB();
+        $db = $db->conexionDB();
+        $resultado = $db->prepare($sql);
 
-      $resultado->bindParam(':nombre', $nombre);
-      $resultado->bindParam(':apellido', $apellido);
-      $resultado->bindParam(':correo', $correo);
-      $resultado->bindParam(':nickname', $nickname);
-      $resultado->bindParam(':pass', $pass);
+        $resultado->bindParam(':nombre', $this->nombre);
+        $resultado->bindParam(':apellido', $this->apellido);
+        $resultado->bindParam(':correo', $this->correo);
+        $resultado->bindParam(':nickname', $this->nickname);
+        $resultado->bindParam(':pass', $this->contrasenia);
 
-      $resultado->execute();
+        $resultado->execute();
 
-     $resultado = null;
-     $db = null;
-     return true;
+        $resultado = null;
+        $db = null;
+        return true;
    }catch(PDOException $e){
-     $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
-     return false;
+      return $e->getMessage();
+     
    }
- }
+//<<<<<<< HEAD
+    
+    }
+//=======
+// }
+//>>>>>>> 36fc3c14c724cfbc12d6754a15a47d768d592332
      public function modificar(){
-//     try{
-        $nombre=$this->getNombre();
-        $apellido=$this->getApellido();
-        $nickname=$this->getNickname();
-        $correo=$this->getCorreo();
-        $pass = $this->getContrasenia();
-
-
+     try{  
+   
      $sql = "update usuario set nombre = :nombre, apellido= :apellido, correo=  :correo, password = :pass
              where nikname= :nickname ";
 
-
+    
       $db = new DB();
       $db = $db->conexionDB();
       $resultado = $db->prepare($sql);
 
-      $resultado->bindParam(':nombre', $nombre);
-      $resultado->bindParam(':apellido', $apellido);
-      $resultado->bindParam(':correo', $correo);
-      $resultado->bindParam(':nickname', $nickname);
-      $resultado->bindParam(':pass', $pass);
+      $resultado->bindParam(':nombre', $this->nombre);
+      $resultado->bindParam(':apellido', $this->apellido);
+      $resultado->bindParam(':correo', $this->correo);
+      $resultado->bindParam(':nickname', $this->nickname);
+      $resultado->bindParam(':pass', $this->contrasenia);
 
       $resultado->execute();
-//       $resultado->fetch();
-
-     $retorno = array('nickname'=> $nickname);
-     return $retorno;
-
-//   }catch(PDOException $e){
-//     $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
-//     return false;
-//   }
-
+      return array('nickname'=> $this->nickname);
+           
+          
+   }catch(PDOException $e){
+     return $e->getMessage();
+   }
+    
     }
+
+  
+  public function existeNick(){
+      try{
+          $sql = "select * from usuario where nikname = :nickname ";
+          $db = new DB();
+      $db = $db->conexionDB();
+      $resultado = $db->prepare($sql);
+         $resultado->bindParam(':nickname', $this->nickname);
+      $resultado->execute();
+      
+      
+      $user = $resultado->fetch();
+      if ($user){
+              return $user['nikname'];
+      }else{
+      return '';
+      }
+      } catch (Exception $ex) {
+          return $e->getMessage();
+      }
+  }
+
 
     public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
     {
@@ -208,4 +245,7 @@ class Usuario extends Clase_Base
 
   }//fin de la clase usuario
 
+
+     
+//}
  ?>

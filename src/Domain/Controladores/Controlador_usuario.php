@@ -93,5 +93,15 @@ class Controlador_Usuario{
       return false;
     }
   }
+//<<<<<<< HEAD
+  
+  public  static function existeNick(DtUsuario $usr){
+      $usuario = new Usuario();
+      $usuario->setNickname($usr->getNickname());
+      return $usuario->existeNick();
+  }
+//}
+//=======
 
 }//Fin clase controlador usuario
+//>>>>>>> 36fc3c14c724cfbc12d6754a15a47d768d592332

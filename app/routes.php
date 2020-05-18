@@ -91,10 +91,14 @@ return function (App $app) {
         $group->get('/', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
     });
-
-    $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    // para chequear que el nickname no existe
+    $app->get('/nickname/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
-    $response->getBody()->write("Hello, $name");
+    
+    $usr = new DTUsuario();
+     $usr->setNickname($name);
+    $nick =CU::existeNick($usr);
+    $response->getBody()->write($nick);
     return $response;
     });
 
@@ -156,12 +160,14 @@ return function (App $app) {
      return $response;
     });
 
-    $app->post('/modificarusr', function (Request $request, Response $response) {
+    $app->get('/modificarusr/{nick}', function (Request $request, Response $response,array $args) {       
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-
+        
+        $nick = $args['nick'];
         $usr = new DTUsuario();
-        $usr->setNickname($request->getParsedBody()['logueado']);
+        //$usr->setNickname($request->getParsedBody()['logueado']);
+        $usr->setNickname($nick);
         $usuario = CU::getUsuarioLogueado($usr);
 
 //        $nombre = array('nombre'=> $usr->getNombre());
