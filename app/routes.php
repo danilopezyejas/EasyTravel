@@ -16,6 +16,7 @@ use App\Domain\Clases\DtUsuario as DTUsuario;
 
 require __DIR__ . '/../src/Infrastructure/Persistence/db.php';
 
+session_start();
 
 return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
@@ -132,6 +133,8 @@ return function (App $app) {
     $usr->setContrasenia($request->getParsedBody()['password']);
     $nickname =CU::login($usr);
     if (sizeof($nickname) !== 0  ){
+        // Set session variables
+        $_SESSION["nick"] = $request->getParsedBody()['nickname'];
         $response->getBody()->write($twig->render('index.twig',$nickname));
     }else{
         $response->getBody()->write($twig->render('login.twig'));
@@ -162,11 +165,11 @@ return function (App $app) {
      return $response;
     });
 
-    $app->get('/modificarusr/{nick}', function (Request $request, Response $response,array $args) {
+    $app->get('/modificarusr', function (Request $request, Response $response,array $args) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-
-        $nick = $args['nick'];
+        $nick = $_SESSION["nick"];
+        //$nick = $args['nick'];
         $usr = new DTUsuario();
         //$usr->setNickname($request->getParsedBody()['logueado']);
         $usr->setNickname($nick);
