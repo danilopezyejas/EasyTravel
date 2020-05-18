@@ -29,7 +29,7 @@
                         <h2>Registrarse</h2>
                         <div class="form-group">
                             <label for="name" class="sr-only">Nickname</label>
-                            <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off" required  pattern=".{8,}">
+                            <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off" required pattern=".{8,}" >
                         </div>
                         <div class="form-group">
                             <label for="name" class="sr-only">Nombre</label>
@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes" pattern=".{6,}">
                         </div>
                         <div class="form-group">
                             <label for="re-password" class="sr-only">Repita Password</label>
@@ -117,9 +117,10 @@
                                 //aca va si es distinto
                                 Swal.fire({title: 'Nickname: ' + data + ' ya utilizado'});
                                 // alert("Nickname: " + data + " ya utilizado");
+                                $('#nickname').val('');
                                  $('#nickname').focus();
                             } else{    
-                            $('#nickname').val('');
+                            
                             var p1 = $('#password').val();
                             var p2 = $('#re-password').val();
                             console.log('paso     ' + p1);
