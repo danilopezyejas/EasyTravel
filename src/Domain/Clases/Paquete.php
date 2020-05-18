@@ -341,13 +341,14 @@ class Paquete extends Clase_Base {
 
         if($resultado->rowCount() > 0){
             while ( $obj = $resultado->fetch() ) {
-                $p = new Paquete($obj);
-                $paquetes[] = $p;
+                //$p = new Paquete($obj);
+                $paquetes[] = $obj;
             }
         }
 
         $resultado = null;
         $db = null;
+        var_dump($paquetes);
         
         return $paquetes;
         

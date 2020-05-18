@@ -49,11 +49,11 @@ return function (App $app) {
         $twig = new Environment($loader);
         $cp = new CP;
         $destinos = $cp->listarPaquetes($_POST['destino'],$_POST['precio'],$_POST['fecha'],$_POST['tematica']);
-        if($destinos["paquetes"]){
-            $response->getBody()->write($twig->render('listado.twig',$destinos));
-        }else{
-            $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
-        }
+//        if($destinos["paquetes"]){
+            $response->getBody()->write($twig->render('listadoPaquetes.twig',$destinos));
+//        }else{
+//            $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+//        }
         return $response;
     });
 

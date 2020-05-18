@@ -6,16 +6,10 @@
     </header>
     <form id="signup-form" method="POST" action="paquetes" autocomplete="off">
       <input id="destino" type="text" name="destino" placeholder="Destino">
-<<<<<<< HEAD
       <input id="precio" type="number" name="precio" placeholder="Monto">
-      <input id="fecha" type="date" name="fecha" min="{{ "now"|date("yy-m-d") }}">
-      <input id="tematica" type="text" name="tematica" placeholder="Tematica">
-=======
-      <input type="number" name="precioMin" placeholder="Monto">
       {# para que se vea la fecha al inicio  value="{{"now"|date("m/d/yy")}} - {{"now"|date("m")}}/{{"now"|date("d") + 7}}/{{"now"|date("yy")}}" #}
       <input id="fecha" type="text" name="fecha">
-      <input type="search" name="tematica" placeholder="Tematica">
->>>>>>> 32d85be591311166e6bc978411fab1b9a873321e
+      <input id="tematica" type="search" name="tematica" placeholder="Tematica">
       <input type="submit" value="Buscar" class="boton_formulario"/>
     </form>
   </div>

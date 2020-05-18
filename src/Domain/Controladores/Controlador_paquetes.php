@@ -49,12 +49,13 @@ class Controlador_Paquetes{
     // code...
   }
 
-  public function listarPaquetes($destino=null, $precio_buscado=null, $fecha_buscada=null, $tematica_buscada=null)
+  public function listarPaquetes($destino_buscado=null, $precio_buscado=null, $fecha_buscada=null, $tematica_buscada=null)
   {
     $paquetes = new Paquete();
-    $destino_buscado = Destino::getDestinoPorCiudad($destino)['idDestino'];
 
     if($destino_buscado){
+        $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
+        
         $this->destinos = $paquetes->getListaDestinos($destino_buscado);
         $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado,$fecha_buscada);
         //$this->vuelos = $paquetes->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
@@ -64,15 +65,18 @@ class Controlador_Paquetes{
        $listaPaquetes = array( 'destinos'=>$this->destinos,
                             'alojamientos'=>$this->alojamientos,
                             //'vuelos'=>$this->vuelos,
-                            'puntosdeinteres'=>$this->puntosdeinteres);
-       
-    }else{
-        if (isset($precio_buscado)){
+                            'puntosdeinteres'=>$this->puntosdeinteres);  
+    }
+    else{
+        if($precio_buscado){
             //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
             //entonces devuelvo paquetes por precio y no por destino
             $this->paquetes = $paquetes->getPaquetesPorPrecio("0-500");
             
-            $listaPaquetes = array('paquetes'=>$this->paquetes);
+            $listaPaquetes = array('paquetes' => $this->paquetes);
+        }
+        else{
+            $listaPaquetes = array('paquetes' => "ggrd");
         }
     }
 // Si el usuario no selecciono ningun destino entra al if
