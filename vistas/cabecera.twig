@@ -10,6 +10,7 @@
   {% endblock %}
 </head>
 <body>
+
   <div class="cabecera">
     <a href="/EasyTravel/public/" >
       <img class="logo" src="imagenes/easyTravel.png" alt="Logo easyTravel">
@@ -20,13 +21,15 @@
         <form class="" action="logout" method="get">
         <input type="submit" id="logout" class="login" value="LogOut">
         </form>
-        <form class="" action="modificarusr" method="post">
+        <a href="/EasyTravel/public/modificarusr/{{ nickname }}" class="registrarse"> Usuario Logueado : {{ nickname }}
+        </a>
+        <!--<form class="" action="modificarusr" method="post">
         <ul class="icons">
             <li><label for="name" class="label" id="logueado" >Usuario Logueado: {{ nickname }}</label></li>
             <li><input type="hidden" name="logueado" value="{{ nickname }}" id="logueado" >
             <li><input type="submit" id="modificar" class="" value="Modificar Info.."></li>
         </ul>
-        </form>
+        </form> -->
       {% else %}
         <form class="" action="login" method="get">
         <input type="submit" id="login" class="login" value="Login">

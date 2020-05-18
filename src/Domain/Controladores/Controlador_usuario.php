@@ -73,4 +73,10 @@ class Controlador_Usuario{
   {
     
   }
+  
+  public  static function existeNick(DtUsuario $usr){
+      $usuario = new Usuario();
+      $usuario->setNickname($usr->getNickname());
+      return $usuario->existeNick();
+  }
 }
