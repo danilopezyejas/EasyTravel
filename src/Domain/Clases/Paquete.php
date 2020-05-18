@@ -34,7 +34,7 @@ class Paquete extends Clase_Base {
     public function getId() {
         // code...
     }
-    
+
     public function getTransporte($destino_buscado=NULL, $origen=NULL, $cantidadAdultos=NULL, $fechaSalida=NULL) {
          $this->token = CB::getToken();
         //$this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
@@ -258,8 +258,8 @@ class Paquete extends Clase_Base {
                 $tematica_buscada = 'money|hidden-Expensive|adrenaline|poitype-Casino';
             }
         }
-        
-        
+
+
         //si todos son null
         if (!$latitudbuscar&&!$longitudbuscar&&!$precio_buscado&&!$tematica_buscada){
             $url_llamada_api = "https://www.triposo.com/api/20200405/local_highlights.json?latitude=40.49181&longitude=-3.56948&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag";
@@ -318,7 +318,7 @@ class Paquete extends Clase_Base {
         }
         return $puntosdeinteres;
     }
-    
+
     public function getPaquetesPorPrecio($precio_buscado){
         if(strcmp ( $precio_buscado, '0-500')== 0){
             $query = "paquetes.precio<500";
@@ -332,26 +332,23 @@ class Paquete extends Clase_Base {
         else if(strcmp ( $precio_buscado, '1500-+')== 0){
             $query = "paquetes.precio>1499";
         }
-        
+
         $db = new DB();
         $db = $db->conexionDB();
         $resultado = $db->prepare("SELECT * from  paquetes where ".$query);
         $resultado->execute();
         
-
         if($resultado->rowCount() > 0){
             while ( $obj = $resultado->fetch() ) {
                 //$p = new Paquete($obj);
                 $paquetes[] = $obj;
             }
         }
-
         $resultado = null;
         $db = null;
         var_dump($paquetes);
-        
+
         return $paquetes;
-        
     }
 
 }//cierre de la clase paquete

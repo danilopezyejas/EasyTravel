@@ -49,12 +49,13 @@ return function (App $app) {
         $twig = new Environment($loader);
         $cp = new CP;
         $destinos = $cp->listarPaquetes($_POST['destino'],$_POST['precio'],$_POST['fecha'],$_POST['tematica']);
-//        if($destinos["paquetes"]){
-            $response->getBody()->write($twig->render('listadoPaquetes.twig',$destinos));
-//        }else{
-//            $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
-//        }
-        return $response;
+
+         if(isset($destinos["paquetes"])){
+              $response->getBody()->write($twig->render('listadoPaquetes.twig',$destinos));
+         }else{
+             $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+         }
+          return $response;
     });
 
     $app->post('/guardarPaquete', function (Request $request, Response $response, array $args) {

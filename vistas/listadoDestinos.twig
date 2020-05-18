@@ -32,15 +32,7 @@
 						</div>
 					</div>
 			{% endfor %}
-					<div class="resultado">
-                                            <h2>Quiza te gustaria visitar: </h2>
-                                            <p><b>{{puntosdeinteres.nombre}}({{puntosdeinteres.idubicacion}})</b></p>
-                                            <p><b>Descripcion:</b> {{puntosdeinteres.descripcion}}<p>
-                                            <a href="#" class="reservar">RESERVAR</a>
-					</div>
 				</div>
-	{% else %}
-		<h1>No eligio destino</h1>
 	{% endif %}
 
 {% include 'pie.twig' %}

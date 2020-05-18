@@ -183,7 +183,7 @@ class Usuario extends Clase_Base
         // $idUsuario = Session::get('idUsuario');
         $idUsuario=2;
 
-        $sql = "INSERT INTO paquetes (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
+        $sql = "INSERT INTO paquetesComprados (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
                 (:id_usuario, :id_transporte, :id_destino, :id_alojamiento )";
 
         $db = new DB();
