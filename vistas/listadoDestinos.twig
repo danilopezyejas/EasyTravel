@@ -1,9 +1,10 @@
-{% set cantOpciones = 1 %}
-
+{% set cantOpciones = 0 %}
 {% include 'cabecera.twig' %}
+	{% if destinos %}
 		<div class="listado">
-      <h1>Descubrí {{destinos.nombre}} {{destinos.pais}}</h1>
+      <h1>Descubrí {{destinos.ciudad}} {{destinos.pais}}</h1>
 			{% for item in alojamientos %}
+				{% set cantOpciones = cantOpciones + 1 %}
 					<div class="resultado">
 						<img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
 						<div class="descripcion">
@@ -17,25 +18,29 @@
 							<p><b>CheckIn:</b> {{item.checkIn}}  <b>CheckOut:</b> {{item.checkOut}}</p>
 							<p><b>Descripcion:</b> {{item.descripcion}}<p>
 							<p><b>Precio total:</b> {{item.precio}}</p>
-							<a href="#" class="reservar">RESERVAR</a>
+							<form id="paquete-{{cantOpciones}}" onsubmit="guardarPaquete({{cantOpciones}});">
+								<div style="display: none;">
+									<input type="text" id="idAlojamiento-{{cantOpciones}}" name="idAlojamiento" value="{{item.idAlojamiento}}">
+									<input type="text" id="idVuelo-{{cantOpciones}}" name="idVuelo" value="IDVuelo">
+									<input type="text" id="idDestino-{{cantOpciones}}" name="idDestino" value="{{destinos.id}}">
+								</div>
+								<div class="reservar" id="reservar-{{cantOpciones}}">
+									<i class="fas fa-spinner fa-spin"></i>
+									<input type="submit" id="btnReserva-{{cantOpciones}}" class="btnReserva">
+								</div>
+							</form>
 						</div>
 					</div>
-          {% set cantOpciones = cantOpciones + 1 %}
 			{% endfor %}
+					<div class="resultado">
+                                            <h2>Quiza te gustaria visitar: </h2>
+                                            <p><b>{{puntosdeinteres.nombre}}({{puntosdeinteres.idubicacion}})</b></p>
+                                            <p><b>Descripcion:</b> {{puntosdeinteres.descripcion}}<p>
+                                            <a href="#" class="reservar">RESERVAR</a>
+					</div>
 				</div>
+	{% else %}
+		<h1>No eligio destino</h1>
+	{% endif %}
 
-        {% block footer %}
-          <footer id="footer" style="display: contents;">
-            <ul class="icons">
-              <li><a href="https://twitter.com/explore" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-              <li><a href="https://www.instagram.com/?hl=es-la" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-              <li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-          </footer>
-        {% endblock %}
-      {% block head_js %}
-        </script>
-          <script src="assets/index/js/main.js"></script>
-        </body>
-      {% endblock %}
-      </html>
+{% include 'pie.twig' %}

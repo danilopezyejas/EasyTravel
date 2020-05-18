@@ -15,6 +15,7 @@ class Alojamiento extends Clase_Base
   private $precio;
   private $descripcion;
   private $idDestino;
+  public $idAlojamiento;
 
   public function __construct($obj=NULL) {
         if(isset($obj)){
@@ -54,6 +55,10 @@ class Alojamiento extends Clase_Base
   {
     $this->descripcion = $descripcion;
   }
+  public function setIdAlojamiento($idAlojamiento)
+  {
+    $this->idAlojamiento = $idAlojamiento;
+  }
 
   public function getNombre()
   {
@@ -83,8 +88,12 @@ class Alojamiento extends Clase_Base
   {
     return $this->idDestino;
   }
+  public function getIdAlojamiento()
+  {
+    return $this->idAlojamiento;
+  }
 
-  public function agregar(){
+  public function agregarDB(){
     $nombre=$this->getNombre();
     $idDestino = $this->getIdDestino();
 
@@ -94,9 +103,10 @@ class Alojamiento extends Clase_Base
       $checkOut=$this->getCheckOut();
       $precio = $this->getPrecio();
       $descripcion = $this->getDescripcion();
+      $idAlojamiento = $this->getIdAlojamiento();
 
-      $sql = "INSERT INTO alojamiento (nombre, estrellas, checkIn, checkOut, precio, descripcion, idDestino) VALUES
-             (:nombre, :estrellas, :checkIn, :checkOut, :precio, :descripcion, :idDestino)";
+      $sql = "INSERT INTO alojamiento (nombre, estrellas, checkIn, checkOut, precio, descripcion, idDestino, idAlojamiento) VALUES
+             (:nombre, :estrellas, :checkIn, :checkOut, :precio, :descripcion, :idDestino, :idAlojamiento)";
 
       try{
         $db = new DB();
@@ -110,6 +120,7 @@ class Alojamiento extends Clase_Base
         $resultado->bindParam(':precio', $precio);
         $resultado->bindParam(':descripcion', $descripcion);
         $resultado->bindParam(':idDestino', $idDestino);
+        $resultado->bindParam(':idAlojamiento', $idAlojamiento);
 
         $resultado->execute();
         $resultado = null;

@@ -48,9 +48,21 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $cp = new CP;
-        $destinos = $cp->listarPaquetes($_POST['destino'],2,$_POST['fecha']);
-        $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+        $destinos = $cp->listarPaquetes($_POST['destino'],$_POST['precio'],$_POST['fecha'],$_POST['tematica']);
+//        if($destinos["paquetes"]){
+            $response->getBody()->write($twig->render('listadoPaquetes.twig',$destinos));
+//        }else{
+//            $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+//        }
         return $response;
+    });
+
+    $app->post('/guardarPaquete', function (Request $request, Response $response, array $args) {
+      $idAlojamiento = $_POST['idAlojamiento'];
+      $idVuelo = $_POST['idVuelo'];
+      $idDestino = $_POST['idDestino'];
+      CU::guardarPaquete($idAlojamiento,$idVuelo,$idDestino);
+      return $response;
     });
 
     $app->get('/registro', function (Request $request, Response $response) {

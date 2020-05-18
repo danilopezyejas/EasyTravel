@@ -1,15 +1,18 @@
 {% include 'cabecera.twig' %}
 
+
   </div>
   <div class="listado">
+
     <header id="header">
       <h1>Bienvenido a Easy Travel</h1>
     </header>
     <form id="signup-form" method="POST" action="paquetes" autocomplete="off">
       <input id="destino" type="text" name="destino" placeholder="Destino">
-      <input type="number" name="precioMin" placeholder="Monto">
-      <input id="fecha" type="date" name="fecha" min="{{ "now"|date("yy-m-d") }}">
-      <input type="search" name="tematica" placeholder="Tematica">
+      <input id="precio" type="number" name="precio" placeholder="Monto">
+      {# para que se vea la fecha al inicio  value="{{"now"|date("m/d/yy")}} - {{"now"|date("m")}}/{{"now"|date("d") + 7}}/{{"now"|date("yy")}}" #}
+      <input id="fecha" type="text" name="fecha">
+      <input id="tematica" type="search" name="tematica" placeholder="Tematica">
       <input type="submit" value="Buscar" class="boton_formulario"/>
     </form>
   </div>

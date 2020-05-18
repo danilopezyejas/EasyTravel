@@ -109,6 +109,7 @@ class Usuario extends Clase_Base
             return $e->getMessage();     
         }
     }
+//<<<<<<< HEAD
 
   public function login(){
       try{
@@ -118,6 +119,7 @@ class Usuario extends Clase_Base
         $stmt->bindParam(':nikname', $this->nickname);
         $stmt->execute();
         $user = $stmt->fetch();
+
 
 
         if($user && password_verify($this->contrasenia, $user['password'])){
@@ -156,8 +158,12 @@ class Usuario extends Clase_Base
       return $e->getMessage();
      
    }
+//<<<<<<< HEAD
     
     }
+//=======
+// }
+//>>>>>>> 36fc3c14c724cfbc12d6754a15a47d768d592332
      public function modificar(){
      try{  
    
@@ -184,6 +190,7 @@ class Usuario extends Clase_Base
    }
     
     }
+
   
   public function existeNick(){
       try{
@@ -191,8 +198,7 @@ class Usuario extends Clase_Base
           $db = new DB();
       $db = $db->conexionDB();
       $resultado = $db->prepare($sql);
-
-      $resultado->bindParam(':nickname', $this->nickname);
+         $resultado->bindParam(':nickname', $this->nickname);
       $resultado->execute();
       
       
@@ -206,5 +212,40 @@ class Usuario extends Clase_Base
           return $e->getMessage();
       }
   }
-}
+
+
+    public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
+    {
+      try{
+        // $idUsuario = Session::get('idUsuario');
+        $idUsuario=2;
+
+        $sql = "INSERT INTO paquetes (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
+                (:id_usuario, :id_transporte, :id_destino, :id_alojamiento )";
+
+        $db = new DB();
+        $db = $db->conexionDB();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':id_usuario', $idUsuario);
+        $resultado->bindParam(':id_transporte', $idVuelo);
+        $resultado->bindParam(':id_destino', $idDestino);
+        $resultado->bindParam(':id_alojamiento', $idAlojamiento);
+
+        $resultado->execute();
+
+        $resultado = null;
+        $db = null;
+        return true;
+      }catch(PDOException $e){
+        $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+        return false;
+      }
+    }
+
+  }//fin de la clase usuario
+
+
+     
+//}
  ?>

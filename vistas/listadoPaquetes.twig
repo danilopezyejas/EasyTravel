@@ -1,0 +1,14 @@
+{% include 'cabecera.twig' %}
+    <div class="listado">
+        <div class="resultado">
+            {% for item in paquetes %}
+                <div class="descripcion">
+                    <h2>{{item.id_destino}}</h2>
+                    <p><b>Hotel: </b>{{item.id_alojamiento}}</p>
+                    <p><b>Vuelo: </b>{{item.id_transporte}}</p>
+                    <p><b>Precio: </b>{{item.precio}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% include 'pie.twig' %}
