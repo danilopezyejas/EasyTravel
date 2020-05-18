@@ -42,7 +42,7 @@ class Controlador_Usuario{
   {
     $usuario = new Usuario();
     $usuario->setNickname($usr->getNickname());
-       
+
     return  $usuario->logueado();
 
   }
@@ -71,6 +71,27 @@ class Controlador_Usuario{
   }
   public function logout()
   {
-    
+
   }
-}
+  public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
+  {
+    if(Usuario::guardarPaquete($idAlojamiento,$idVuelo,$idDestino)){
+      // $para      =  Session::get('mail');
+      $para      = 'lopezyejas@gmail.com';
+      $asunto    = 'Reserva en EasyTravel';
+      $mensaje   = 'Hola, gracias por preferirnos.';
+      $cabeceras = 'From: php.2020.grupo3.tip@gmail.com' . "\r\n" .
+                   'Reply-To: php.2020.grupo3.tip@gmail.com' . "\r\n" .
+                   'X-Mailer: PHP/' . phpversion();
+      $mail = mail($para, $asunto, $mensaje, $cabeceras);
+      if($mail){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  }
+
+}//Fin clase controlador usuario

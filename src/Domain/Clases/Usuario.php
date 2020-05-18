@@ -109,7 +109,7 @@ class Usuario extends Clase_Base
         return $retorno;
     }
     public function agregar(){
-        
+
         $nombre=$this->getNombre();
         $apellido=$this->getApellido();
         $nickname=$this->getNickname();
@@ -140,8 +140,7 @@ class Usuario extends Clase_Base
      $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
      return false;
    }
-
-    }
+ }
      public function modificar(){
 //     try{
         $nombre=$this->getNombre();
@@ -177,6 +176,36 @@ class Usuario extends Clase_Base
 //   }
 
     }
-  }
+
+    public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
+    {
+      try{
+        // $idUsuario = Session::get('idUsuario');
+        $idUsuario=2;
+
+        $sql = "INSERT INTO paquetes (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
+                (:id_usuario, :id_transporte, :id_destino, :id_alojamiento )";
+
+        $db = new DB();
+        $db = $db->conexionDB();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':id_usuario', $idUsuario);
+        $resultado->bindParam(':id_transporte', $idVuelo);
+        $resultado->bindParam(':id_destino', $idDestino);
+        $resultado->bindParam(':id_alojamiento', $idAlojamiento);
+
+        $resultado->execute();
+
+        $resultado = null;
+        $db = null;
+        return true;
+      }catch(PDOException $e){
+        $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+        return false;
+      }
+    }
+
+  }//fin de la clase usuario
 
  ?>

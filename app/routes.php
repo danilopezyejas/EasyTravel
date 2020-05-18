@@ -57,6 +57,14 @@ return function (App $app) {
         return $response;
     });
 
+    $app->post('/guardarPaquete', function (Request $request, Response $response, array $args) {
+      $idAlojamiento = $_POST['idAlojamiento'];
+      $idVuelo = $_POST['idVuelo'];
+      $idDestino = $_POST['idDestino'];
+      CU::guardarPaquete($idAlojamiento,$idVuelo,$idDestino);
+      return $response;
+    });
+
     $app->get('/registro', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);

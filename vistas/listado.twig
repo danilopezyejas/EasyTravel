@@ -1,63 +1,32 @@
-{% set derecha = false %}
-<!DOCTYPE html>
-<html lang="es">
-	<head>
-	<meta charset="utf-8">
-	<title>Easy Travel</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+{% include 'cabecera.twig' %}
+		<div class="listado">
+      <h1>Descubrí {{destinos.ciudad}} {{destinos.pais}}</h1>
+					<div class="resultado">
+						<img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
+						<div class="descripcion">
+              <h2>Opcion 1:</h2>
+							<p>Región: europa</p>
+							<p>Latitud: 43.555</p>
+							<p>Longitud: -23.5899</p>
+							<h2>Hopedate en: </h2>
+							<p><b>Hotel:</b> radison</p>
+							<P><b>Estrellas:</b> 3</p>
+							<p><b>CheckIn:</b> 11:00  <b>CheckOut:</b> 10:00</p>
+							<p><b>Descripcion:</b> super hotel<p>
+							<p><b>Precio total:</b> 500</p>
+							<form id="paquete" method="post" >
+								<div style="display: none;">
+									<input type="text" id="idAlojamiento" name="idAlojamiento" value="HY45P">
+									<input type="text" id="idVuelo" name="idVuelo" value="IDVuelo">
+									<input type="text" id="pais" name="idDestino" value="Uruguay">
+								</div>
+								<div class="reservar">
+									<i class="fas fa-spinner fa-spin"></i>
+									<input type="submit" id="btnReserva" class="btnReserva">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 
-	<!-- Google Webfonts -->
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,500' rel='stylesheet' type='text/css'>
-
-	<!-- Theme Style -->
-	<link rel="stylesheet" href="assets/listado/css/style.css">
-	<!-- Modernizr JS -->
-	<script src="assets/listado/js/modernizr-2.6.2.min.js"></script>
-	</head>
-	<body>
-            <div class=listado">
-                <h1>{{puntosdeinteres.id}}</h1>
-                {% for item in paquetes %}
-                        {% if derecha == false %}
-                            <div class="resultado">
-                                <img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
-                                <div class="descripcion">
-                                    <h2>{{item.id_destino}}</h2>
-                                    <p><b>Hotel:</b> {{item.id_alojamiento}}</p>
-                                    <p><b>Vuelo:</b> {{item.id_transporte}}</p>
-                                    <a href="#" class="reservar">Ver detalles</a>
-                                </div>
-                            </div>
-                            {% set derecha = true %}
-                        {% else %}
-                            <div class="resultado">
-                                <img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
-                                <div class="descripcion">
-                                    <h2>{{item.id_destino}}</h2>
-                                    <p><b>Hotel:</b> {{item.id_alojamiento}}</p>
-                                    <p><b>Vuelo:</b> {{item.id_transporte}}</p>
-                                    <a href="#" class="reservar">Ver detalles</a>
-                                </div>
-                            </div>
-                            {% set derecha = false %}
-                        {% endif %}
-                {% endfor %}
-            </div>
-
-	<!-- jQuery -->
-	<script src="assets/listado/js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="assets/listado/js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="assets/listado/js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="assets/listado/js/jquery.waypoints.min.js"></script>
-	<!-- Main JS -->
-	<script src="assets/listado/js/main.js"></script>
-
-
-	</body>
-</html>
+{% include 'pie.twig' %}
