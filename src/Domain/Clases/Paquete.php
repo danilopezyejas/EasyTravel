@@ -339,7 +339,7 @@ class Paquete extends Clase_Base {
 
         $db = new DB();
         $db = $db->conexionDB();
-        if ($precio_buscado){
+        if (!$precio_buscado){
             $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
                                     id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
                                     alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
@@ -352,7 +352,7 @@ class Paquete extends Clase_Base {
                                     ");
         }
         else{
-            if(strcmp ( $precio_buscado, '500')== 0){
+            if(strcmp ( $precio_buscado, "500")== 0){
                 $query = "paquetes.precio<500";
             }
             else if(strcmp ( $precio_buscado, "500-1000")== 0){
