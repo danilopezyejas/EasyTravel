@@ -17,7 +17,7 @@ class Paquete extends Clase_Base {
     private $tabla;
     private $id_paquete;
     private $precio;
-    //datos del transporte 
+    //datos del transporte
     private $id_transporte;
     //datos del alojamiento
     private $id_alojamiento;
@@ -33,7 +33,7 @@ class Paquete extends Clase_Base {
     private $region;
     private $latitud;
     private $longitud;
-    
+
     //otras variables
     private $token;
 
@@ -339,7 +339,7 @@ class Paquete extends Clase_Base {
 
         $db = new DB();
         $db = $db->conexionDB();
-        if ($precio_buscado){
+        if (!$precio_buscado){
             $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
                                     id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
                                     alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
@@ -364,7 +364,7 @@ class Paquete extends Clase_Base {
             else if(strcmp ( $precio_buscado, '1500')== 0){
                 $query = "paquetes.precio>1499";
             }
-            
+
             $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
                                     id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
                                     alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
@@ -376,7 +376,7 @@ class Paquete extends Clase_Base {
                                     and paquetes.id_transporte=transporte.idTransporte and ".$query);
         }
         $resultado->execute();
-        
+
         if($resultado->rowCount() > 0){
             while ( $obj = $resultado->fetch() ) {
                 //$p = new Paquete($obj);
