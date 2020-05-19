@@ -29,7 +29,7 @@
         <form class="" action="logout" method="get">
         <input type="submit" id="logout" class="login" value="LogOut">
         </form>
-        <a href="/EasyTravel/public/modificarusr/{{ nickname }}" class="registrarse"> Usuario Logueado : {{ nickname }}
+        <a href="modificarusr/{{ nickname }}" class="registrarse"> Usuario : {{ nickname }}
         </a>
         <!--<form class="" action="modificarusr" method="post">
         <ul class="icons">
@@ -40,12 +40,13 @@
         </form> -->
       {% else %}
         <form class="" action="login" method="get">
-        <input type="submit" id="login" class="login" value="Login">
+            <input type="submit" id="login" class="login" value="Login">
+        </form>
+        <form class="" action="registro" method="get">
+            <input type="submit" id="" class="registrarse" value="Registrarse">
         </form>
       {%  endif %}
 
-    <form class="" action="registro" method="get">
-      <input type="submit" id="" class="registrarse" value="Registrarse">
-    </form>
+    
   </div>
   </div>

@@ -64,20 +64,21 @@ return function (App $app) {
       CU::guardarPaquete($idAlojamiento,$idVuelo,$idDestino);
       return $response;
     });
-
+//Para registrar un nuevo usuario
     $app->get('/registro', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('registro.twig'));
         return $response;
     });
-
+//Para que un usuario se loguee
     $app->get('/login', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('login.twig'));
         return $response;
     });
+//Para que un usuario se desloguee
     $app->get('/logout', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
@@ -90,7 +91,8 @@ return function (App $app) {
         $group->get('/', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
     });
-    // para chequear que el nickname no existe
+
+// para chequear que el nickname no existe
     $app->get('/nickname/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
     
@@ -100,7 +102,7 @@ return function (App $app) {
     $response->getBody()->write($nick);
     return $response;
     });
-
+//Guardar los datos de un usuario que se Registra.
     $app->post('/guardar', function (Request $request, Response $response) {
     $loader = new FilesystemLoader(__DIR__ . '/../vistas');
     $twig = new Environment($loader);
@@ -119,7 +121,7 @@ return function (App $app) {
     return $response;
     });
 
-
+//Luego que ingresa el usuario y la pass lo redirecciona al index.twig
     $app->post('/entrar', function (Request $request, Response $response) {
     $loader = new FilesystemLoader(__DIR__ . '/../vistas');
     $twig = new Environment($loader);
@@ -137,7 +139,7 @@ return function (App $app) {
 
      return $response;
     });
-
+//Modifica los datos del usuario que está logueado
     $app->post('/modificar', function (Request $request, Response $response) {
     $loader = new FilesystemLoader(__DIR__ . '/../vistas');
     $twig = new Environment($loader);
@@ -154,11 +156,12 @@ return function (App $app) {
     if (sizeof($nick) !== 0  ){
 
 //    $response->getBody()->write($nick['nickname']);
-    $response->getBody()->write($twig->render('index.twig',$nick));
+    return $response->withHeader('Location','/');
+   // $response->getBody()->write($twig->render('index.twig',$nick));
     }
      return $response;
     });
-
+//muestra los datos del usuario que se va a modificar
     $app->get('/modificarusr/{nick}', function (Request $request, Response $response,array $args) {       
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
