@@ -138,7 +138,7 @@ return function (App $app) {
     $usr->setContrasenia($request->getParsedBody()['password']);
     $nickname =CU::login($usr);
     
-    if (sizeof($nickname) !== 0  ){
+    if ($nickname['nickname'] !== ''  ){
         // Set session variables
         $nickname['nuevo'] = 'SI';
         $_SESSION["nick"] = $request->getParsedBody()['nickname'];
