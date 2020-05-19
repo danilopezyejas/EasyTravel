@@ -71,12 +71,12 @@ class Controlador_Paquetes{
         if($precio_buscado){
             //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
             //entonces devuelvo paquetes por precio y no por destino
-            $this->paquetes = $paquetes->getPaquetesPorPrecio("0-500");
+            $this->paquetes = $paquetes->getPaquetesPorPrecio($precio_buscado);
 
             $listaPaquetes = array('paquetes' => $this->paquetes);
         }
         else{
-            $listaPaquetes = array('paquetes' => "ggrd");
+            $listaPaquetes = array('paquetes' => NULL);
         }
     }
 // Si el usuario no selecciono ningun destino entra al if

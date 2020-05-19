@@ -13,12 +13,28 @@ use DateTime;
 
 class Paquete extends Clase_Base {
 
+    //datos del paquete en si
     private $tabla;
     private $id_paquete;
-    private $id_transporte;
-    private $id_alojamiento;
-    private $id_destino;
     private $precio;
+    //datos del transporte 
+    private $id_transporte;
+    //datos del alojamiento
+    private $id_alojamiento;
+    private $nombre; //Este es el nombre del hotel
+    private $estrellas;
+    private $checkIn;
+    private $checkOut;
+    private $descripcion;
+    //datos del destino
+    private $id_destino;
+    private $ciudad;
+    private $pais;
+    private $region;
+    private $latitud;
+    private $longitud;
+    
+    //otras variables
     private $token;
 
     public function __construct($obj = NULL) {
@@ -319,23 +335,46 @@ class Paquete extends Clase_Base {
         return $puntosdeinteres;
     }
 
-    public function getPaquetesPorPrecio($precio_buscado){
-        if(strcmp ( $precio_buscado, '0-500')== 0){
-            $query = "paquetes.precio<500";
-        }
-        else if(strcmp ( $precio_buscado, '500-1000')== 0){
-            $query = "paquetes.precio>499 and paquetes.precio<1000";
-        }
-        else if(strcmp ( $precio_buscado, '1000-1500')== 0){
-            $query = "paquetes.precio>999 and paquetes.precio<1500";
-        }
-        else if(strcmp ( $precio_buscado, '1500-+')== 0){
-            $query = "paquetes.precio>1499";
-        }
+    public function getPaquetesPorPrecio($precio_buscado=NULL){
 
         $db = new DB();
         $db = $db->conexionDB();
-        $resultado = $db->prepare("SELECT * from  paquetes where ".$query);
+        if ($precio_buscado){
+            $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
+                                    id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
+                                    alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
+                                    destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud
+                                    from paquetes
+                                    inner join alojamiento, destino, transporte
+                                    where paquetes.id_alojamiento= alojamiento.idAlojamiento
+                                    and paquetes.id_destino=destino.idDestino
+                                    and paquetes.id_transporte=transporte.idTransporte
+                                    ");
+        }
+        else{
+            if(strcmp ( $precio_buscado, '500')== 0){
+                $query = "paquetes.precio<500";
+            }
+            else if(strcmp ( $precio_buscado, "500-1000")== 0){
+                $query = "paquetes.precio>499 and paquetes.precio<1000";
+            }
+            else if(strcmp ( $precio_buscado, '1000-1500')== 0){
+                $query = "paquetes.precio>999 and paquetes.precio<1500";
+            }
+            else if(strcmp ( $precio_buscado, '1500')== 0){
+                $query = "paquetes.precio>1499";
+            }
+            
+            $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
+                                    id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
+                                    alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
+                                    destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud
+                                    from paquetes
+                                    inner join alojamiento, destino, transporte
+                                    where paquetes.id_alojamiento= alojamiento.idAlojamiento
+                                    and paquetes.id_destino=destino.idDestino
+                                    and paquetes.id_transporte=transporte.idTransporte and ".$query);
+        }
         $resultado->execute();
         
         if($resultado->rowCount() > 0){
@@ -344,9 +383,12 @@ class Paquete extends Clase_Base {
                 $paquetes[] = $obj;
             }
         }
+        else {
+            $paquetes = array('mensaje' => "No se encontraron resultados");
+        }
         $resultado = null;
         $db = null;
-        var_dump($paquetes);
+        //var_dump($paquetes);
 
         return $paquetes;
     }

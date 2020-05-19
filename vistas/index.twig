@@ -9,7 +9,12 @@
     </header>
     <form id="signup-form" method="POST" action="paquetes" autocomplete="off">
       <input id="destino" type="text" name="destino" placeholder="Destino">
-      <input id="precio" type="number" name="precio" placeholder="Monto">
+      <select id="precio" type="number" name="precio" placeholder="Monto">
+          <option value="500">Menor a 500 EUR</option>
+          <option value="500-1000">Entre 500 y 1000 EUR</option>
+          <option value="1000-1500">Entre 1000 y 1500 EUR</option>
+          <option value="1500">Mayo a 1500 EUR</option>
+      </select>
       {# para que se vea la fecha al inicio  value="{{"now"|date("m/d/yy")}} - {{"now"|date("m")}}/{{"now"|date("d") + 7}}/{{"now"|date("yy")}}" #}
       <input id="fecha" type="text" name="fecha">
       <input id="tematica" type="search" name="tematica" placeholder="Tematica">
