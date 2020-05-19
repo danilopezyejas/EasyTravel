@@ -78,7 +78,6 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('login.twig'));
-        // return $response->withHeader('Location','usuarios');
         return $response;
     });
 //Para que un usuario se desloguee
@@ -137,7 +136,7 @@ return function (App $app) {
     $usr->setNickname($request->getParsedBody()['nickname']);
     $usr->setContrasenia($request->getParsedBody()['password']);
     $nickname =CU::login($usr);
-    
+
     if (sizeof($nickname) !== 0  ){
         // Set session variables
         $nickname['nuevo'] = 'SI';
@@ -147,8 +146,7 @@ return function (App $app) {
     }else{
         $response->getBody()->write($twig->render('login.twig'));
     }
-//    $response->getBody()->write($nickname);
-
+// return $response->withHeader('Location','/EasyTravel/public');
      return $response;
     });
 //Modifica los datos del usuario que está logueado
@@ -176,7 +174,7 @@ return function (App $app) {
      return $response;
     });
 //muestra los datos del usuario que se va a modificar
-    $app->post('/modificarusr', function (Request $request, Response $response,array $args) {      
+    $app->post('/modificarusr', function (Request $request, Response $response,array $args) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $nick = $_SESSION["nick"];
@@ -185,7 +183,7 @@ return function (App $app) {
         $usr->setNickname($request->getParsedBody()['logueado']);
         //$usr->setNickname($nick);
         $usuario = CU::getUsuarioLogueado($usr);
-        
+
 
 //        $nombre = array('nombre'=> $usr->getNombre());
         $response->getBody()->write($twig->render('modificar.twig',$usuario));
