@@ -28,6 +28,8 @@ return function (App $app) {
         }
         $datos = array('listaDestinos' => $destinos);
         $twig = new Environment($loader);
+        $twig->addGlobal('session', $_SESSION);
+
         $response->getBody()->write($twig->render('index.twig',$datos));
         return $response;
     });
@@ -50,10 +52,12 @@ return function (App $app) {
         $twig = new Environment($loader);
         $cp = new CP;
         $destinos = $cp->listarPaquetes($_POST['destino'],$_POST['precio'],$_POST['fecha'],$_POST['tematica']);
-
+        $twig->addGlobal('session', $_SESSION);
          if(isset($destinos["paquetes"])){
+           //Busqueda por precio
               $response->getBody()->write($twig->render('listadoPaquetes.twig',$destinos));
          }else{
+           //Busqueda comun
              $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
          }
           return $response;
@@ -78,17 +82,16 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('login.twig'));
-        // return $response->withHeader('Location','usuarios');
         return $response;
     });
 //Para que un usuario se desloguee
     $app->get('/logout', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        $_SESSION['nick']= '';
-        $salida =  array('salida'=>'SI');
-        $response->getBody()->write($twig->render('index.twig',$salida));
-        return $response;
+        session_destroy();
+        session_start();
+        // $_SESSION['salida']= 'SI';
+        return $response->withHeader('Location','/EasyTravel/public');
     });
 
     $app->group('/users', function (Group $group) {
@@ -102,7 +105,7 @@ return function (App $app) {
     $name = $args['name'];
 
     $usr = new DTUsuario();
-     $usr->setNickname($name);
+    $usr->setNickname($name);
     $nick =CU::existeNick($usr);
     $response->getBody()->write($nick);
     return $response;
@@ -121,35 +124,33 @@ return function (App $app) {
     //$usr->setContrasenia($request->getParsedBody()['password']);
 
     $nickname = CU::guardarUsuario($usr);
-    $nickname['nuevo'] = 'SI';
-    $response->getBody()->write($twig->render('index.twig',$nickname));
-    // return $response->withHeader('Location','/');
-    return $response;
+    $_SESSION['nuevo'] = 'SI';
+    $_SESSION['nick'] = $nickname['nickname'];
+    return $response->withHeader('Location','/EasyTravel/public');
     });
 
 //Luego que ingresa el usuario y la pass lo redirecciona al index.twig
     $app->post('/entrar', function (Request $request, Response $response) {
     $loader = new FilesystemLoader(__DIR__ . '/../vistas');
     $twig = new Environment($loader);
-    $twig->addGlobal('session', $_SESSION);
 
     $usr = new DTUsuario();
     $usr->setNickname($request->getParsedBody()['nickname']);
     $usr->setContrasenia($request->getParsedBody()['password']);
-    $nickname =CU::login($usr);
-    
-    if ($nickname['nickname'] !== ''  ){
-        // Set session variables
-        $nickname['nuevo'] = 'SI';
-        $_SESSION["nick"] = $request->getParsedBody()['nickname'];
-        $response->getBody()->write($twig->render('index.twig',$nickname));
-        $nickname['nuevo'] = 'NO';
-    }else{
-        $response->getBody()->write($twig->render('login.twig'));
-    }
-//    $response->getBody()->write($nickname);
 
-     return $response;
+    $nickname = CU::login($usr);
+
+     if ($nickname['nickname'] !== ''  ){
+        // Set session variables
+        $_SESSION['nuevo'] = 'SI';
+        $_SESSION["nick"] = $request->getParsedBody()['nickname'];
+        // $_SESSION["correo"] = $request->getParsedBody()['correo'];
+        // $_SESSION["nombre"] = $request->getParsedBody()['nombre'];
+    }else{
+        return $response->withHeader('Location','/EasyTravel/public/login');
+    }
+    return $response->withHeader('Location','/EasyTravel/public');
+     // return $response;
     });
 //Modifica los datos del usuario que está logueado
     $app->post('/modificar', function (Request $request, Response $response) {
@@ -176,7 +177,7 @@ return function (App $app) {
      return $response;
     });
 //muestra los datos del usuario que se va a modificar
-    $app->post('/modificarusr', function (Request $request, Response $response,array $args) {      
+    $app->post('/modificarusr', function (Request $request, Response $response,array $args) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $nick = $_SESSION["nick"];
@@ -185,7 +186,7 @@ return function (App $app) {
         $usr->setNickname($request->getParsedBody()['logueado']);
         //$usr->setNickname($nick);
         $usuario = CU::getUsuarioLogueado($usr);
-        
+
 
 //        $nombre = array('nombre'=> $usr->getNombre());
         $response->getBody()->write($twig->render('modificar.twig',$usuario));
