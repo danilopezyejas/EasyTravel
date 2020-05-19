@@ -1,76 +1,40 @@
-<!DOCTYPE html>
-<html lang="es">
-	<head>
-	<meta charset="utf-8">
-	<title>Easy Travel</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+{% include 'cabecera.twig' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Start Sign In Form -->
+            <form action="modificar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="modificar">
+                <h2>Modificar Datos Usuario</h2>
+                <div class="form-group">
+                    <label for="name" class="sr-only">Nickname</label>
+                    <input type="text" class="form-control" name="nickname" id="nickname" readonly value="{{ nickname }}">
+                </div>
+                <div class="form-group">
+                    <label for="name" class="sr-only">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off" value="{{ nombre }}"
+                           required="yes">
+                </div>
+                <div class="form-group">
+                    <label for="name" class="sr-only">Apellido</label>
+                    <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off" value="{{ apellido }}"
+                           required="yes">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ correo }}"
+                           required="yes">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" value="{{ password }}"required="yes">
+                </div>
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" >
+                </div>
+            </form>
 
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-
-	<link rel="stylesheet" href="assets/login/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/login/css/animate.css">
-	<link rel="stylesheet" href="assets/login/css/style.css">
-
-
-	<!-- Modernizr JS -->
-	<script src="assets/login/js/modernizr-2.6.2.min.js"></script>
-	<script src="assets/login/js/easytravel.js"></script>
-
-	</head>
-	<body class="style-2">
-		<div class="container">
-					<div class="row">
-						<div class="col-md-4">
-							<!-- Start Sign In Form -->
-							<form action="modificar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="modificar">
-								<h2>Modificar Datos Usuario</h2>
-								<div class="form-group">
-									<label for="name" class="sr-only">Nickname</label>
-									<input type="text" class="form-control" name="nickname" id="nickname" readonly value="{{ nickname }}">
-								</div>
-								<div class="form-group">
-									<label for="name" class="sr-only">Nombre</label>
-									<input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off" value="{{ nombre }}"
-									required="yes">
-								</div>
-								<div class="form-group">
-									<label for="name" class="sr-only">Apellido</label>
-									<input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off" value="{{ apellido }}"
-									required="yes">
-								</div>
-								<div class="form-group">
-									<label for="email" class="sr-only">Email</label>
-									<input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ correo }}"
-									required="yes">
-								</div>
-								<div class="form-group">
-									<label for="password" class="sr-only">Password</label>
-									<input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" value="{{ password }}"required="yes">
-								</div>
-								
-								<div class="form-group">
-									<input type="submit" value="Guardar" class="btn btn-primary" >
-								</div>
-							</form>
-
-						</div>
-					</div>
-				</div>
-
-	<!-- jQuery -->
-	<script src="assets/login/js/jquery.min.js"></script>
-	<!-- Bootstrap -->
-	<script src="assets/login/js/bootstrap.min.js"></script>
-	<!-- Placeholder -->
-	<script src="assets/login/js/jquery.placeholder.min.js"></script>
-	<!-- Waypoints -->
-	<script src="assets/login/js/jquery.waypoints.min.js"></script>
-	<!-- Main JS -->
-	<script src="assets/login/js/main.js"></script>
-        
-
-	</body>
-</html>
+        </div>
+    </div>
+</div>
+{% include 'pie.twig' %}

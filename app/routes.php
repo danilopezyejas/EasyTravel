@@ -16,6 +16,7 @@ use App\Domain\Clases\DtUsuario as DTUsuario;
 
 require __DIR__ . '/../src/Infrastructure/Persistence/db.php';
 
+session_start();
 
 return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
@@ -49,12 +50,13 @@ return function (App $app) {
         $twig = new Environment($loader);
         $cp = new CP;
         $destinos = $cp->listarPaquetes($_POST['destino'],$_POST['precio'],$_POST['fecha'],$_POST['tematica']);
-//        if($destinos["paquetes"]){
-            $response->getBody()->write($twig->render('listadoPaquetes.twig',$destinos));
-//        }else{
-//            $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
-//        }
-        return $response;
+
+         if(isset($destinos["paquetes"])){
+              $response->getBody()->write($twig->render('listadoPaquetes.twig',$destinos));
+         }else{
+             $response->getBody()->write($twig->render('listadoDestinos.twig',$destinos));
+         }
+          return $response;
     });
 
     $app->post('/guardarPaquete', function (Request $request, Response $response, array $args) {
@@ -76,13 +78,16 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $response->getBody()->write($twig->render('login.twig'));
+        // return $response->withHeader('Location','usuarios');
         return $response;
     });
 //Para que un usuario se desloguee
     $app->get('/logout', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        $response->getBody()->write($twig->render('index.twig'));
+        $_SESSION['nick']= '';
+        $salida =  array('salida'=>'SI');
+        $response->getBody()->write($twig->render('index.twig',$salida));
         return $response;
     });
 
@@ -95,7 +100,7 @@ return function (App $app) {
 // para chequear que el nickname no existe
     $app->get('/nickname/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
-    
+
     $usr = new DTUsuario();
      $usr->setNickname($name);
     $nick =CU::existeNick($usr);
@@ -115,9 +120,10 @@ return function (App $app) {
     $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
     //$usr->setContrasenia($request->getParsedBody()['password']);
 
-    CU::guardarUsuario($usr);
-
-    $response->getBody()->write($twig->render('index.twig'));
+    $nickname = CU::guardarUsuario($usr);
+    $nickname['nuevo'] = 'SI';
+    $response->getBody()->write($twig->render('index.twig',$nickname));
+    // return $response->withHeader('Location','/');
     return $response;
     });
 
@@ -125,13 +131,19 @@ return function (App $app) {
     $app->post('/entrar', function (Request $request, Response $response) {
     $loader = new FilesystemLoader(__DIR__ . '/../vistas');
     $twig = new Environment($loader);
+    $twig->addGlobal('session', $_SESSION);
 
     $usr = new DTUsuario();
     $usr->setNickname($request->getParsedBody()['nickname']);
     $usr->setContrasenia($request->getParsedBody()['password']);
     $nickname =CU::login($usr);
+    
     if (sizeof($nickname) !== 0  ){
+        // Set session variables
+        $nickname['nuevo'] = 'SI';
+        $_SESSION["nick"] = $request->getParsedBody()['nickname'];
         $response->getBody()->write($twig->render('index.twig',$nickname));
+        $nickname['nuevo'] = 'NO';
     }else{
         $response->getBody()->write($twig->render('login.twig'));
     }
@@ -154,23 +166,26 @@ return function (App $app) {
     $nick =CU::modificar($usr);
 
     if (sizeof($nick) !== 0  ){
+        $nick['modificado'] = 'SI';
 
 //    $response->getBody()->write($nick['nickname']);
-    return $response->withHeader('Location','/');
-   // $response->getBody()->write($twig->render('index.twig',$nick));
+//    return $response->withHeader('Location','/');
+    $response->getBody()->write($twig->render('index.twig',$nick));
+    $nick['modificado'] = 'NO';
     }
      return $response;
     });
 //muestra los datos del usuario que se va a modificar
-    $app->get('/modificarusr/{nick}', function (Request $request, Response $response,array $args) {       
+    $app->post('/modificarusr', function (Request $request, Response $response,array $args) {      
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        
-        $nick = $args['nick'];
+        $nick = $_SESSION["nick"];
+        //$nick = $args['nick'];
         $usr = new DTUsuario();
-        //$usr->setNickname($request->getParsedBody()['logueado']);
-        $usr->setNickname($nick);
+        $usr->setNickname($request->getParsedBody()['logueado']);
+        //$usr->setNickname($nick);
         $usuario = CU::getUsuarioLogueado($usr);
+        
 
 //        $nombre = array('nombre'=> $usr->getNombre());
         $response->getBody()->write($twig->render('modificar.twig',$usuario));

@@ -134,7 +134,7 @@ class Usuario extends Clase_Base
         }
     }
     
-    public function agregar(): ? bool{
+    public function agregar(){
 
     try{
         $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
@@ -153,7 +153,7 @@ class Usuario extends Clase_Base
 
         $resultado = null;
         $db = null;
-        return true;
+        return array('nickname'=> $this->nickname); 
    }catch(PDOException $e){
       return $e->getMessage();
      
@@ -204,9 +204,9 @@ class Usuario extends Clase_Base
       
       $user = $resultado->fetch();
       if ($user){
-              return $user['nikname'];
+        return $user['nikname'];
       }else{
-      return '';
+        return '';
       }
       } catch (Exception $ex) {
           return $e->getMessage();
@@ -220,7 +220,7 @@ class Usuario extends Clase_Base
         // $idUsuario = Session::get('idUsuario');
         $idUsuario=2;
 
-        $sql = "INSERT INTO paquetes (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
+        $sql = "INSERT INTO paquetesComprados (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
                 (:id_usuario, :id_transporte, :id_destino, :id_alojamiento )";
 
         $db = new DB();

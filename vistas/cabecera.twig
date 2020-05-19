@@ -13,6 +13,7 @@
     <script src="https://kit.fontawesome.com/87277c0c3b.js" crossorigin="anonymous"></script>
     <script src="assets\js\daterangepicker.js"></script>
     <link href="assets\css\daterangepicker.css" rel="stylesheet">
+    
     <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon" />
 
   {% endblock %}
@@ -29,15 +30,15 @@
         <form class="" action="logout" method="get">
         <input type="submit" id="logout" class="login" value="LogOut">
         </form>
-        <a href="modificarusr/{{ nickname }}" class="registrarse"> Usuario : {{ nickname }}
-        </a>
-        <!--<form class="" action="modificarusr" method="post">
+
+        <!--<a href="modificarusr/{{ nickname }}" class="registrarse"> Usuario : {{ nickname }}</a>-->
+        <form class="" action="modificarusr" method="post">
         <ul class="icons">
-            <li><label for="name" class="label" id="logueado" >Usuario Logueado: {{ nickname }}</label></li>
+            <!--<li><label for="name" class="login" id="logueado" >Usuario  {{ nickname }}</label></li>-->
             <li><input type="hidden" name="logueado" value="{{ nickname }}" id="logueado" >
-            <li><input type="submit" id="modificar" class="" value="Modificar Info.."></li>
+            <li><input type="submit" id="modificar" class="login" value="{{ nickname }}"></li>
         </ul>
-        </form> -->
+        </form>
       {% else %}
         <form class="" action="login" method="get">
             <input type="submit" id="login" class="login" value="Login">

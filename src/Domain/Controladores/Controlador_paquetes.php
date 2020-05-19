@@ -16,7 +16,7 @@ class Controlador_Paquetes{
   private $alojamientos;
   private $puntosdeinteres;
   private $vuelos;
-  
+
   private $paquetes;
 
   public function __construct($obj=NULL) {
@@ -55,24 +55,24 @@ class Controlador_Paquetes{
 
     if($destino_buscado){
         $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
-        
+
         $this->destinos = $paquetes->getListaDestinos($destino_buscado);
         $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado,$fecha_buscada);
         //$this->vuelos = $paquetes->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
         $this->puntosdeinteres = $paquetes->getListaPuntosDeInteres("41.29694", "2.07833", NULL, NULL);
         //y hacer las convinaciones con varios for
-
+        // $this->crearPaquetes();
        $listaPaquetes = array( 'destinos'=>$this->destinos,
                             'alojamientos'=>$this->alojamientos,
                             //'vuelos'=>$this->vuelos,
-                            'puntosdeinteres'=>$this->puntosdeinteres);  
+                            'puntosdeinteres'=>$this->puntosdeinteres);
     }
     else{
         if($precio_buscado){
             //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
             //entonces devuelvo paquetes por precio y no por destino
             $this->paquetes = $paquetes->getPaquetesPorPrecio("0-500");
-            
+
             $listaPaquetes = array('paquetes' => $this->paquetes);
         }
         else{
@@ -108,6 +108,13 @@ class Controlador_Paquetes{
     $destino = new Destino();
     return $destino->getDestinosGuardados();
   }
+
+  // public function crearPaquetes()
+  // {
+  //   foreach ($this->alojamientos as $key => $value) {
+  //     $this->destinos
+  //   }
+  // }
 
 }
 
