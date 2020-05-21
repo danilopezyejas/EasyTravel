@@ -18,14 +18,24 @@
 	<!-- Modernizr JS -->
 	<script src="assets/login/js/modernizr-2.6.2.min.js"></script>
 	<script src="assets/login/js/easytravel.js"></script>
+	<script src="assets/login/js/bootstrap.min.js"></script>
 
 	</head>
 	<body class="style-2">
 <div class="container">
-    <div class="row">
+    <ul class="nav nav-tabs nav-justified label-primary">
+    <li class="active"><a data-toggle="tab" href="#home">Perfil</a></li>
+    <li><a data-toggle="tab" href="#menu1">Paquetes comprados</a></li>
+    <li><a data-toggle="tab" href="#menu2">Reseñas</a></li>
+    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <div class="row">
         <div class="col-md-4">
             <!-- Start Sign In Form -->
-            <form action="modificar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="modificar">
+            <form action="modificar" method="post" class="fh5co-form" data-animate-effect="fadeInLeft" name="modificar">
                 <h2>Modificar Datos Usuario</h2>
                 <div class="form-group">
                     <label for="name" class="sr-only">Nickname</label>
@@ -58,6 +68,22 @@
 
         </div>
     </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+</div>
+    
 </div>
 <!-- jQuery -->
 	<script src="assets/login/js/jquery.min.js"></script>

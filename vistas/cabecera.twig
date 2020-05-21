@@ -35,7 +35,7 @@
         <form class="" action="modificarusr" method="post">
         <ul class="icons">
             <!--<li><label for="name" class="login" id="logueado" >Usuario  {{ nickname }}</label></li>-->
-            <li><input type="hidden" name="logueado" value="{{ nickname }}" id="logueado" >
+            <li><input type="hidden" name="logueado" value="{{ session.nick }}" id="logueado" >
             <li><input type="submit" id="modificar" class="login" value="{{ session.nick }}"></li>
         </ul>
         </form>

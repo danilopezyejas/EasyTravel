@@ -6,8 +6,8 @@ use App\Domain\Clases\DtUsuario as DtUsuario;
 
 class Controlador_Usuario{
 
-
-  private $usuarioLogueado;
+    static  $logueado = null;
+    private $usuarioLogueado;
   private $usuario;
 
   public function __construct($obj=NULL) {
@@ -19,7 +19,10 @@ class Controlador_Usuario{
         // $tabla="paquete";
         // parent::__construct($tabla);
     }
-
+  public function setUsuarioLogueado(string $user)
+  {
+     self::$logueado  = $user;
+  }
   public static function modificar(DtUsuario $usr)
   {
     $usuario = new Usuario();
@@ -42,6 +45,7 @@ class Controlador_Usuario{
   {
     $usuario = new Usuario();
     $usuario->setNickname($usr->getNickname());
+//    $usuario->setNickname(self::$logueado);
 
     return  $usuario->logueado();
 
@@ -67,12 +71,19 @@ class Controlador_Usuario{
       $usuario = new Usuario();
       $usuario->setNickname($usr->getNickname());
       $usuario->setContrasenia($usr->getContrasenia());
-      return  $usuario->login();
+      $logueado = $usuario->login();
+      if ($logueado['nickname'] !== ''){
+          self::$logueado = $logueado['nickname'];
+         // $this->usuarioLogueado = $logueado['nickname'];
+      }
+      return $logueado;
+      
   }
   public function logout()
   {
-
+      self::$logueado = null;
   }
+  
   public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
   {
     if(Usuario::guardarPaquete($idAlojamiento,$idVuelo,$idDestino)){
