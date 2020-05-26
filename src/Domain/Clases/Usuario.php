@@ -134,7 +134,7 @@ class Usuario extends Clase_Base
         }
     }
     
-    public function agregar(): ? bool{
+    public function agregar(){
 
     try{
         $sql = "INSERT INTO usuario (nombre, apellido, nikname, correo, password) VALUES
@@ -153,7 +153,7 @@ class Usuario extends Clase_Base
 
         $resultado = null;
         $db = null;
-        return true;
+        return array('nickname'=> $this->nickname); 
    }catch(PDOException $e){
       return $e->getMessage();
      
@@ -204,9 +204,9 @@ class Usuario extends Clase_Base
       
       $user = $resultado->fetch();
       if ($user){
-              return $user['nikname'];
+        return $user['nikname'];
       }else{
-      return '';
+        return '';
       }
       } catch (Exception $ex) {
           return $e->getMessage();

@@ -7,6 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
+    'Zeuxisoo\\Whoops\\Slim\\Tests\\' => array($vendorDir . '/zeuxisoo/slim-whoops/tests'),
+    'Zeuxisoo\\Whoops\\Slim\\' => array($vendorDir . '/zeuxisoo/slim-whoops/src/Zeuxisoo/Whoops/Slim'),
+    'Whoops\\' => array($vendorDir . '/filp/whoops/src/Whoops'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Tests\\' => array($baseDir . '/tests'),

@@ -15,11 +15,35 @@
   <script src="assets/js/misScripts.js"></script>
   <script src="assets/js/main.js"></script>
   <script type="text/javascript" src="assets/js/autocompletar.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script type="text/javascript">
+
     $('#fecha').daterangepicker({
         "minDate": "{{ "now"|date("m")}}/{{ "now"|date("d")}}/{{ "now"|date("yy")}}"
     });
+    $(document).ready(function () {
+        //notificaciones varias dependiendo de donde se carguen
+     //Si el usuario se loguea por primera vez
+     if ('{{session.nuevo}}' === 'SI'){
+        Swal.fire({text: 'Bienvenido '+'{{session.nick}}'+' ',backdrop:true,timer:5000,toast:true, position:'top',grow:false,showConfirmButton:false});
+        '{{session.nuevo}}'[0] = 'NO';
+    }
+     //Si no se pudo registrar un usuario
+     if('{{session.noregistro}}'==='SI'){
+     Swal.fire({text: 'No se pudo registrar',backdrop:true,timer:5000,toast:true, position:'top',grow:false,showConfirmButton:false});
+    }
+    //Si no se pudo modificar un usuario
+     if('{{session.modificado}}'==='SI'){
+     Swal.fire({text:'Usuario: '+'{{session.nick}}'+' Modificado',backdrop:true,timer:5000,toast:true, position:'top',grow:false,showConfirmButton:false});
+    }
+
+    //Si no se pudo modificar un usuario
+     if('{{session.salida}}'==='SI'){
+     Swal.fire({text:'Salió correctamente',backdrop:true,timer:5000,toast:true, position:'top',grow:false,showConfirmButton:false});
+    }
+    });
   </script>
+
 {% endblock %}
 </body>
 

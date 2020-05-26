@@ -18,7 +18,7 @@ $('#paquete-'+opcion).submit(function(e){
          $('#btnReserva-'+opcion).css('cursor','no-drop');
          $('#btnReserva-'+opcion).attr("disabled", true);
          document.getElementById("btnReserva-"+opcion).value = "RESERVADO";
-         alert("Gracias por preferirnos. Se le ha enviado un correo con los detalles del paquete.");
+         Swal.fire({text:'Gracias por preferirnos. Se le ha enviado un correo con los detalles',backdrop:true,toast:true, position:'top',grow:false,showConfirmButton:true});
        })
        .fail(function(){
          document.getElementById("btnReserva-"+opcion).value = "RESERVAR";
