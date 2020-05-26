@@ -56,7 +56,7 @@ class Paquete extends Clase_Base {
         //$this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
         $ch = curl_init();
         //Preparo el curl para hacer la consulta
-        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=MAD&destinationLocationCode='.$destino_buscado.'&departureDate=2020-08-01&adults=1&max=10');
+        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode='.$destino_buscado.'&departureDate=2020-08-01&adults=1&max=10');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
