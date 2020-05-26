@@ -8,51 +8,39 @@
 namespace App\Domain\Clases;
 
 use App\Domain\Clases\Clase_Base;
+use App\Infrastructure\Persistence\db as DB;
 
 class Vuelo extends Clase_Base{
     
+    private $id;
     private $origenCodigo;
     private $destinoCodigo;
-    private $ultimaFechaEmision;
-    private $cantidadDeAsientosReservables;
-    private $idaDuracion;
     private $fechaIda;
     private $moneda;
     private $precioTotal;
-    private $aerolinea;
-    private $opcionTarifa;
-    private $tipoViajeros;
     
     
-    function __construct() {
+    function __construct($obj=NULL) {
         if(isset($obj)){
             foreach ($obj as $key => $value) {
                 $this->$key=$value;
             }
         }
-        $tabla="vuelos";
+        $tabla="transporte";
         parent::__construct($tabla);
         
     }
-    
+
+    function getId() {
+        return $this->id;
+    }
+
     function getOrigenCodigo() {
         return $this->origenCodigo;
     }
 
     function getDestinoCodigo() {
         return $this->destinoCodigo;
-    }
-
-    function getUltimaFechaEmision() {
-        return $this->ultimaFechaEmision;
-    }
-
-    function getCantidadDeAsientosReservables() {
-        return $this->cantidadDeAsientosReservables;
-    }
-
-    function getIdaDuracion() {
-        return $this->idaDuracion;
     }
 
     function getFechaIda() {
@@ -67,16 +55,8 @@ class Vuelo extends Clase_Base{
         return $this->precioTotal;
     }
 
-    function getAerolinea() {
-        return $this->aerolinea;
-    }
-
-    function getOpcionTarifa() {
-        return $this->opcionTarifa;
-    }
-
-    function getTipoViajeros() {
-        return $this->tipoViajeros;
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setOrigenCodigo($origenCodigo) {
@@ -85,18 +65,6 @@ class Vuelo extends Clase_Base{
 
     function setDestinoCodigo($destinoCodigo) {
         $this->destinoCodigo = $destinoCodigo;
-    }
-
-    function setUltimaFechaEmision($ultimaFechaEmision) {
-        $this->ultimaFechaEmision = $ultimaFechaEmision;
-    }
-
-    function setCantidadDeAsientosReservables($cantidadDeAsientosReservables) {
-        $this->cantidadDeAsientosReservables = $cantidadDeAsientosReservables;
-    }
-
-    function setIdaDuracion($idaDuracion) {
-        $this->idaDuracion = $idaDuracion;
     }
 
     function setFechaIda($fechaIda) {
@@ -111,102 +79,55 @@ class Vuelo extends Clase_Base{
         $this->precioTotal = $precioTotal;
     }
 
-    function setAerolinea($aerolinea) {
-        $this->aerolinea = $aerolinea;
+    public function agregar(){
+        $origenCodigo=$this->getOrigenCodigo();
+        $destinoCodigo=$this->getDestinoCodigo();
+        $fechaIda=$this->getFechaIda();
+        $moneda=$this->getMoneda();
+        $precioTotal=$this->getPrecioTotal();
+
+        if(!$this->existe($origenCodigo,$destinoCodigo,$fechaIda)){
+
+            $sql = "INSERT INTO transporte (origenCodigo,destinoCodigo,fechaIda,moneda,precioTotal) VALUES
+                     (:o, :d, :fi, :m, :p)";
+
+              try{
+                $db = new DB();
+                $db = $db->conexionDB();
+                $resultado = $db->prepare($sql);
+
+                $resultado->bindParam(':o', $origenCodigo);
+                $resultado->bindParam(':d', $destinoCodigo);
+                $resultado->bindParam(':fi', $fechaIda);
+                $resultado->bindParam(':m', $moneda);
+                $resultado->bindParam(':p', $precioTotal);
+
+                $resultado->execute();
+                $resultado = null;
+                $db = null;
+                return true;
+              }catch(PDOException $e){
+                $response->getBody()->write( 'Hubo un problema al agregar el vuelo en la base de datos: '.$e->getMessage() );
+                return false;
+              }
+        }
     }
-
-    function setOpcionTarifa($opcionTarifa) {
-        $this->opcionTarifa = $opcionTarifa;
-    }
-
-    function setTipoViajeros($tipoViajeros) {
-        $this->tipoViajeros = $tipoViajeros;
-    }
-
-//function getVuelo($origen = null, $destino = null, $fechaSalida = null , $adultos = null){
-//    
-//    //si dentro de los parametros no llega ningun valor, o si alguno es null
-//    //entonces lo que se hace es cargar las variales siguientes con unos valores predeterminados
-//    //que se sabe de antemano sirven para esta llamada de api
-//    //lo hice así, porque me parece que sirve tanto para si no llega ningun valor o si solo falta uno
-//    if (!$origen){
-//        $origen = "SYD";
-//    }if (!$destino){
-//        $destino = "BKK";
-//    }if (!$fechaSalida){
-//        $fechaSalida = 2020-08-01;
-//    }if (!$adultos){
-//        $adultos = 2;
-//    } 
-//    
-//    // Obtengo el token
-//   $this->token = CB::getToken();
-//
-//   $ch = curl_init();
-////Preparo el curl para hacer la consulta
-//   curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?
-//       originLocationCode='.$origen.'&
-//       destinationLocationCode='.$destino.'&
-//       departureDate='.$fechaSalida.'&
-//       adults='.$adultos.'&
-//       max=3');
-//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-//
-//   $headers = array();
-//   $headers[] = 'Authorization: Bearer '.$this->token;
-//   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-////Obtengo toda la informacion en json
-//   $resultado = curl_exec($ch);
-//
-//   if (curl_errno($ch)) {
-//       echo 'Error:' . curl_error($ch);
-//   }
-//   curl_close($ch);
-//
-//    $json_response=json_decode($resultado, true);
-//    
-//   
-//}//cierra la funcion get vuelo
-
-
-  public function agregar(){
-    $nombre=$this->getNombre();
-    $idDestino = $this->getIdDestino();
-
-    if(!$this->existe($nombre, $idDestino)){
-      $estrellas=$this->getEstrellas();
-      $checkIn=$this->getCheckIn();
-      $checkOut=$this->getCheckOut();
-      $precio = $this->getPrecio();
-      $descripcion = $this->getDescripcion();
-
-      $sql = "INSERT INTO alojamiento (nombre, estrellas, checkIn, checkOut, precio, descripcion, idDestino) VALUES
-             (:nombre, :estrellas, :checkIn, :checkOut, :precio, :descripcion, :idDestino)";
-
-      try{
+    
+  public function existe($origenCodigo,$destinoCodigo,$fechaIda){
         $db = new DB();
         $db = $db->conexionDB();
-        $resultado = $db->prepare($sql);
+        $stmt = $db->prepare( "SELECT * from  transporte WHERE origenCodigo= :o AND destinoCodigo = :d AND fechaIda= :fi" );
+        $stmt->bindParam(':o', $origenCodigo);
+        $stmt->bindParam(':d', $destinoCodigo);
+        $stmt->bindParam(':fi', $fechaIda);
 
-        $resultado->bindParam(':nombre', $nombre);
-        $resultado->bindParam(':estrellas', $estrellas);
-        $resultado->bindParam(':checkIn', $checkIn);
-        $resultado->bindParam(':checkOut', $checkOut);
-        $resultado->bindParam(':precio', $precio);
-        $resultado->bindParam(':descripcion', $descripcion);
-        $resultado->bindParam(':idDestino', $idDestino);
-
-        $resultado->execute();
-        $resultado = null;
-        $db = null;
-        return true;
-      }catch(PDOException $e){
-        $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
-        return false;
-      }
+        $stmt->execute();
+        if($stmt->columnCount() > 0){
+            return true;
+        }else{
+          return false;
+        }
     }
-  }
   
   
 }//cierra la clase

@@ -56,7 +56,7 @@ class Paquete extends Clase_Base {
         //$this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
         $ch = curl_init();
         //Preparo el curl para hacer la consulta
-        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2020-08-01&adults=1&max=1');
+        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=MAD&destinationLocationCode='.$destino_buscado.'&departureDate=2020-08-01&adults=1&max=10');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
@@ -72,30 +72,29 @@ class Paquete extends Clase_Base {
         curl_close($ch);
 
         $json_response = json_decode($resultado, true);
+        //var_dump($json_response);
+        $vuelos[] = null;
         if (isset($json_response)) {
-            $aux = $json_response["data"];
-            foreach ($aux as $key => $value) {
-                $id = array('id' => $aux['hotel']['id']);
-                $ultimaFechaParaComprar = array('ultimaFechaParaComprar' => $aux["lastTicketingDate"]);
-                $numeroDeLugaresDisponibles = array('numeroDeLugaresDisponibles' => $aux["numberOfBookableSeats"]);
-                foreach ($aux["itineraries"] as $key => $value) {
-                    foreach ($aux["itineraries"]["segments"] as $key => $value) {
-                        foreach ($aux["itineraries"]["segments"]["departure"] as $key => $value) {
-                            $iataCodeOrigen = array('iataCodeOrigen' => ["iataCode"]);
-                            $fechaSalida = date("Y-m-d H:i", strtotime($fechaSalida));
+            if (isset($json_response["data"])) {
+                foreach ($json_response["data"] as $key => $value){
+                    foreach ($value["itineraries"] as $key => $value2){
+                        foreach ($value2["segments"] as $key => $value3){
+                            $origenCodigo = array ('origenCodigo' => $value3["departure"]["iataCode"]);
+                            $fechaIda = array ('fechaIda' => $value3["departure"]["at"]);//date("Y-m-d H:i", strtotime($fechaSalida)));
+                            $destinoCodigo = array ('destinoCodigo' => $value3["arrival"]["iataCode"]);
                         }
                     }
+                    $moneda = array('moneda' => $value["price"]["currency"]);
+                    $precioTotal = array('precioTotal' => $value["price"]["total"]);
+                    $vuelo = new Vuelo(array_merge($origenCodigo,$destinoCodigo,$fechaIda,$moneda,$precioTotal));
+                    $vuelo->agregar();
+                    $vuelos[] = $vuelo;
                 }
-                foreach ($aux["price"] as $key => $value) {
-                    $currency = array('currency' => $aux["price"]["currency"]);
-                    $precioTotal = array('precioTotal' => $aux["price"]["total"]);
-                }
-                $datos = array_merge($id, $ultimaFechaParaComprar, $numeroDeLugaresDisponibles, $iataCodeOrigen, $fechaSalida, $currency, $precioTotal);
-                $nuevoVuelo = new Vuelo($datos);
-                $vuelos[] = $nuevoVuelo;
             }
-            return $vuelos;
         }
+        
+        //var_dump($vuelos);
+        return $vuelos;
     }
 
     public function setId(int $id) {

@@ -58,13 +58,13 @@ class Controlador_Paquetes{
 
         $this->destinos = $paquetes->getListaDestinos($destino_buscado);
         $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado,$fecha_buscada);
-        //$this->vuelos = $paquetes->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
+        $this->vuelos = $paquetes->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
         $this->puntosdeinteres = $paquetes->getListaPuntosDeInteres("41.29694", "2.07833", NULL, NULL);
         //y hacer las convinaciones con varios for
         // $this->crearPaquetes();
        $listaPaquetes = array( 'destinos'=>$this->destinos,
                             'alojamientos'=>$this->alojamientos,
-                            //'vuelos'=>$this->vuelos,
+                            'vuelos'=>$this->vuelos,
                             'puntosdeinteres'=>$this->puntosdeinteres);
     }
     else{
