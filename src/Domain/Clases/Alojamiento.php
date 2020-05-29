@@ -127,7 +127,7 @@ class Alojamiento extends Clase_Base
         $db = null;
         return true;
       }catch(PDOException $e){
-        $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+        $response->getBody()->write( 'Ha ocurrido un error, comuniquese con el administrador' );
         return false;
       }
     }

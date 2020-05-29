@@ -124,7 +124,7 @@ class Destino extends Clase_Base
        $db = null;
        return true;
      }catch(PDOException $e){
-       $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+       $response->getBody()->write( 'Ha ocurrido un error, comuniquese con el administrador' );
        return false;
      }
    }
@@ -198,6 +198,20 @@ class Destino extends Clase_Base
     }
   }
 
-}
+  public static function destinoAleatorio(){
+    $indice = mt_rand(1,50);
+    $db = new DB();
+    $db = $db->conexionDB();
+    $stmt = $db->prepare( "SELECT idDestino FROM destino ORDER BY rand() LIMIT 1 " );
+    $stmt->execute();
+    if($stmt->columnCount() < 1){
+        return NULL;
+    }else{
+      $resultado = $stmt->fetch();
+      return $resultado[0];
+    }
+  }
+
+}//Fin de la clase
 
  ?>

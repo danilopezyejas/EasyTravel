@@ -801,8 +801,10 @@ div#destinoautocomplete-list.autocomplete-items{
     margin-bottom: 0; }
   @media screen and (max-width: 1680px) {
     #footer {
-      bottom: 3.5em;
-      left: 3.5em; }
+      left: 3.5em;
+      position: relative;
+      bottom: 1em;
+    }
 
     .nav_login{
       bottom: 14em;
@@ -819,8 +821,10 @@ div#destinoautocomplete-list.autocomplete-items{
         }}
   @media screen and (max-width: 360px) {
     #footer {
-      bottom: 1.25em;
-      left: 1.25em; }
+      left: 1.25em;
+      position: relative;
+      bottom: 1em;
+    }
 
     .nav_login{
         bottom: 10em;

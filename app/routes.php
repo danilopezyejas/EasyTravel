@@ -172,7 +172,7 @@ return function (App $app) {
 
         if ($_SESSION['nick'] !== '') {
             $_SESSION['modificado'] = 'SI';
-            
+
         }
         return $response->withHeader('Location', '/EasyTravel/public');
     });

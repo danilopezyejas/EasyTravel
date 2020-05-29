@@ -93,12 +93,12 @@ class Usuario extends Clase_Base
         $db = $db->conexionDB();
         $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname " );
         $stmt->bindParam(':nikname', $this->nickname);
-        
+
         $stmt->execute();
         if($stmt->rowCount() < 1){
             return array('nickname'=>'');
-        }    
-        $resultado = $stmt->fetch(); 
+        }
+        $resultado = $stmt->fetch();
         return  array('nickname'=> $resultado['nikname'],
                         'nombre'=> $resultado['nombre'],
                         'apellido'=> $resultado['apellido'],
@@ -106,7 +106,7 @@ class Usuario extends Clase_Base
 
 //        return $retorno;
         }catch(PDOException $e){
-            return $e->getMessage();     
+            return $e->getMessage();
         }
     }
 //<<<<<<< HEAD
@@ -123,17 +123,17 @@ class Usuario extends Clase_Base
 
 
         if($user && password_verify($this->contrasenia, $user['password'])){
-            return array('nickname'=> $user['nikname']);    
-            
-        }    
-        else{       
+            return array('nickname'=> $user['nikname']);
+
+        }
+        else{
                 return  array('nickname'=>'');
         }
         }catch(PDOException $e){
-            return $e->getMessage();     
+            return $e->getMessage();
         }
     }
-    
+
     public function agregar(){
 
     try{
@@ -153,24 +153,24 @@ class Usuario extends Clase_Base
 
         $resultado = null;
         $db = null;
-        return array('nickname'=> $this->nickname); 
+        return array('nickname'=> $this->nickname);
    }catch(PDOException $e){
       return $e->getMessage();
-     
+
    }
 //<<<<<<< HEAD
-    
+
     }
 //=======
 // }
 //>>>>>>> 36fc3c14c724cfbc12d6754a15a47d768d592332
      public function modificar(){
-     try{  
-   
+     try{
+
      $sql = "update usuario set nombre = :nombre, apellido= :apellido, correo=  :correo, password = :pass
              where nikname= :nickname ";
 
-    
+
       $db = new DB();
       $db = $db->conexionDB();
       $resultado = $db->prepare($sql);
@@ -183,15 +183,15 @@ class Usuario extends Clase_Base
 
       $resultado->execute();
       return array('nickname'=> $this->nickname);
-           
-          
+
+
    }catch(PDOException $e){
      return $e->getMessage();
    }
-    
+
     }
 
-  
+
   public function existeNick(){
       try{
           $sql = "select * from usuario where nikname = :nickname ";
@@ -200,8 +200,8 @@ class Usuario extends Clase_Base
       $resultado = $db->prepare($sql);
          $resultado->bindParam(':nickname', $this->nickname);
       $resultado->execute();
-      
-      
+
+
       $user = $resultado->fetch();
       if ($user){
         return $user['nikname'];
@@ -238,7 +238,7 @@ class Usuario extends Clase_Base
         $db = null;
         return true;
       }catch(PDOException $e){
-        $response->getBody()->write( '{"error" : {"text":'.$e->getMessage().'}}' );
+        $response->getBody()->write( 'Ha ocurrido un error, comuniquese con el administrador' );
         return false;
       }
     }
@@ -246,6 +246,6 @@ class Usuario extends Clase_Base
   }//fin de la clase usuario
 
 
-     
+
 //}
  ?>

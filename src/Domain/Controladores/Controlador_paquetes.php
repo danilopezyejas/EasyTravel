@@ -53,8 +53,10 @@ class Controlador_Paquetes{
   {
     $paquetes = new Paquete();
 
+    $destino_buscado = Destino::destinoAleatorio();
+
     if($destino_buscado){
-        $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
+        // $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
 
         $this->destinos = $paquetes->getListaDestinos($destino_buscado);
         $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado,$fecha_buscada);
@@ -81,7 +83,7 @@ class Controlador_Paquetes{
     }
 // Si el usuario no selecciono ningun destino entra al if
     // if(!$this->destinos){
-    //   $this->destinos = $paquetes->getListaDestinos();
+    //   $destino_buscado = Destino::destinoAleatorio();
     // }
     // if (!$this->alojamientos) {
     //   $this->alojamientos = $paquetes->getListaAlojamientos();
