@@ -184,48 +184,37 @@ class Paquete extends Clase_Base {
 
 
     public function getTransporte($destino_buscado=NULL, $origen=NULL, $cantidadAdultos=NULL, $fechaSalida=NULL) {
-         $this->token = CB::getToken();
-        //$this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
-        $ch = curl_init();
-        //Preparo el curl para hacer la consulta
-        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode='.$destino_buscado.'&departureDate=2020-08-01&adults=1&max=10');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-
-        $headers = array();
-        $headers[] = 'Authorization: Bearer ' . $this->token;
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        //Obtengo toda la informacion en json
-        $resultado = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+        $db = new DB();
+        $db = $db->conexionDB();
+        if (!$destino_buscado && !$origen && !$cantidadAdultos &&!$fechaSalida){
+            $resultado = $db->prepare("SELECT * FROM transporte;");
         }
-        curl_close($ch);
+        else{
 
-        $json_response = json_decode($resultado, true);
-        //var_dump($json_response);
-        $vuelos[] = null;
-        if (isset($json_response)) {
-            if (isset($json_response["data"])) {
-                foreach ($json_response["data"] as $key => $value){
-                    foreach ($value["itineraries"] as $key => $value2){
-                        foreach ($value2["segments"] as $key => $value3){
-                            $origenCodigo = array ('origenCodigo' => $value3["departure"]["iataCode"]);
-                            $fechaIda = array ('fechaIda' => $value3["departure"]["at"]);//date("Y-m-d H:i", strtotime($fechaSalida)));
-                            $destinoCodigo = array ('destinoCodigo' => $value3["arrival"]["iataCode"]);
-                        }
-                    }
-                    $moneda = array('moneda' => $value["price"]["currency"]);
-                    $precioTotal = array('precioTotal' => $value["price"]["total"]);
-                    $vuelo = new Vuelo(array_merge($origenCodigo,$destinoCodigo,$fechaIda,$moneda,$precioTotal));
-                    $vuelo->agregar();
-                    $vuelos[] = $vuelo;
-                }
+            $resultado = $db->prepare("SELECT * FROM transporte 
+                where origenCodigo='".$origen."' and destinoCodigo='".$destino_buscado."' and 
+                fechaIda >=".$fechaSalida);
+        }
+        $resultado->execute();
+
+        if($resultado->rowCount() > 0){
+            while ( $obj = $resultado->fetch() ) {
+                //$p = new Paquete($obj);
+                $vuelos[] = $obj;
             }
         }
+<<<<<<< HEAD
 
         //var_dump($vuelos);
+=======
+        else {
+            $vuelos = array('mensaje' => "No se encontraron resultados");
+        }
+        $resultado = null;
+        $db = null;
+        //var_dump($paquetes);
+
+>>>>>>> 8c6535d9b68bbbd698c3daba6d332cd4e516b1e2
         return $vuelos;
     }
 
