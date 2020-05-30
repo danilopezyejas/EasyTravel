@@ -182,7 +182,7 @@ class Paquete extends Clase_Base {
     }
 
 
-    
+
     public function getTransporte($destino_buscado=NULL, $origen=NULL, $cantidadAdultos=NULL, $fechaSalida=NULL) {
          $this->token = CB::getToken();
         //$this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
@@ -346,49 +346,52 @@ class Paquete extends Clase_Base {
 
     public function getListaDestinos($destino_buscado) {
 
-        $this->token = CB::getToken();
-        //$this->token = "H2eX2tPQ2pShv3nxbzaBfAEEwwyY";
+      $destino = Destino::getInfo($destino_buscado);
+      return $destino;
 
-        $ch = curl_init();
-        //Preparo el curl para hacer la consulta
-        curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/reference-data/locations/C' . $destino_buscado);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-
-        $headers = array();
-        $headers[] = 'Authorization: Bearer ' . $this->token;
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        //Obtengo toda la informacion en json
-        $resultado = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
-
-        $json_response = json_decode($resultado, true);
-        if ($json_response != NULL) {
-            if (isset($json_response["data"])) {
-                $destinos = array('ciudad' => $json_response["data"]["address"]["cityName"],
-                    'idLocation' => $json_response["data"]["id"],
-                    'idCity' => $json_response ["data"]["address"]["cityCode"],
-                    'iataCode' => $json_response ["data"]["iataCode"],
-                    'timeZone' => $json_response ["data"]["timeZoneOffset"],
-                    'latitud' => $json_response ["data"]["geoCode"]["latitude"],
-                    'longitud' => $json_response ["data"]["geoCode"]["longitude"],
-                    'pais' => $json_response ["data"]["address"]["countryName"],
-                    'region' => $json_response ["data"]["address"]["regionCode"],
-                    'id' => $destino_buscado);
-            } else {
-                $destinos = array('id' => "XXX");
-            }
-        } else {
-            $destinos = array('id' => "XYX");
-        }
-        if ($destino_buscado != NULL) {
-            $nuevoDestino = new Destino($destinos);
-        }
-        return $destinos;
+        // $this->token = CB::getToken();
+        // //$this->token = "H2eX2tPQ2pShv3nxbzaBfAEEwwyY";
+        //
+        // $ch = curl_init();
+        // //Preparo el curl para hacer la consulta
+        // curl_setopt($ch, CURLOPT_URL, 'https://test.api.amadeus.com/v1/reference-data/locations/C' . $destino_buscado);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        //
+        // $headers = array();
+        // $headers[] = 'Authorization: Bearer ' . $this->token;
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        // //Obtengo toda la informacion en json
+        // $resultado = curl_exec($ch);
+        //
+        // if (curl_errno($ch)) {
+        //     echo 'Error:' . curl_error($ch);
+        // }
+        // curl_close($ch);
+        //
+        // $json_response = json_decode($resultado, true);
+        // if ($json_response != NULL) {
+        //     if (isset($json_response["data"])) {
+        //         $destinos = array('ciudad' => $json_response["data"]["address"]["cityName"],
+        //             'idLocation' => $json_response["data"]["id"],
+        //             'idCity' => $json_response ["data"]["address"]["cityCode"],
+        //             'iataCode' => $json_response ["data"]["iataCode"],
+        //             'timeZone' => $json_response ["data"]["timeZoneOffset"],
+        //             'latitud' => $json_response ["data"]["geoCode"]["latitude"],
+        //             'longitud' => $json_response ["data"]["geoCode"]["longitude"],
+        //             'pais' => $json_response ["data"]["address"]["countryName"],
+        //             'region' => $json_response ["data"]["address"]["regionCode"],
+        //             'id' => $destino_buscado);
+        //     } else {
+        //         $destinos = array('id' => "XXX");
+        //     }
+        // } else {
+        //     $destinos = array('id' => "XYX");
+        // }
+        // if ($destino_buscado != NULL) {
+        //     $nuevoDestino = new Destino($destinos);
+        // }
+        // return $destinos;
     }
 
 //    public function getListaPuntosDeInteres($latitudbuscar = NULL, $longitudbuscar = NULL, $precio_buscado = NULL, $tematica_buscada = NULL) {
@@ -526,7 +529,7 @@ class Paquete extends Clase_Base {
 
         return $paquetes;
     }
-    
+
     public function getPaquetesPorDestino($destino_buscado=NULL,$precio_buscado=NULL,$fecha_buscada=NULL,$tematica_buscada=NULL){
         $this->destinos = $this->getListaDestinos($destino_buscado);
         $this->alojamientos = $this->getListaAlojamientos($destino_buscado, $fecha_buscada);
@@ -535,13 +538,12 @@ class Paquete extends Clase_Base {
         $paquetes = [];
         foreach ($this->alojamientos as $key => $value) {
             foreach ($this->transporte as $key2 => $value2) {
-                $this->agregarDB();
+                $this->agregarDB($value['idAlojamiento']);
             }
         }
 
-        return;
     }
-      public function agregarDB(){
+      public function agregarDB($idAlojamiento){
 
       $sql = "INSERT INTO alojamiento (id_transporte, id_alojamiento, id_destino, precio) VALUES
              (:id_transporte, :id_alojamiento, :id_destino, :precio)";
@@ -552,8 +554,8 @@ class Paquete extends Clase_Base {
         $resultado = $db->prepare($sql);
 
         $resultado->bindParam(':id_transporte', $this->transporte);
-        $resultado->bindParam(':id_alojamiento', $this->alojamiento);
-        $resultado->bindParam(':id_destino', $this->destino["id"]);
+        $resultado->bindParam(':id_alojamiento', $idAlojamiento);
+        $resultado->bindParam(':id_destino', $this->destinos['idDestino']);
         $resultado->bindParam(':precio', $this->precio);
 
         $resultado->execute();
@@ -564,7 +566,7 @@ class Paquete extends Clase_Base {
         $response->getBody()->write( 'Ocurrió un error, comuniquese con el administrador.' );
         return false;
       }
-    
+
   }
 
 }//cierre de la clase paquete

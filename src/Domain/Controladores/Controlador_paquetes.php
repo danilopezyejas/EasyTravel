@@ -53,16 +53,12 @@ class Controlador_Paquetes{
   {
     $paquetes = new Paquete();
 
-<<<<<<< HEAD
     // $destino_buscado = Destino::destinoAleatorio();
 
-    if($destino_buscado){
-=======
-    
->>>>>>> 17a109a7dc8c5ed3226b09f563f16218477bf683
+    // if($destino_buscado){
         $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
 
-        
+
 
             //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
             //entonces devuelvo paquetes por precio y no por destino
@@ -71,8 +67,8 @@ class Controlador_Paquetes{
             //$this->paquetes = $paquetes->getPaquetesPorPrecio($destino_buscado,$precio_buscado);
 
             $listaPaquetes = array('paquetes' => $this->paquetes);
-        
-    
+
+
 // Si el usuario no selecciono ningun destino entra al if
     // if(!$this->destinos){
     //   $destino_buscado = Destino::destinoAleatorio();

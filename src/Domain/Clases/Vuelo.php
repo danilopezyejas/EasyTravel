@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,15 +11,15 @@ use App\Domain\Clases\Clase_Base;
 use App\Infrastructure\Persistence\db as DB;
 
 class Vuelo extends Clase_Base{
-    
+
     private $id;
     private $origenCodigo;
     private $destinoCodigo;
     private $fechaIda;
     private $moneda;
     private $precioTotal;
-    
-    
+
+
     function __construct($obj=NULL) {
         if(isset($obj)){
             foreach ($obj as $key => $value) {
@@ -28,7 +28,7 @@ class Vuelo extends Clase_Base{
         }
         $tabla="transporte";
         parent::__construct($tabla);
-        
+
     }
 
     function getId() {
@@ -86,10 +86,10 @@ class Vuelo extends Clase_Base{
         $moneda=$this->getMoneda();
         $precioTotal=$this->getPrecioTotal();
 
-        if(!$this->existe($origenCodigo,$destinoCodigo,$fechaIda)){
+        // if(!$this->existe($origenCodigo,$destinoCodigo,$fechaIda)){
 
             $sql = "INSERT INTO transporte (origenCodigo,destinoCodigo,fechaIda,moneda,precioTotal) VALUES
-                     (:o, :d, :fi, :m, :p)";
+                     (:o, :d, :fi, :m, :p) ";
 
               try{
                 $db = new DB();
@@ -105,14 +105,15 @@ class Vuelo extends Clase_Base{
                 $resultado->execute();
                 $resultado = null;
                 $db = null;
+
                 return true;
               }catch(PDOException $e){
                 $response->getBody()->write( 'Hubo un problema al agregar el vuelo en la base de datos: '.$e->getMessage() );
                 return false;
               }
-        }
+        // }
     }
-    
+
   public function existe($origenCodigo,$destinoCodigo,$fechaIda){
         $db = new DB();
         $db = $db->conexionDB();
@@ -122,14 +123,15 @@ class Vuelo extends Clase_Base{
         $stmt->bindParam(':fi', $fechaIda);
 
         $stmt->execute();
+
         if($stmt->columnCount() > 0){
             return true;
         }else{
           return false;
         }
     }
-  
-  
+
+
 }//cierra la clase
 
 ?>
