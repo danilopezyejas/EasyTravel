@@ -3,6 +3,10 @@ namespace App\Domain\Controladores;
 
 use App\Domain\Clases\Usuario as Usuario;
 use App\Domain\Clases\DtUsuario as DtUsuario;
+use App\Domain\Clases\Alojamiento;
+use App\Domain\Clases\Vuelo;
+use App\Domain\Clases\Destino;
+
 
 class Controlador_Usuario{
 
@@ -77,22 +81,76 @@ class Controlador_Usuario{
          // $this->usuarioLogueado = $logueado['nickname'];
       }
       return $logueado;
-      
+
   }
   public function logout()
   {
       self::$logueado = null;
   }
-  
+
   public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
   {
     if(Usuario::guardarPaquete($idAlojamiento,$idVuelo,$idDestino)){
-      // $para      =  Session::get('mail');
-      $para      = 'lopezyejas@gmail.com';
+      // $Alojamiento = Alojamiento::getInfo($idAlojamiento);
+      // $Vuelo = Vuelo::getInfo($idVuelo);
+      $Destino = Destino::getInfo($idDestino);
+
+      $para      =  $_SESSION['mail'];
       $asunto    = 'Reserva en EasyTravel';
-      $mensaje   = 'Hola, gracias por preferirnos.';
-      $cabeceras = 'From: php.2020.grupo3.tip@gmail.com' . "\r\n" .
+      $mensaje   = "<html lang='es'>
+      <head>
+      <meta charset='utf-8'>
+      <title></title>
+      </head>
+      <body style='background-color: black '>
+
+      <!--Copia desde aquí-->
+      <table style='max-width: 600px; padding: 10px; margin:0 auto; border-collapse: collapse;'>
+      <tr>
+      <td style='background-color: #ecf0f1; text-align: left; padding: 0'>
+      <a href='https://easytraveltip.herokuapp.com/'>
+        <img width='20%' style='display:block; margin: 1.5% 3%; clip-path: inset(32% 20% 32% 20%);' src='https://z-p3-scontent.fmvd3-1.fna.fbcdn.net/v/t1.0-9/p960x960/55944984_339372503589359_3080510613827354624_o.jpg?_nc_cat=111&_nc_sid=85a577&_nc_eui2=AeFEPA-ZzqZ9fmnI4oGMuIHixVknnM7c0RjFWSecztzRGMak0eV53xSOrqv1VzGsjtk&_nc_ohc=mAUC08BaMqsAX-EcaYX&_nc_ht=z-p3-scontent.fmvd3-1.fna&_nc_tp=6&oh=5661ef6a3e9bf0820b3a7ecbf06ed5f3&oe=5EF6F99C'>
+      </a>
+      </td>
+      </tr>
+
+      <tr>
+      <td style='padding: 0'>
+      <img style='padding: 0; display: block' src='https://culturainquieta.com/images/articles/Norways_Breathtaking_Fjords_From_A_Polish_Kayakers_Perspective/Tomasz_Furmanek_Fjord_fiordo_kayak8.jpg' width='100%'>
+      </td>
+      </tr>
+
+      <tr>
+      <td style='background-color: #ecf0f1'>
+      <div style='color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif'>
+        <h2 style='color: #2261e6; margin: 0 0 7px; text-align: center'>Gracias por confiar en Easy Travel</h2>
+        <h3 style='color: #e67e22; margin: 0 0 7px; text-align: center'>Su proximo destino es: ".$Destino['ciudad'].$Destino['pais'] ." </h3>
+        <p style='margin: 2px; font-size: 15px; text-align: left;'>
+
+        </p>
+        <ul style='font-size: 15px;  margin: 10px 0'>
+          <li>Batallas amistosas.</li>
+          <li>Torneos Oficiales.</li>
+          <li>Intercambios de Pokémon.</li>
+          <li>Actividades de integración.</li>
+          <li>Muchas sorpresas más.</li>
+        </ul>
+        <div style='width: 100%; text-align: center'>
+          <a style='text-decoration: none; border-radius: 5px; padding: 11px 23px; color: white; background-color: #3498db' href='https://easytraveltip.herokuapp.com/'>Ir a la página</a>
+        </div>
+        <p style='color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0'>Tecnologo en informatica 2020</p>
+      </div>
+      </td>
+      </tr>
+      </table>
+      <!--hasta aquí-->
+
+      </body>
+      </html>
+";
+      $cabeceras = 'From: Easy TRavel php.2020.grupo3.tip@gmail.com' . "\r\n" .
                    'Reply-To: php.2020.grupo3.tip@gmail.com' . "\r\n" .
+                   'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
                    'X-Mailer: PHP/' . phpversion();
       $mail = mail($para, $asunto, $mensaje, $cabeceras);
       if($mail){
@@ -104,15 +162,11 @@ class Controlador_Usuario{
       return false;
     }
   }
-//<<<<<<< HEAD
-  
+
   public  static function existeNick(DtUsuario $usr){
       $usuario = new Usuario();
       $usuario->setNickname($usr->getNickname());
       return $usuario->existeNick();
   }
-//}
-//=======
 
 }//Fin clase controlador usuario
-//>>>>>>> 36fc3c14c724cfbc12d6754a15a47d768d592332

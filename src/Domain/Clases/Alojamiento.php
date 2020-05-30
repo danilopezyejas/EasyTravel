@@ -152,6 +152,39 @@ class Alojamiento extends Clase_Base
           return false;
         }
     }
+
+public static function getInfo($idAlojamiento)
+{
+  $db = new DB();
+  $db = $db->conexionDB();
+  $stmt = $db->prepare( "SELECT * from  alojamiento WHERE  idAlojamiento = :idAlojamiento" );
+  $stmt->bindParam(':idAlojamiento', $idAlojamiento);
+
+  $stmt->execute();
+  if($stmt->columnCount() < 1){
+      return '';
+  }
+  $resultado = $stmt->fetch();
+
+  return $resultado;
 }
+
+public static function getAlojamientos($idDestino)
+{
+  $db = new DB();
+  $db = $db->conexionDB();
+  $stmt = $db->prepare( "SELECT * from  alojamiento WHERE  idDestino = :idDestino" );
+  $stmt->bindParam(':idDestino', $idDestino);
+
+  $stmt->execute();
+  if($stmt->columnCount() < 1){
+      return '';
+  }
+  $resultado = $stmt->fetchAll();
+
+  return $resultado;
+}
+
+}//Fin de la clase
 
  ?>

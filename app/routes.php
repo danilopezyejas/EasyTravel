@@ -128,6 +128,7 @@ return function (App $app) {
             $nickname = CU::login($usr);
             $_SESSION['nuevo'] = 'SI';
             $_SESSION['nick'] = $nickname['nickname'];
+            $_SESSION['mail'] = $usr->getCorreo();
             return $response->withHeader('Location', '/EasyTravel/public');
         } else {
             $_SESSION['nuevo'] = 'NO';
@@ -151,6 +152,9 @@ return function (App $app) {
             // Set session variables
             $_SESSION['nuevo'] = 'SI';
             $_SESSION["nick"] = $nickname['nickname'];
+            $_SESSION['mail'] = $nickname['correo'];
+            $_SESSION['idUsuario'] = $nickname['idUsuario'];
+
         } else {
             return $response->withHeader('Location', '/EasyTravel/public/login');
         }
@@ -169,6 +173,7 @@ return function (App $app) {
         $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
 
         $_SESSION['nick'] = CU::modificar($usr)['nickname'];
+        $_SESSION['mail'] = $usr->getCorreo();
 
         if ($_SESSION['nick'] !== '') {
             $_SESSION['modificado'] = 'SI';

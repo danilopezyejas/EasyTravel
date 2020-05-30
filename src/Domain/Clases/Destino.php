@@ -212,6 +212,22 @@ class Destino extends Clase_Base
     }
   }
 
+  public static function getInfo($idDestino)
+  {
+    $db = new DB();
+    $db = $db->conexionDB();
+    $stmt = $db->prepare( "SELECT * from  destino WHERE  idDestino = :idDestino" );
+    $stmt->bindParam(':idDestino', $idDestino);
+
+    $stmt->execute();
+    if($stmt->columnCount() < 1){
+        return '';
+    }
+    $resultado = $stmt->fetch();
+
+    return $resultado;
+  }
+
 }//Fin de la clase
 
  ?>

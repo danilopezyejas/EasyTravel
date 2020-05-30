@@ -3,6 +3,7 @@ $('#paquete-'+opcion).submit(function(e){
   e.preventDefault();
   var datos = $(this).serializeArray();
   $.ajax({
+        async:false,
          url: "/EasyTravel/public/guardarPaquete",
          type: "POST",
          data: datos,

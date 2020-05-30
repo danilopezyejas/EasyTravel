@@ -123,7 +123,7 @@ class Usuario extends Clase_Base
 
 
         if($user && password_verify($this->contrasenia, $user['password'])){
-            return array('nickname'=> $user['nikname']);
+            return array('nickname'=> $user['nikname'], 'correo' => $user['correo'], 'idUsuario' => $user['id_Usuario']);
 
         }
         else{
@@ -153,17 +153,13 @@ class Usuario extends Clase_Base
 
         $resultado = null;
         $db = null;
-        return array('nickname'=> $this->nickname);
+        return array('nickname'=> $this->nickname, 'correo' => $user['correo'], 'idUsuario' => $user['id_Usuario']);
    }catch(PDOException $e){
       return $e->getMessage();
 
    }
-//<<<<<<< HEAD
 
     }
-//=======
-// }
-//>>>>>>> 36fc3c14c724cfbc12d6754a15a47d768d592332
      public function modificar(){
      try{
 
@@ -182,7 +178,7 @@ class Usuario extends Clase_Base
       $resultado->bindParam(':pass', $this->contrasenia);
 
       $resultado->execute();
-      return array('nickname'=> $this->nickname);
+      return array('nickname'=> $this->nickname, 'correo' => $user['correo'], 'idUsuario' => $user['id_Usuario']);
 
 
    }catch(PDOException $e){
@@ -217,10 +213,9 @@ class Usuario extends Clase_Base
     public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
     {
       try{
-        // $idUsuario = Session::get('idUsuario');
-        $idUsuario=2;
+        $idUsuario = $_SESSION['idUsuario'];
 
-        $sql = "INSERT INTO paquetesComprados (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
+        $sql = "INSERT INTO paquetes_comprados (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
                 (:id_usuario, :id_transporte, :id_destino, :id_alojamiento )";
 
         $db = new DB();
