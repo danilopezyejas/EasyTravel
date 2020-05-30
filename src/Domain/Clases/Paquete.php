@@ -19,8 +19,10 @@ class Paquete extends Clase_Base {
     private $precio;
     //datos del transporte
     private $id_transporte;
+    private $transporte; //esto sería un array con toda la info del transporte
     //datos del alojamiento
     private $id_alojamiento;
+    private $alojamiento; //esto sería un array
     private $nombre; //Este es el nombre del hotel
     private $estrellas;
     private $checkIn;
@@ -28,6 +30,7 @@ class Paquete extends Clase_Base {
     private $descripcion;
     //datos del destino
     private $id_destino;
+    private $destino; //array con todos los datos del destino
     private $ciudad;
     private $pais;
     private $region;
@@ -50,7 +53,136 @@ class Paquete extends Clase_Base {
     public function getId() {
         // code...
     }
+    function getTabla() {
+        return $this->tabla;
+    }
 
+    function getId_paquete() {
+        return $this->id_paquete;
+    }
+
+    function getPrecio() {
+        return $this->precio;
+    }
+
+    function getId_transporte() {
+        return $this->id_transporte;
+    }
+
+    function getId_alojamiento() {
+        return $this->id_alojamiento;
+    }
+
+    function getNombre() {
+        return $this->nombre;
+    }
+
+    function getEstrellas() {
+        return $this->estrellas;
+    }
+
+    function getCheckIn() {
+        return $this->checkIn;
+    }
+
+    function getCheckOut() {
+        return $this->checkOut;
+    }
+
+    function getDescripcion() {
+        return $this->descripcion;
+    }
+
+    function getId_destino() {
+        return $this->id_destino;
+    }
+
+    function getCiudad() {
+        return $this->ciudad;
+    }
+
+    function getPais() {
+        return $this->pais;
+    }
+
+    function getRegion() {
+        return $this->region;
+    }
+
+    function getLatitud() {
+        return $this->latitud;
+    }
+
+    function getLongitud() {
+        return $this->longitud;
+    }
+
+    function setTabla($tabla) {
+        $this->tabla = $tabla;
+    }
+
+    function setId_paquete($id_paquete) {
+        $this->id_paquete = $id_paquete;
+    }
+
+    function setPrecio($precio) {
+        $this->precio = $precio;
+    }
+
+    function setId_transporte($id_transporte) {
+        $this->id_transporte = $id_transporte;
+    }
+
+    function setId_alojamiento($id_alojamiento) {
+        $this->id_alojamiento = $id_alojamiento;
+    }
+
+    function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+    function setEstrellas($estrellas) {
+        $this->estrellas = $estrellas;
+    }
+
+    function setCheckIn($checkIn) {
+        $this->checkIn = $checkIn;
+    }
+
+    function setCheckOut($checkOut) {
+        $this->checkOut = $checkOut;
+    }
+
+    function setDescripcion($descripcion) {
+        $this->descripcion = $descripcion;
+    }
+
+    function setId_destino($id_destino) {
+        $this->id_destino = $id_destino;
+    }
+
+    function setCiudad($ciudad) {
+        $this->ciudad = $ciudad;
+    }
+
+    function setPais($pais) {
+        $this->pais = $pais;
+    }
+
+    function setRegion($region) {
+        $this->region = $region;
+    }
+
+    function setLatitud($latitud) {
+        $this->latitud = $latitud;
+    }
+
+    function setLongitud($longitud) {
+        $this->longitud = $longitud;
+    }
+
+
+    
     public function getTransporte($destino_buscado=NULL, $origen=NULL, $cantidadAdultos=NULL, $fechaSalida=NULL) {
          $this->token = CB::getToken();
         //$this->token = "QFc1HgAtB1P4n5CmRhbg8jItTCwI";
@@ -256,83 +388,83 @@ class Paquete extends Clase_Base {
         return $destinos;
     }
 
-    public function getListaPuntosDeInteres($latitudbuscar = NULL, $longitudbuscar = NULL, $precio_buscado = NULL, $tematica_buscada = NULL) {
-        //definir las tematicas segun los rangos de precio
-        //modificar los precios segun se muestren en la busqueda
-        if($precio_buscado&&!$tematica_buscada){
-            if(strcmp ( $precio_buscado, '0-500')== 0){
-                $tematica_buscada = 'beaches|camping|dancing|eatingout';
-            }
-            else if(strcmp ( $precio_buscado, '500-1000')== 0){
-                $tematica_buscada = 'dancing|eatingout|cuisine-Mexican|museums';
-            }
-            else if(strcmp ( $precio_buscado, '1000-1500')== 0){
-                $tematica_buscada = 'cuisine-Vegan|cinema|coffee|cuisine-Italian|history';
-            }
-            else if(strcmp ( $precio_buscado, '1500-+')== 0){
-                $tematica_buscada = 'money|hidden-Expensive|adrenaline|poitype-Casino';
-            }
-        }
-
-
-        //si todos son null
-        if (!$latitudbuscar&&!$longitudbuscar&&!$precio_buscado&&!$tematica_buscada){
-            $url_llamada_api = "https://www.triposo.com/api/20200405/local_highlights.json?latitude=40.49181&longitude=-3.56948&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag";
-        }else{
-            if (!$latitudbuscar||!$longitudbuscar){
-                if (isset($precio_buscado) && isset($tematica_buscada)){
-                    $url_llamada_api = 'https://www.triposo.com/api/20200405/local_highlights.json?latitude=40.49181&longitude=-3.56948&tag_labels='.$tematica_buscada.'&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag';
-                }
-                else{
-                    $url_llamada_api = 'https://www.triposo.com/api/20200405/local_highlights.json?latitude=40.49181&longitude=-3.56948&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag';
-                }
-            }else{
-                $url_llamada_api = 'https://www.triposo.com/api/20200405/local_highlights.json?latitude='.$latitudbuscar.'&longitude='.$longitudbuscar.'&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag';
-            }
-        }
-
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url_llamada_api);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        $resultado = curl_exec($ch);
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
-
-
-        $json_response = json_decode($resultado, true);
-        //var_dump($json_response);
-        if ($json_response != NULL) {
-            if (isset($json_response)) {
-                if (isset($json_response["results"])) {
-                    if (isset($json_response["results"]["0"]["pois"]["0"])) {
-                        $pois = $json_response["results"]["0"]["pois"];
-                        foreach($pois as $key => $value){
-                            $nombre = array('nombre' => $value["name"]);
-                            $descripcion = array('descripcion' => $value["intro"]);
-                            $idubicacion = array('idubicacion' => $value["location_id"]);
-                            $datos = array_merge($nombre,$descripcion,$idubicacion);
-                            $nuevoPoi = new PuntosDeInteres($datos);
-                            $puntosdeinteres[] = $nuevoPoi;
-                        }
-                    }else {
-                        $puntosdeinteres = array('id' => "XXX");
-                    }
-                }else {
-                    $puntosdeinteres = array('id' => "XXX");
-                }
-            } else {
-                $puntosdeinteres = array('id' => "XXX");
-            }
-        } else {
-            $puntosdeinteres = array('id' => "XXX");
-        }
-        return $puntosdeinteres;
-    }
+//    public function getListaPuntosDeInteres($latitudbuscar = NULL, $longitudbuscar = NULL, $precio_buscado = NULL, $tematica_buscada = NULL) {
+//        //definir las tematicas segun los rangos de precio
+//        //modificar los precios segun se muestren en la busqueda
+//        if($precio_buscado&&!$tematica_buscada){
+//            if(strcmp ( $precio_buscado, '0-500')== 0){
+//                $tematica_buscada = 'beaches|camping|dancing|eatingout';
+//            }
+//            else if(strcmp ( $precio_buscado, '500-1000')== 0){
+//                $tematica_buscada = 'dancing|eatingout|cuisine-Mexican|museums';
+//            }
+//            else if(strcmp ( $precio_buscado, '1000-1500')== 0){
+//                $tematica_buscada = 'cuisine-Vegan|cinema|coffee|cuisine-Italian|history';
+//            }
+//            else if(strcmp ( $precio_buscado, '1500-+')== 0){
+//                $tematica_buscada = 'money|hidden-Expensive|adrenaline|poitype-Casino';
+//            }
+//        }
+//
+//
+//        //si todos son null
+//        if (!$latitudbuscar&&!$longitudbuscar&&!$precio_buscado&&!$tematica_buscada){
+//            $url_llamada_api = "https://www.triposo.com/api/20200405/local_highlights.json?latitude=40.49181&longitude=-3.56948&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag";
+//        }else{
+//            if (!$latitudbuscar||!$longitudbuscar){
+//                if (isset($precio_buscado) && isset($tematica_buscada)){
+//                    $url_llamada_api = 'https://www.triposo.com/api/20200405/local_highlights.json?latitude=40.49181&longitude=-3.56948&tag_labels='.$tematica_buscada.'&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag';
+//                }
+//                else{
+//                    $url_llamada_api = 'https://www.triposo.com/api/20200405/local_highlights.json?latitude=40.49181&longitude=-3.56948&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag';
+//                }
+//            }else{
+//                $url_llamada_api = 'https://www.triposo.com/api/20200405/local_highlights.json?latitude='.$latitudbuscar.'&longitude='.$longitudbuscar.'&poi_fields=name,score,intro,location_id&account=R2XMW3DG&token=mt4dcdlieh0a5hyvhjere6y3ur4pdaag';
+//            }
+//        }
+//
+//
+//        $ch = curl_init();
+//
+//        curl_setopt($ch, CURLOPT_URL, $url_llamada_api);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//
+//        $resultado = curl_exec($ch);
+//        if (curl_errno($ch)) {
+//            echo 'Error:' . curl_error($ch);
+//        }
+//        curl_close($ch);
+//
+//
+//        $json_response = json_decode($resultado, true);
+//        //var_dump($json_response);
+//        if ($json_response != NULL) {
+//            if (isset($json_response)) {
+//                if (isset($json_response["results"])) {
+//                    if (isset($json_response["results"]["0"]["pois"]["0"])) {
+//                        $pois = $json_response["results"]["0"]["pois"];
+//                        foreach($pois as $key => $value){
+//                            $nombre = array('nombre' => $value["name"]);
+//                            $descripcion = array('descripcion' => $value["intro"]);
+//                            $idubicacion = array('idubicacion' => $value["location_id"]);
+//                            $datos = array_merge($nombre,$descripcion,$idubicacion);
+//                            $nuevoPoi = new PuntosDeInteres($datos);
+//                            $puntosdeinteres[] = $nuevoPoi;
+//                        }
+//                    }else {
+//                        $puntosdeinteres = array('id' => "XXX");
+//                    }
+//                }else {
+//                    $puntosdeinteres = array('id' => "XXX");
+//                }
+//            } else {
+//                $puntosdeinteres = array('id' => "XXX");
+//            }
+//        } else {
+//            $puntosdeinteres = array('id' => "XXX");
+//        }
+//        return $puntosdeinteres;
+//    }
 
     public function getPaquetesPorPrecio($precio_buscado=NULL){
 
@@ -391,6 +523,46 @@ class Paquete extends Clase_Base {
 
         return $paquetes;
     }
+    
+    public function getPaquetesPorDestino($destino_buscado=NULL,$precio_buscado=NULL,$fecha_buscada=NULL,$tematica_buscada=NULL){
+        $this->destinos = $this->getListaDestinos($destino_buscado);
+        $this->alojamientos = $this->getListaAlojamientos($destino_buscado, $fecha_buscada);
+        $this->transporte = $this->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
+
+        $paquetes = [];
+        foreach ($this->alojamientos as $key => $value) {
+            foreach ($this->transporte as $key2 => $value2) {
+                $this->agregarDB();
+            }
+        }
+
+        return;
+    }
+      public function agregarDB(){
+
+      $sql = "INSERT INTO alojamiento (id_transporte, id_alojamiento, id_destino, precio) VALUES
+             (:id_transporte, :id_alojamiento, :id_destino, :precio)";
+
+      try{
+        $db = new DB();
+        $db = $db->conexionDB();
+        $resultado = $db->prepare($sql);
+
+        $resultado->bindParam(':id_transporte', $this->transporte);
+        $resultado->bindParam(':id_alojamiento', $this->alojamiento);
+        $resultado->bindParam(':id_destino', $this->destino["id"]);
+        $resultado->bindParam(':precio', $this->precio);
+
+        $resultado->execute();
+        $resultado = null;
+        $db = null;
+        return true;
+      }catch(PDOException $e){
+        $response->getBody()->write( 'Ocurrió un error, comuniquese con el administrador.' );
+        return false;
+      }
+    
+  }
 
 }//cierre de la clase paquete
 ?>
