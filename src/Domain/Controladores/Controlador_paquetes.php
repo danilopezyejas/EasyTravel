@@ -53,34 +53,26 @@ class Controlador_Paquetes{
   {
     $paquetes = new Paquete();
 
+<<<<<<< HEAD
     // $destino_buscado = Destino::destinoAleatorio();
 
     if($destino_buscado){
+=======
+    
+>>>>>>> 17a109a7dc8c5ed3226b09f563f16218477bf683
         $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
 
-        $this->destinos = $paquetes->getListaDestinos($destino_buscado);
-        $this->alojamientos = $paquetes->getListaAlojamientos($destino_buscado,$fecha_buscada);
-        $this->vuelos = $paquetes->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
-        $this->puntosdeinteres = $paquetes->getListaPuntosDeInteres("41.29694", "2.07833", NULL, NULL);
-        //y hacer las convinaciones con varios for
-        // $this->crearPaquetes();
-       $listaPaquetes = array( 'destinos'=>$this->destinos,
-                            'alojamientos'=>$this->alojamientos,
-                            'vuelos'=>$this->vuelos,
-                            'puntosdeinteres'=>$this->puntosdeinteres);
-    }
-    else{
-        if($precio_buscado){
+        
+
             //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
             //entonces devuelvo paquetes por precio y no por destino
-            $this->paquetes = $paquetes->getPaquetesPorPrecio($precio_buscado);
+            $this->paquetes = $paquetes->getPaquetesPorDestino($destino_buscado,$precio_buscado,$fecha_buscada,$tematica_buscada);
+
+            //$this->paquetes = $paquetes->getPaquetesPorPrecio($destino_buscado,$precio_buscado);
 
             $listaPaquetes = array('paquetes' => $this->paquetes);
-        }
-        else{
-            $listaPaquetes = array('paquetes' => NULL);
-        }
-    }
+        
+    
 // Si el usuario no selecciono ningun destino entra al if
     // if(!$this->destinos){
     //   $destino_buscado = Destino::destinoAleatorio();
