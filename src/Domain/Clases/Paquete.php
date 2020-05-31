@@ -183,7 +183,7 @@ class Paquete extends Clase_Base {
 
 
 
-    public function getTransporte($destino_buscado=NULL, $origen=NULL, $cantidadAdultos=NULL, $fechaSalida=NULL) {
+    public function getTransporte($destino_buscado=NULL, $cantidadAdultos=NULL, $fechaSalida=NULL) {
         $db = new DB();
         $db = $db->conexionDB();
         if (!$destino_buscado && !$origen && !$cantidadAdultos &&!$fechaSalida){
@@ -191,8 +191,8 @@ class Paquete extends Clase_Base {
         }
         else{
 
-            $resultado = $db->prepare("SELECT * FROM transporte 
-                where origenCodigo='".$origen."' and destinoCodigo='".$destino_buscado."' and 
+            $resultado = $db->prepare("SELECT * FROM transporte
+                where destinoCodigo='".$destino_buscado."' and
                 fechaIda >=".$fechaSalida);
         }
         $resultado->execute();
@@ -203,10 +203,6 @@ class Paquete extends Clase_Base {
                 $vuelos[] = $obj;
             }
         }
-<<<<<<< HEAD
-
-        //var_dump($vuelos);
-=======
         else {
             $vuelos = array('mensaje' => "No se encontraron resultados");
         }
@@ -214,7 +210,6 @@ class Paquete extends Clase_Base {
         $db = null;
         //var_dump($paquetes);
 
->>>>>>> 8c6535d9b68bbbd698c3daba6d332cd4e516b1e2
         return $vuelos;
     }
 
@@ -514,27 +509,45 @@ class Paquete extends Clase_Base {
         }
         $resultado = null;
         $db = null;
-        //var_dump($paquetes);
-
         return $paquetes;
     }
 
     public function getPaquetesPorDestino($destino_buscado=NULL,$precio_buscado=NULL,$fecha_buscada=NULL,$tematica_buscada=NULL){
-        $this->destinos = $this->getListaDestinos($destino_buscado);
-        $this->alojamientos = $this->getListaAlojamientos($destino_buscado, $fecha_buscada);
-        $this->transporte = $this->getTransporte($destino_buscado, NULL, NULL, $fecha_buscada);
+//         $this->destinos = $this->getListaDestinos($destino_buscado);
+//         $this->alojamientos = $this->getListaAlojamientos($destino_buscado, $fecha_buscada);
+//         $this->transporte = $this->getTransporte($destino_buscado, NULL, $fecha_buscada);
+//
+// $paquetes = [];
+//         foreach ($this->alojamientos as $key => $value) {
+//             foreach ($this->transporte as $key2 => $value2) {
+//               // $precio = $value['precio'] + $value2['precioTotal'];
+//               //   $this->agregarDB($value['idAlojamiento'],$value2['idtransporte'], $precio);
+//               $arrayName = array('' => , );
+//             }
+//         }
 
-        $paquetes = [];
-        foreach ($this->alojamientos as $key => $value) {
-            foreach ($this->transporte as $key2 => $value2) {
-                $this->agregarDB($value['idAlojamiento']);
-            }
+        $db = new DB();
+        $db = $db->conexionDB();
+        $stmt = $db->prepare( "SELECT * FROM `paquetes`
+                                        INNER JOIN destino on destino.idDestino=paquetes.id_destino
+                                        INNER JOIN transporte on transporte.idtransporte=paquetes.id_transporte
+                                        INNER JOIN alojamiento on alojamiento.idAlojamiento=paquetes.id_alojamiento
+                                        WHERE id_destino = :idDestino ");
+        $stmt->bindParam(':idDestino', $destino_buscado);
+
+        $stmt->execute();
+        if($stmt->columnCount() < 1){
+            return '';
         }
+        $resultado = $stmt->fetchAll();
 
+
+        return $resultado;
     }
-      public function agregarDB($idAlojamiento){
 
-      $sql = "INSERT INTO alojamiento (id_transporte, id_alojamiento, id_destino, precio) VALUES
+    public function agregarDB($idAlojamiento, $idTransporte, $precio){
+
+      $sql = "INSERT INTO paquetes (id_transporte, id_alojamiento, id_destino, precio) VALUES
              (:id_transporte, :id_alojamiento, :id_destino, :precio)";
 
       try{
@@ -542,10 +555,10 @@ class Paquete extends Clase_Base {
         $db = $db->conexionDB();
         $resultado = $db->prepare($sql);
 
-        $resultado->bindParam(':id_transporte', $this->transporte);
+        $resultado->bindParam(':id_transporte', $idTransporte);
         $resultado->bindParam(':id_alojamiento', $idAlojamiento);
         $resultado->bindParam(':id_destino', $this->destinos['idDestino']);
-        $resultado->bindParam(':precio', $this->precio);
+        $resultado->bindParam(':precio', $precio);
 
         $resultado->execute();
         $resultado = null;

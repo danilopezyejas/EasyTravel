@@ -131,6 +131,22 @@ class Vuelo extends Clase_Base{
         }
     }
 
+    public static function getInfo($idVuelo)
+    {
+      $db = new DB();
+      $db = $db->conexionDB();
+      $stmt = $db->prepare( "SELECT * from  transporte WHERE  idtransporte = :idTransporte" );
+      $stmt->bindParam(':idTransporte', $idVuelo);
+
+      $stmt->execute();
+      if($stmt->columnCount() < 1){
+          return '';
+      }
+      $resultado = $stmt->fetch();
+
+      return $resultado;
+    }
+
 
 }//cierra la clase
 

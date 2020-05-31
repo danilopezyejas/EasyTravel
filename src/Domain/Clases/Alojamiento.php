@@ -153,7 +153,8 @@ class Alojamiento extends Clase_Base
         }
     }
 
-public static function getInfo($idAlojamiento)
+
+public static function getAlojamientos($idAlojamiento)
 {
   $db = new DB();
   $db = $db->conexionDB();
@@ -165,22 +166,6 @@ public static function getInfo($idAlojamiento)
       return '';
   }
   $resultado = $stmt->fetch();
-
-  return $resultado;
-}
-
-public static function getAlojamientos($idDestino)
-{
-  $db = new DB();
-  $db = $db->conexionDB();
-  $stmt = $db->prepare( "SELECT * from  alojamiento WHERE  idDestino = :idDestino" );
-  $stmt->bindParam(':idDestino', $idDestino);
-
-  $stmt->execute();
-  if($stmt->columnCount() < 1){
-      return '';
-  }
-  $resultado = $stmt->fetchAll();
 
   return $resultado;
 }

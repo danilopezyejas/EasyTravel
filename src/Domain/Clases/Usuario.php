@@ -123,7 +123,7 @@ class Usuario extends Clase_Base
 
 
         if($user && password_verify($this->contrasenia, $user['password'])){
-            return array('nickname'=> $user['nikname'], 'correo' => $user['correo'], 'idUsuario' => $user['id_Usuario']);
+            return array('nickname'=> $user['nikname'], 'correo' => $user['correo'], 'idUsuario' => $user['id_usuario']);
 
         }
         else{
@@ -214,7 +214,7 @@ class Usuario extends Clase_Base
     {
       try{
         $idUsuario = $_SESSION['idUsuario'];
-
+// $idUsuario = 2;
         $sql = "INSERT INTO paquetes_comprados (id_usuario, id_transporte, id_destino, id_alojamiento ) VALUES
                 (:id_usuario, :id_transporte, :id_destino, :id_alojamiento )";
 

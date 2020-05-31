@@ -94,6 +94,8 @@ class Controlador_Usuario{
       // $Alojamiento = Alojamiento::getInfo($idAlojamiento);
       // $Vuelo = Vuelo::getInfo($idVuelo);
       $Destino = Destino::getInfo($idDestino);
+      $Alojamiento = Alojamiento::getAlojamientos($idAlojamiento);
+      $Transporte = Vuelo::getInfo($idVuelo);
 
       $para      =  $_SESSION['mail'];
       $asunto    = 'Reserva en EasyTravel';
@@ -124,16 +126,14 @@ class Controlador_Usuario{
       <td style='background-color: #ecf0f1'>
       <div style='color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif'>
         <h2 style='color: #2261e6; margin: 0 0 7px; text-align: center'>Gracias por confiar en Easy Travel</h2>
-        <h3 style='color: #e67e22; margin: 0 0 7px; text-align: center'>Su proximo destino es: ".$Destino['ciudad'].$Destino['pais'] ." </h3>
+        <h3 style='color: #e67e22; margin: 0 0 7px; text-align: center'>Su proximo destino es: ".$Destino['ciudad']." ".$Destino['pais'] ." </h3>
         <p style='margin: 2px; font-size: 15px; text-align: left;'>
 
         </p>
-        <ul style='font-size: 15px;  margin: 10px 0'>
-          <li>Batallas amistosas.</li>
-          <li>Torneos Oficiales.</li>
-          <li>Intercambios de Pokémon.</li>
-          <li>Actividades de integración.</li>
-          <li>Muchas sorpresas más.</li>
+        <ul style='font-size: 15px;  margin: 10px 0 40px 0 ;'>
+          <li><b>Se hospedara en:</b> ".$Alojamiento['nombre']." un hotel de ".$Alojamiento['estrellas']." estrellas</li>
+          <li>".$Alojamiento['descripcion'].".</li>
+          <li><b>Su vuelo sale el:</b> ".$Transporte['fechaIda']."</li>
         </ul>
         <div style='width: 100%; text-align: center'>
           <a style='text-decoration: none; border-radius: 5px; padding: 11px 23px; color: white; background-color: #3498db' href='https://easytraveltip.herokuapp.com/'>Ir a la página</a>

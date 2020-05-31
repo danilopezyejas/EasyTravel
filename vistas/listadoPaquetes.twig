@@ -9,8 +9,8 @@
                     <div class="resultado">
                         <img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
                         <div class="descripcion">
-                            <h1>{{item.pais}}</h1>
-                            <h1>{{item.ciudad}}</h1>
+                            <h2>Opcion {{ cantOpciones }}:</h2>
+                            <h1>{{item.ciudad}} {{ item.pais}}</h1>
                             <p>Región: {{item.region}}</p>
                             <p>Latitud: {{item.latitud}}</p>
                             <p>Longitud: {{item.longitud}}</p>
@@ -19,11 +19,11 @@
                             <p><b>CheckIn:</b> {{item.checkIn}}  <b>CheckOut:</b> {{item.checkOut}}</p>
                             <p><b>Descripcion:</b> {{item.descripcion}}<p>
                             <p><b>Vuelo: </b>{{item.id_transporte}}</p>
-                            <p><b>Precio: </b>{{item.precio}}</p>
+                            <p><b>Precio: </b>{{item.precioTotal}}</p>
                             <form id="paquete-{{cantOpciones}}" onsubmit="guardarPaquete({{cantOpciones}});">
                                 <div style="display: none;">
                                     <input type="text" id="idAlojamiento-{{cantOpciones}}" name="idAlojamiento" value="{{item.id_alojamiento}}">
-                                    <input type="text" id="idVuelo-{{cantOpciones}}" name="idVuelo" value="IDVuelo">
+                                    <input type="text" id="idVuelo-{{cantOpciones}}" name="idVuelo" value="{{item.id_transporte}}">
                                     <input type="text" id="idDestino-{{cantOpciones}}" name="idDestino" value="{{item.id_destino}}">
                                 </div>
                                 <div class="reservar" id="reservar-{{cantOpciones}}">
