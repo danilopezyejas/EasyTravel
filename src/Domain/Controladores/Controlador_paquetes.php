@@ -53,11 +53,11 @@ class Controlador_Paquetes{
   {
     $paquetes = new Paquete();
 
-    // $destino_buscado = Destino::destinoAleatorio();
-
-    // if($destino_buscado){
-        $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
-
+    if($destino_buscado==null){
+      $destino_buscado = Destino::destinoAleatorio();
+    }else{
+      $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
+    }
 
 
             //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
