@@ -148,7 +148,7 @@ class Controlador_Usuario{
       </body>
       </html>
 ";
-      $cabeceras = 'From: Easy TRavel php.2020.grupo3.tip@gmail.com' . "\r\n" .
+      $cabeceras = 'From: Easy Travel php.2020.grupo3.tip@gmail.com' . "\r\n" .
                    'Reply-To: php.2020.grupo3.tip@gmail.com' . "\r\n" .
                    'Content-Type: text/html; charset=ISO-8859-1' . "\r\n" .
                    'X-Mailer: PHP/' . phpversion();

@@ -16,7 +16,7 @@ class Paquete extends Clase_Base {
     //datos del paquete en si
     private $tabla;
     private $id_paquete;
-    private $precio;
+    private $precioTotal;
     //datos del transporte
     private $id_transporte;
     private $transporte; //esto sería un array con toda la info del transporte
@@ -125,8 +125,8 @@ class Paquete extends Clase_Base {
         $this->id_paquete = $id_paquete;
     }
 
-    function setPrecio($precio) {
-        $this->precio = $precio;
+    function setPrecio($precioTotal) {
+        $this->precio = $precioTotal;
     }
 
     function setId_transporte($id_transporte) {
@@ -456,61 +456,105 @@ class Paquete extends Clase_Base {
 //        return $puntosdeinteres;
 //    }
 
-    public function getPaquetesPorPrecio($precio_buscado=NULL){
+public function getPaquetesPorPrecio($destino_buscado=NULL,$precio_buscado=NULL){
 
-        $db = new DB();
-        $db = $db->conexionDB();
-        if (!$precio_buscado){
-            $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
-                                    id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
-                                    alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
-                                    destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud
-                                    from paquetes
-                                    inner join alojamiento, destino, transporte
-                                    where paquetes.id_alojamiento= alojamiento.idAlojamiento
-                                    and paquetes.id_destino=destino.idDestino
-                                    and paquetes.id_transporte=transporte.idTransporte
-                                    ");
-        }
-        else{
-            if(strcmp ( $precio_buscado, "500")== 0){
-                $query = "paquetes.precio<500";
-            }
-            else if(strcmp ( $precio_buscado, "500-1000")== 0){
-                $query = "paquetes.precio>499 and paquetes.precio<1000";
-            }
-            else if(strcmp ( $precio_buscado, '1000-1500')== 0){
-                $query = "paquetes.precio>999 and paquetes.precio<1500";
-            }
-            else if(strcmp ( $precio_buscado, '1500')== 0){
-                $query = "paquetes.precio>1499";
-            }
-
-            $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
-                                    id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
-                                    alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
-                                    destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud
-                                    from paquetes
-                                    inner join alojamiento, destino, transporte
-                                    where paquetes.id_alojamiento= alojamiento.idAlojamiento
-                                    and paquetes.id_destino=destino.idDestino
-                                    and paquetes.id_transporte=transporte.idTransporte and ".$query);
-        }
-        $resultado->execute();
-
-        if($resultado->rowCount() > 0){
-            while ( $obj = $resultado->fetch() ) {
-                //$p = new Paquete($obj);
-                $paquetes[] = $obj;
-            }
-        }
-        else {
-            $paquetes = array('mensaje' => "No se encontraron resultados");
-        }
-        $resultado = null;
-        $db = null;
-        return $paquetes;
+    $db = new DB();
+    $db = $db->conexionDB();
+    $query ="";
+    if (!$destino_buscado){
+    if (!$precio_buscado){
+        $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
+                                id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
+                                alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
+                                destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud, transporte.fechaIda
+                                from paquetes
+                                inner join alojamiento, destino, transporte
+                                where paquetes.id_alojamiento= alojamiento.idAlojamiento
+                                and paquetes.id_destino=destino.idDestino
+                                and paquetes.id_transporte=transporte.idTransporte
+                                ");
     }
+    else{
+        if(strcmp ( $precio_buscado, "500")== 0){
+            $query = "paquetes.precio<500";
+        }
+        else if(strcmp ( $precio_buscado, "500-1000")== 0){
+            $query = "paquetes.precio>499 and paquetes.precio<1000";
+        }
+        else if(strcmp ( $precio_buscado, '1000-1500')== 0){
+            $query = "paquetes.precio>999 and paquetes.precio<1500";
+        }
+        else if(strcmp ( $precio_buscado, '1500')== 0){
+            $query = "paquetes.precio>1499";
+        }
+
+        $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
+                                id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
+                                alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
+                                destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud, transporte.fechaIda
+                                from paquetes
+                                inner join alojamiento, destino, transporte
+                                where paquetes.id_alojamiento= alojamiento.idAlojamiento
+                                and paquetes.id_destino=destino.idDestino
+                                and paquetes.id_transporte=transporte.idTransporte and ".$query);
+    }
+    }else{
+        if (!$precio_buscado){
+        $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
+                                id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
+                                alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
+                                destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud, transporte.fechaIda
+                                from paquetes
+                                inner join alojamiento, destino, transporte
+                                where paquetes.id_alojamiento= alojamiento.idAlojamiento
+                                and paquetes.id_destino=destino.idDestino
+                                and paquetes.id_transporte=transporte.idTransporte
+                                and paquetes.id_destino='".$destino_buscado."'
+                                ");
+    }
+    else{
+        if(strcmp ( $precio_buscado, "500")== 0){
+            $query = "paquetes.precio<500";
+        }
+        else if(strcmp ( $precio_buscado, "500-1000")== 0){
+            $query = "paquetes.precio>499 and paquetes.precio<1000";
+        }
+        else if(strcmp ( $precio_buscado, '1000-1500')== 0){
+            $query = "paquetes.precio>999 and paquetes.precio<1500";
+        }
+        else if(strcmp ( $precio_buscado, '1500')== 0){
+            $query = "paquetes.precio>1499";
+        }
+
+        $resultado = $db->prepare("select id_paquete,id_transporte,id_alojamiento,
+                                id_destino,paquetes.precio,alojamiento.nombre,alojamiento.estrellas,
+                                alojamiento.checkIn,alojamiento.checkOut,alojamiento.descripcion,
+                                destino.ciudad, destino.pais, destino.region, destino.latitud, destino.longitud, transporte.fechaIda
+                                from paquetes
+                                inner join alojamiento, destino, transporte
+                                where paquetes.id_alojamiento= alojamiento.idAlojamiento
+                                and paquetes.id_destino=destino.idDestino
+                                and paquetes.id_transporte=transporte.idTransporte
+                                and paquetes.id_destino='".$destino_buscado."' and ".$query);
+    }
+    }
+    $resultado->execute();
+
+    if($resultado->rowCount() > 0){
+        while ( $obj = $resultado->fetch() ) {
+            //$p = new Paquete($obj);
+            $paquetes[] = $obj;
+        }
+    }
+    else {
+        $paquetes = array('mensaje' => "No se encontraron resultados");
+    }
+    $resultado = null;
+    $db = null;
+    //var_dump($paquetes);
+
+    return $paquetes;
+}
 
     public function getPaquetesPorDestino($destino_buscado=NULL,$precio_buscado=NULL,$fecha_buscada=NULL,$tematica_buscada=NULL){
 //         $this->destinos = $this->getListaDestinos($destino_buscado);

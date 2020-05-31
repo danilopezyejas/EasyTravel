@@ -19,7 +19,8 @@
                             <p><b>CheckIn:</b> {{item.checkIn}}  <b>CheckOut:</b> {{item.checkOut}}</p>
                             <p><b>Descripcion:</b> {{item.descripcion}}<p>
                             <p><b>Vuelo: </b>{{item.id_transporte}}</p>
-                            <p><b>Precio: </b>{{item.precioTotal}}</p>
+                            <p><b>Fecha de salida del vuelo: </b>{{item.fechaIda}}</p>
+                            <p><b>Precio: </b>{{item.precio}}</p>
                             <form id="paquete-{{cantOpciones}}" onsubmit="guardarPaquete({{cantOpciones}});">
                                 <div style="display: none;">
                                     <input type="text" id="idAlojamiento-{{cantOpciones}}" name="idAlojamiento" value="{{item.id_alojamiento}}">

@@ -52,21 +52,22 @@ class Controlador_Paquetes{
   public function listarPaquetes($destino_buscado=null, $precio_buscado=null, $fecha_buscada=null, $tematica_buscada=null)
   {
     $paquetes = new Paquete();
-
-    if($destino_buscado==null){
-      $destino_buscado = Destino::destinoAleatorio();
+    if($precio_buscado==null){
+      if($destino_buscado==null){
+        $destino_buscado = Destino::destinoAleatorio();
+      }else{
+        $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
+      }
+      //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
+      //entonces devuelvo paquetes por precio y no por destino
+      $this->paquetes = $paquetes->getPaquetesPorDestino($destino_buscado,$precio_buscado,$fecha_buscada,$tematica_buscada);
     }else{
       $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
+      $this->paquetes = $paquetes->getPaquetesPorPrecio($destino_buscado,$precio_buscado);
+
     }
 
-
-            //acá es donde tomo en cuenta que haya ingresado un rango de precio y no un destino.
-            //entonces devuelvo paquetes por precio y no por destino
-            $this->paquetes = $paquetes->getPaquetesPorDestino($destino_buscado,$precio_buscado,$fecha_buscada,$tematica_buscada);
-
-            //$this->paquetes = $paquetes->getPaquetesPorPrecio($destino_buscado,$precio_buscado);
-
-            $listaPaquetes = array('paquetes' => $this->paquetes);
+    $listaPaquetes = array('paquetes' => $this->paquetes);
 
 
 // Si el usuario no selecciono ningun destino entra al if
