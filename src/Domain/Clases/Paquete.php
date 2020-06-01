@@ -551,7 +551,7 @@ public function getPaquetesPorPrecio($destino_buscado=NULL,$precio_buscado=NULL)
     }
     $resultado = null;
     $db = null;
-    //var_dump($paquetes);
+    var_dump($paquetes);
 
     return $paquetes;
 }
