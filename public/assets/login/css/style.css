@@ -160,3 +160,7 @@ input, textarea {
 .js .animate-box {
   opacity: 0;
 }
+
+.popuptext {
+  visibility: hidden;
+}

@@ -29,30 +29,36 @@
                         <h2>Registrarse</h2>
                         <div class="form-group">
                             <label for="name" class="sr-only">Nickname</label>
-                            <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off" required pattern=".{8,}" >
+                            <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" autocomplete="off" required pattern=".{8,}" onmouseover="ver(1)" onmouseout="ocultar(1);">
+                              <span class="popuptext" id="myPopup1">Minimo 8 caracteres</span>
                         </div>
                         <div class="form-group">
                             <label for="name" class="sr-only">Nombre</label>
                             <input type="text" class="form-control" name="nombre" id="name" placeholder="Nombre" autocomplete="off"
-                                   required  pattern=".{2,}">
+                                   required  pattern=".{2,}" onmouseover="ver(2)" onmouseout="ocultar(2);">
+                                   <span class="popuptext" id="myPopup2">Minimo 2 caracteres</span>
                         </div>
                         <div class="form-group">
                             <label for="name" class="sr-only">Apellido</label>
                             <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" autocomplete="off"
-                                   required  pattern=".{3,}">
-                        </div> 
+                                   required  pattern=".{3,}" onmouseover="ver(3)" onmouseout="ocultar(3);">
+                                   <span class="popuptext" id="myPopup3">Minimo 3 caracteres</span>
+                        </div>
                         <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off"
-                                   required  pattern=".{8,}">
+                                   required  pattern=".{8,}" onmouseover="ver(4)" onmouseout="ocultar(4);">
+                                   <span class="popuptext" id="myPopup4">Minimo 8 caracteres</span>
                         </div>
                         <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes" pattern=".{6,}">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes" pattern=".{6,}" onmouseover="ver(5)" onmouseout="ocultar(5);">
+                            <span class="popuptext" id="myPopup5">Minimo 6 caracteres</span>
                         </div>
                         <div class="form-group">
                             <label for="re-password" class="sr-only">Repita Password</label>
-                            <input type="password" class="form-control" id="re-password" name="re-password" placeholder="Repita Password" autocomplete="off" required="yes">
+                            <input type="password" class="form-control" id="re-password" name="re-password" placeholder="Repita Password" autocomplete="off" required="yes" onmouseover="ver(6)" onmouseout="ocultar(6);">
+                            <span class="popuptext" id="myPopup6">Minimo 6 caracteres</span>
                             <label   name="re-password-check" id="re-password-check" ></label>
                         </div>
                         <div class="form-group">
@@ -112,15 +118,15 @@
                         success: function (data) {
 
                             //Swal.fire({title: `${data}`});
-                           
+
                             if (data === $('#nickname').val() ){
                                 //aca va si es distinto
                                 Swal.fire({title: 'Nickname: ' + data + ' ya utilizado'});
                                 // alert("Nickname: " + data + " ya utilizado");
                                 $('#nickname').val('');
                                  $('#nickname').focus();
-                            } else{    
-                            
+                            } else{
+
                             var p1 = $('#password').val();
                             var p2 = $('#re-password').val();
                             console.log('paso     ' + p1);
