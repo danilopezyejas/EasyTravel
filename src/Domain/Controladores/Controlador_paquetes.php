@@ -63,8 +63,10 @@ class Controlador_Paquetes{
       //entonces devuelvo paquetes por precio y no por destino
       $this->paquetes = $paquetes->getPaquetesPorDestino($destino_buscado,$precio_buscado,$fecha_buscada,$tematica_buscada);
     }else{
-      $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
-      $this->paquetes = $paquetes->getPaquetesPorPrecio($destino_buscado,$precio_buscado);
+      if($destino_buscado!=null){
+        $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
+        $this->paquetes = $paquetes->getPaquetesPorPrecio($destino_buscado,$precio_buscado);
+    }
 
     }
 
@@ -100,12 +102,12 @@ class Controlador_Paquetes{
     $destino = new Destino();
     return $destino->getDestinosGuardados();
   }
-  
+
   public static function getPaquetesComprados($nickname)
   {
     $paquetesComprados = new PaquetesComprados();
     //$paquetesComprados->listaPaquetesComprados($nickname);
-    
+
     $paquetes = array('paquetes' => $paquetesComprados->listaPaquetesComprados($nickname));
     return $paquetes;
   }
