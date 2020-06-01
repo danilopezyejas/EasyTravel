@@ -3,6 +3,7 @@
 namespace App\Domain\Controladores;
 
 use App\Domain\Clases\Paquete as Paquete;
+use App\Domain\Clases\PaquetesComprados as PaquetesComprados;
 use App\Domain\Clases\Destino;
 
 class Controlador_Paquetes{
@@ -98,6 +99,15 @@ class Controlador_Paquetes{
   {
     $destino = new Destino();
     return $destino->getDestinosGuardados();
+  }
+  
+  public static function getPaquetesComprados($nickname)
+  {
+    $paquetesComprados = new PaquetesComprados();
+    //$paquetesComprados->listaPaquetesComprados($nickname);
+    
+    $paquetes = array('paquetes' => $paquetesComprados->listaPaquetesComprados($nickname));
+    return $paquetes;
   }
 
   // public function crearPaquetes()

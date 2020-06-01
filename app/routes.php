@@ -60,6 +60,7 @@ return function (App $app) {
             //Busqueda comun
             $response->getBody()->write($twig->render('listadoDestinos.twig', $destinos));
         }
+//        var_dump($destinos);
         return $response;
     });
 
@@ -191,10 +192,16 @@ return function (App $app) {
         $usr->setNickname($request->getParsedBody()['logueado']);
         //$usr->setNickname($nick);
         $usuario = CU::getUsuarioLogueado($usr);
-
-
+        $paquetes= CP::getPaquetesComprados($usr->getNickname());
+//        var_dump($usuario);
+//        
+//        var_dump($paquetes);
+//        exit;
+        $paquetes['usuario']= $usuario ;
+//        var_dump($paquetes);
+//        exit;
 //        $nombre = array('nombre'=> $usr->getNombre());
-        $response->getBody()->write($twig->render('modificar.twig', $usuario));
+        $response->getBody()->write($twig->render('modificar.twig',$paquetes));
         return $response;
     });
 };

@@ -153,7 +153,7 @@ class Usuario extends Clase_Base
 
         $resultado = null;
         $db = null;
-        return array('nickname'=> $this->nickname, 'correo' => $user['correo'], 'idUsuario' => $user['id_Usuario']);
+        return array('nickname'=> $this->nickname, 'correo' => $this->correo, 'idUsuario' => $this->id);
    }catch(PDOException $e){
       return $e->getMessage();
 
@@ -178,7 +178,7 @@ class Usuario extends Clase_Base
       $resultado->bindParam(':pass', $this->contrasenia);
 
       $resultado->execute();
-      return array('nickname'=> $this->nickname, 'correo' => $user['correo'], 'idUsuario' => $user['id_Usuario']);
+      return array('nickname'=> $this->nickname, 'correo' => $this->correo, 'idUsuario' => $this->id);
 
 
    }catch(PDOException $e){
