@@ -50,27 +50,24 @@ class PaquetesComprados extends Clase_Base {
                 and p.id_transporte = t.idtransporte
                 and p.id_destino = d.idDestino
                 and p.id_alojamiento = a.idAlojamiento
-               and u.nikname = :nickname ");
+                and p.id_destino = a.idDestino
+               and u.nikname = :nickname 
+               order by p.id_paquete");
             $stmt->bindParam(':nickname', $nickname);
 
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
-//                while ($obj = $stmt->fetch()) {
-                    //$p = new Paquete($obj);
                     $paquetes = $stmt->fetchAll();
-//                }
+
             } else {
                 $paquetes = array('mensaje' => "No se encontraron resultados");
             }
-//            var_dump($paquetes);
             return $paquetes;
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
-
-    //put your code here
 }
 
 ?>
