@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Easy Travel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="shortcut icon" href="favicon.ico">
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="../assets/login/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/login/css/animate.css">
+        <link rel="stylesheet" href="../assets/login/css/style.css">
+
+
+        <!-- Modernizr JS -->
+        <script src="../assets/login/js/modernizr-2.6.2.min.js"></script>
+        <script src="../assets/login/js/easytravel.js"></script>
+
+    </head>
+    <body class="style-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- Start Sign In Form -->
+                    <form action="../resenia/guardar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="resenia">
+                        <h2>Reseña del Paquete {{ id_paquete }}</h2>
+                        <div class="form-group">
+                            <label for="name" class="sr-only">Comentarios</label>
+                            <input for="name" class="sr-only" name="paquete" id="paquete" data-value="{{ id_paquete }}" >
+                            <textarea rows="5" class="form-control" name="comentarios" id="comentarios" placeholder="Ingrese comentarios" autocomplete="off" ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <a href="#" class="btn btn-lg" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
+                            <a href="#" class="btn btn-lg" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
+                            <a href="#" class="btn btn-lg" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
+                            <a href="#" class="btn btn-lg" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
+                            <a href="#" class="btn btn-lg" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" id="guardar" value="Guardar" class="btn btn-info" >
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script src="../assets/login/js/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="../assets/login/js/bootstrap.min.js"></script>
+        <!-- Placeholder -->
+        <script src="../assets/login/js/jquery.placeholder.min.js"></script>
+        <!-- Waypoints -->
+        <script src="../assets/login/js/jquery.waypoints.min.js"></script>
+        <!-- Main JS -->
+        <script src="../assets/login/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+        
+
+    </body>
+</html>

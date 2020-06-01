@@ -13,6 +13,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use App\Domain\Clases\DtUsuario as DTUsuario;
+use App\Domain\Clases\Resenia as Resenia;
 
 require __DIR__ . '/../src/Infrastructure/Persistence/db.php';
 
@@ -112,6 +113,44 @@ return function (App $app) {
         $response->getBody()->write($nick);
         return $response;
     });
+// para ingresar una reseña del paquete
+    $app->get('/resenia/{id_paquete}', function (Request $request, Response $response, array $args) {
+        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $twig = new Environment($loader);
+        $id = $request->getAttribute('id_paquete');
+        $datos = array('id_paquete'=>$id);
+        $response->getBody()->write($twig->render('resenia.twig',$datos));
+        return $response;
+        
+        
+    });
+    
+//Guardar los datos de reseña 
+    $app->post('/resenia/guardar', function (Request $request, Response $response) {
+        $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        $twig = new Environment($loader);
+        $usr = $_SESSION['nick'];
+        $res = new Resenia();
+        $res->setDescripcion($request->getParsedBody()['comentarios']);
+        $res->setIdPaquete($request->getParsedBody()['paquete']);
+        $res->setIdUsuario($usuario = CU::getUsuarioLogueado($usr));
+        $res->setValoracion($request->getParsedBody()['email']);
+       
+
+        $nickname = CU::guardarUsuario($usr);
+        if ($nickname['nickname'] !== '') {
+            $nickname = CU::login($usr);
+            $_SESSION['nuevo'] = 'SI';
+            $_SESSION['nick'] = $nickname['nickname'];
+            $_SESSION['mail'] = $usr->getCorreo();
+            return $response->withHeader('Location', '/EasyTravel/public');
+        } else {
+            $_SESSION['nuevo'] = 'NO';
+            $_SESSION['nick'] = '';
+            return $response->withHeader('Location', '/EasyTravel/public');
+        }
+    });
+    
 //Guardar los datos de un usuario que se Registra.
     $app->post('/guardar', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
@@ -198,9 +237,6 @@ return function (App $app) {
 //        var_dump($paquetes);
 //        exit;
         $paquetes['usuario']= $usuario ;
-//        var_dump($paquetes);
-//        exit;
-//        $nombre = array('nombre'=> $usr->getNombre());
         $response->getBody()->write($twig->render('modificar.twig',$paquetes));
         return $response;
     });

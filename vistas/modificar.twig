@@ -26,8 +26,7 @@
             <ul class="nav nav-tabs nav-justified label-primary">
                 <li class="active"><a data-toggle="tab" href="#home">Perfil</a></li>
                 <li><a data-toggle="tab" href="#menu1">Paquetes comprados</a></li>
-                <li><a data-toggle="tab" href="#menu2">Reseñas</a></li>
-                <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+                <li><a data-toggle="tab" href="#menu2">Reseñas</a></li>                
             </ul>
 
             <div class="tab-content">
@@ -72,42 +71,49 @@
                 <div id="menu1" class="tab-pane fade">
                     <div class="col-md-12 fh5co-form">
                         {% if paquetes.mensaje %}
-                        <h1>{{paquetes.mensaje}}</h1>
+                            <h1>{{paquetes.mensaje}}</h1>
                         {% else %}
-                        <table class="table table-striped table-hover table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Id Paquete</th>
-                                    <th>Ciudad</th>
-                                    <th>Pais</th>
-                                    <th>Hotel</th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody>
-                                {% for item in paquetes %}
-                                <tr>
-                                    <td>{{ item.id_paquete }}</td>
-                                    <td>{{ item.ciudad }}</td>
-                                    <td>{{ item.pais }}</td>
-                                    <td>{{ item.nombre }}</td>
-                                </tr>
-                               
-                                {% endfor %}
-                            </tbody>
-                        </table>   
+
+                            <p>Filtrar por alguna de las columnas:</p>  
+                            <input class="form-control" id="myInput" type="text" placeholder="Filtrar...">
+                            <br>
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Id Paquete</th>
+                                        <th>Ciudad</th>
+                                        <th>Pais</th>
+                                        <th>Hotel</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="myTable">
+                                    {% for item in paquetes %}
+                                        <tr>
+                                            <td>{{ item.id_paquete }}</td>
+                                            <td>{{ item.ciudad }}</td>
+                                            <td>{{ item.pais }}</td>
+                                            <td>{{ item.nombre }}</td>
+                                            <td> <button id="agregar" name="agregar" class="btn btn-info pull-left" onClick="window.location = 'resenia/{{item.id_paquete}}'">Agregar Reseña</button></td>
+
+                                        </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>   
                         {% endif %} 
                     </div>
                 </div>
                 <div id="menu2" class="tab-pane fade">
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                </div>
-                <div id="menu3" class="tab-pane fade">
-                    <h3>Menu 3</h3>
-                    <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                    <div class="col-md-12 fh5co-form">
+                    <h3>Reseñas</h3>
+                    <p>Listado de reseñas</p>
+                    </div>
                 </div>
             </div>
+                    <div class="form-group">
+                            <p>Ya esta registrado? <a href="login">Login</a></p>
+                        </div>
         </div>
 
     </div>
@@ -121,7 +127,17 @@
     <script src="assets/login/js/jquery.waypoints.min.js"></script>
     <!-- Main JS -->
     <script src="assets/login/js/main.js"></script>
+    <script type="text/javascript">
 
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+    </script>
 
 </body>
 </html>
