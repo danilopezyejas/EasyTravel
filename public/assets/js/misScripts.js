@@ -43,3 +43,12 @@ $(document).ready(function(){
       });
     }
 });
+
+// function cambiarPagina(numPagina) {
+
+function pagina(e, pagina) {
+   e.preventDefault();
+alert(pagina);
+}
+
+// }

@@ -1,4 +1,6 @@
 {% set cantOpciones = 0 %}
+{% set elementos_pagina = 10 %}
+{% set paginas = ((paquetes|length)/elementos_pagina)|round(0,'ceil') %}
 {% include 'cabecera.twig' %}
     <div class="listado">
         {% if paquetes.mensaje %}
@@ -36,5 +38,7 @@
                     </div>
             {% endfor %}
         {% endif %}
+
     </div>
+
 {% include 'pie.twig' %}

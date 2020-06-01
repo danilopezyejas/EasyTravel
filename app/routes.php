@@ -32,6 +32,7 @@ return function (App $app) {
         $twig->addGlobal('session', $_SESSION);
 
         $response->getBody()->write($twig->render('index.twig', $datos));
+        $_SESSION['nuevo'] = 'NO';
         return $response;
     });
 
@@ -171,7 +172,6 @@ return function (App $app) {
             $_SESSION['mail'] = $usr->getCorreo();
             return $response->withHeader('Location', '/EasyTravel/public');
         } else {
-            $_SESSION['nuevo'] = 'NO';
             $_SESSION['nick'] = '';
             return $response->withHeader('Location', '/EasyTravel/public');
         }
@@ -233,7 +233,7 @@ return function (App $app) {
         $usuario = CU::getUsuarioLogueado($usr);
         $paquetes= CP::getPaquetesComprados($usr->getNickname());
 //        var_dump($usuario);
-//        
+//
 //        var_dump($paquetes);
 //        exit;
         $paquetes['usuario']= $usuario ;
