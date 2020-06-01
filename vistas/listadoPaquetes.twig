@@ -38,18 +38,7 @@
                     </div>
             {% endfor %}
         {% endif %}
-        <center>
-          <div class="pagination">
 
-            {% for i in 0 .. paginas %}
-              {% if i+1 > 10 %}
-                <a href="{{ (url ~ 1)|e }}"  onclick="pagina(event,{{ i }});">...</a>
-              {% else %}
-                <a href="{{ url ~ loop.index }}"  onclick="pagina(event,{{ i }});"> {{ i+1 }}</a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </center>
     </div>
-    
+
 {% include 'pie.twig' %}

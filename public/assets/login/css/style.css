@@ -9,10 +9,11 @@ body {
 body.style-2 {
   background-color: #ffffff;
   background-size: cover;
-  background-position: -30% center;
+  background-position: top;
   background-repeat: no-repeat;
   background-image: url(./../../../imagenes/exterior.jpg);
   height: 100%;
+  background-size: 100%;
 }
 
 a {
