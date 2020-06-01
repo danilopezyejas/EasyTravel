@@ -9,7 +9,7 @@
             {% for item in paquetes %}
                 {% set cantOpciones = cantOpciones + 1 %}
                     <div class="resultado">
-                        <img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
+                        <img src="imagenes/sevilla2.jpg" alt="imagen" class="imgDestino">
                         <div class="descripcion">
                             <h2>Opcion {{ cantOpciones }}:</h2>
                             <h1>{{item.ciudad}} {{ item.pais}}</h1>
@@ -29,10 +29,12 @@
                                     <input type="text" id="idVuelo-{{cantOpciones}}" name="idVuelo" value="{{item.id_transporte}}">
                                     <input type="text" id="idDestino-{{cantOpciones}}" name="idDestino" value="{{item.id_destino}}">
                                 </div>
-                                <div class="reservar" id="reservar-{{cantOpciones}}">
-                                    <i class="fas fa-spinner fa-spin"></i>
-                                    <input type="submit" id="btnReserva-{{cantOpciones}}" class="btnReserva">
-                                </div>
+                                {% if session.nick %}
+                                  <div class="reservar" id="reservar-{{cantOpciones}}">
+                                      <i class="fas fa-spinner fa-spin"></i>
+                                      <input type="submit" id="btnReserva-{{cantOpciones}}" class="btnReserva">
+                                  </div>
+                                {% endif %}
                             </form>
                         </div>
                     </div>

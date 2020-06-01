@@ -91,8 +91,6 @@ class Controlador_Usuario{
   public static function guardarPaquete($idAlojamiento,$idVuelo,$idDestino)
   {
     if(Usuario::guardarPaquete($idAlojamiento,$idVuelo,$idDestino)){
-      // $Alojamiento = Alojamiento::getInfo($idAlojamiento);
-      // $Vuelo = Vuelo::getInfo($idVuelo);
       $Destino = Destino::getInfo($idDestino);
       $Alojamiento = Alojamiento::getAlojamientos($idAlojamiento);
       $Transporte = Vuelo::getInfo($idVuelo);
