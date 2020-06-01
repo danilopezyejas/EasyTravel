@@ -70,6 +70,7 @@ return function (App $app) {
         $idAlojamiento = $_POST['idAlojamiento'];
         $idVuelo = $_POST['idVuelo'];
         $idDestino = $_POST['idDestino'];
+        set_time_limit(60);
         CU::guardarPaquete($idAlojamiento, $idVuelo, $idDestino);
         return $response;
     });
@@ -121,11 +122,11 @@ return function (App $app) {
         $datos = array('id_paquete'=>$id);
         $response->getBody()->write($twig->render('resenia.twig',$datos));
         return $response;
-        
-        
+
+
     });
-    
-//Guardar los datos de reseña 
+
+//Guardar los datos de reseña
     $app->post('/resenia/guardar', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
@@ -135,7 +136,7 @@ return function (App $app) {
         $res->setIdPaquete($request->getParsedBody()['paquete']);
         $res->setIdUsuario($usuario = CU::getUsuarioLogueado($usr));
         $res->setValoracion($request->getParsedBody()['email']);
-       
+
 
         $nickname = CU::guardarUsuario($usr);
         if ($nickname['nickname'] !== '') {
@@ -150,7 +151,7 @@ return function (App $app) {
             return $response->withHeader('Location', '/EasyTravel/public');
         }
     });
-    
+
 //Guardar los datos de un usuario que se Registra.
     $app->post('/guardar', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
