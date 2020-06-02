@@ -1,15 +1,14 @@
 {% set cantOpciones = 0 %}
-{% set elementos_pagina = 10 %}
-{% set paginas = ((paquetes|length)/elementos_pagina)|round(0,'ceil') %}
 {% include 'cabecera.twig' %}
     <div class="listado">
         {% if paquetes.mensaje %}
             <h1>{{paquetes.mensaje}}</h1>
         {% else %}
+
             {% for item in paquetes %}
                 {% set cantOpciones = cantOpciones + 1 %}
                     <div class="resultado">
-                        <img src="imagenes/sevilla2.jpg" alt="imagen" class="imgDestino">
+                        <img src="{{ random(imagenes) }}" alt="imagen" class="imgDestino">
                         <div class="descripcion">
                             <h2>Opcion {{ cantOpciones }}:</h2>
                             <h1>{{item.ciudad}} {{ item.pais}}</h1>

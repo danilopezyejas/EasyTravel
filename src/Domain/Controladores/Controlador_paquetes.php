@@ -53,6 +53,7 @@ class Controlador_Paquetes{
   public function listarPaquetes($destino_buscado=null, $precio_buscado=null, $fecha_buscada=null, $tematica_buscada=null)
   {
     $paquetes = new Paquete();
+    $imagenes = $paquetes->getImagenes();
     if($precio_buscado==null){
       if($destino_buscado==null){
         $destino_buscado = Destino::destinoAleatorio();
@@ -66,20 +67,12 @@ class Controlador_Paquetes{
       if($destino_buscado!=null){
         $destino_buscado = Destino::getDestinoPorCiudad($destino_buscado)['idDestino'];
         $this->paquetes = $paquetes->getPaquetesPorPrecio($destino_buscado,$precio_buscado);
+      }
     }
 
-    }
-
-    $listaPaquetes = array('paquetes' => $this->paquetes);
-
-
-// Si el usuario no selecciono ningun destino entra al if
-    // if(!$this->destinos){
-    //   $destino_buscado = Destino::destinoAleatorio();
-    // }
-    // if (!$this->alojamientos) {
-    //   $this->alojamientos = $paquetes->getListaAlojamientos();
-    // }
+    $listaPaquetes = array('paquetes' => $this->paquetes,
+                           'imagenes' => $imagenes
+                         );
 
     return $listaPaquetes;
   }

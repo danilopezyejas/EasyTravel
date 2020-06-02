@@ -612,5 +612,19 @@ public function getPaquetesPorPrecio($destino_buscado=NULL,$precio_buscado=NULL)
 
   }
 
+  public function getImagenes()
+  {
+    $db = new DB();
+    $db = $db->conexionDB();
+    $resultado = $db->prepare("SELECT * FROM imagenes;");
+    $resultado->execute();
+
+    while($img = $resultado->fetch()){
+      $imagenes[] = $img['imagen'];
+    }
+
+    return $imagenes;
+  }
+
 }//cierre de la clase paquete
 ?>
