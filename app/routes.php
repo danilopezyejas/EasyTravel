@@ -24,7 +24,7 @@ return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         //para buscar y devolver las reseñas que se muestran en el inicio
-        $resenias = CP::getResenias();
+        $resenias = CP::verResenias();
         $listaDestinos = CP::getDestinosGuardados();
         $destinos = "";
         foreach ($listaDestinos as $key => $value) {

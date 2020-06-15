@@ -122,7 +122,7 @@ class Controlador_Paquetes{
   // }
 
   
-  public static function getResenias(){
+  public static function verResenias(){
         $db = new DB();
         $db = $db->conexionDB();
         $stmt = $db->prepare( "SELECT nombre, ciudad, descripcion FROM resenia r
