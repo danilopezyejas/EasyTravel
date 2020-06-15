@@ -99,7 +99,8 @@ class Usuario extends Clase_Base
             return array('nickname'=>'');
         }
         $resultado = $stmt->fetch();
-        return  array('nickname'=> $resultado['nikname'],
+        return  array( 'id_usuario'=> $resultado['id_usuario'],
+                        'nickname'=> $resultado['nikname'],
                         'nombre'=> $resultado['nombre'],
                         'apellido'=> $resultado['apellido'],
                         'correo'=> $resultado['correo'] );
