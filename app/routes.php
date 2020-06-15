@@ -32,7 +32,7 @@ return function (App $app) {
         }
         $datos = array('listaDestinos' => $destinos,
                         'resenias' => $resenias);
-              
+
         $twig = new Environment($loader);
         $twig->addGlobal('session', $_SESSION);
 
@@ -206,6 +206,7 @@ return function (App $app) {
         }
         return $response->withHeader('Location', '/EasyTravel/public');
     });
+
 //Modifica los datos del usuario que está logueado
     $app->post('/modificar', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
@@ -242,7 +243,7 @@ return function (App $app) {
        //var_dump($resenias);
        //exit;
 //
-        
+
         $paquetes['usuario']= $usuario ;
         $paquetes['resenias'] = $resenias;
         // var_dump($paquetes);
