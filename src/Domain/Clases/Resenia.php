@@ -16,7 +16,7 @@ use PDO;
  * @author ernesto
  */
 class Resenia extends Clase_Base {
-    
+
     private $id_resenia;
     private $id_paquete;
     private $id_usuario;
@@ -34,11 +34,11 @@ class Resenia extends Clase_Base {
     public function setDescripcion($descripcion){
         $this->descripcion = $descripcion;
     }
-    
+
     public function setIdPaquete($id){
         $this->id_paquete = $id;
     }
-    
+
     public function setIdUsuario($id){
         $this->id_usuario = $id;
     }
@@ -73,22 +73,22 @@ class Resenia extends Clase_Base {
 
    }
     }
-    
+
     public function listar($nickname){
         $fecha = date("Y-m-d");
     try{
-        $sql = "SELECT 
+        $sql = "SELECT
             CONCAT(t.origenCodigo, '-', t.destinoCodigo) as transporte,
             t.fechaIda as fecha,
             a.nombre as nombre,
             CONCAT(d.ciudad, '/', d.pais) as destino,
-            r.descripcion as resenia 
-        FROM paquetes p,
+            r.descripcion as resenia
+        FROM paquetes_comprados p,
             transporte t,
             alojamiento a,
             destino d,
             resenia r,
-            usuario u 
+            usuario u
         WHERE  p.id_transporte = t.idtransporte
             AND p.id_alojamiento = a.idAlojamiento
             AND p.id_destino = d.idDestino
@@ -97,7 +97,7 @@ class Resenia extends Clase_Base {
             AND u.nikname = :nickname ";
         $db = new DB();
         $db = $db->conexionDB();
-        $resultado = $db->prepare($sql);        
+        $resultado = $db->prepare($sql);
         $resultado->bindParam(':nickname', $nickname);
         $resultado->execute();
 
@@ -112,5 +112,5 @@ class Resenia extends Clase_Base {
 
    }
     }
-   
+
 }

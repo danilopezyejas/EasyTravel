@@ -104,13 +104,10 @@ class Usuario extends Clase_Base
                         'nombre'=> $resultado['nombre'],
                         'apellido'=> $resultado['apellido'],
                         'correo'=> $resultado['correo'] );
-
-//        return $retorno;
         }catch(PDOException $e){
             return $e->getMessage();
         }
     }
-//<<<<<<< HEAD
 
   public function login(){
       try{
