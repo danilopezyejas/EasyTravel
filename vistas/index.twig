@@ -21,6 +21,20 @@
       <input id="tematica" type="search" name="tematica" placeholder="Tematica">
       <input type="submit" value="Buscar" class="boton_formulario"/>
     </form>
+      {% if resenias %}
+        <div style="display: flex;">
+            {% for item in resenias %}
+                <div class="resultado" style="margin: 0.3rem; width: 18rem;">
+                    <div>
+                        <h3>{{item.nombre}}</h3>
+                        <h3>{{item.ciudad}}</h3>
+                        <p>{{item.descripcion}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+      {% endif %}
+
   </div>
 
 {% include 'pie.twig' %}

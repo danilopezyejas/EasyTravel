@@ -22,12 +22,16 @@ session_start();
 return function (App $app) {
     $app->get('/', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
+        //para buscar y devolver las reseñas que se muestran en el inicio
+        $resenias = CP::getResenias();
         $listaDestinos = CP::getDestinosGuardados();
         $destinos = "";
         foreach ($listaDestinos as $key => $value) {
             $destinos .= $value['ciudad'] . ',';
         }
-        $datos = array('listaDestinos' => $destinos);
+        $datos = array('listaDestinos' => $destinos,
+                        'resenias' => $resenias);
+              
         $twig = new Environment($loader);
         $twig->addGlobal('session', $_SESSION);
 

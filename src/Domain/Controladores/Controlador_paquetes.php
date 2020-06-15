@@ -5,6 +5,8 @@ namespace App\Domain\Controladores;
 use App\Domain\Clases\Paquete as Paquete;
 use App\Domain\Clases\PaquetesComprados as PaquetesComprados;
 use App\Domain\Clases\Destino;
+use App\Infrastructure\Persistence\db as DB;
+
 
 class Controlador_Paquetes{
 
@@ -111,6 +113,24 @@ class Controlador_Paquetes{
   //     $this->destinos
   //   }
   // }
+
+  
+  public static function getResenias(){
+        $db = new DB();
+        $db = $db->conexionDB();
+        $stmt = $db->prepare( "SELECT nombre, ciudad, descripcion FROM resenia r
+                                inner join usuario u on r.id_usuario=u.id_usuario
+                                inner join paquetes p on r.id_paquete=p.id_paquete
+                                inner join destino d on p.id_destino=d.idDestino
+                                LIMIT 4" );
+
+        $stmt->execute();
+        if($stmt->columnCount() < 1){
+            return '';
+        }
+        $resultado = $stmt->fetchAll();
+        return $resultado;
+    }
 
 }
 
