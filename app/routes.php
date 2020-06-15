@@ -188,8 +188,8 @@ return function (App $app) {
 
         $nickname = CU::login($usr);
 
-        var_dump($nickname);
-        exit;
+        // var_dump($nickname);
+        // exit;
 
         if ($nickname['nickname'] !== '') {
             // Set session variables
