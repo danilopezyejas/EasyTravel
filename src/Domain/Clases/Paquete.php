@@ -208,7 +208,6 @@ class Paquete extends Clase_Base {
         }
         $resultado = null;
         $db = null;
-        //var_dump($paquetes);
 
         return $vuelos;
     }
@@ -427,7 +426,6 @@ class Paquete extends Clase_Base {
 //
 //
 //        $json_response = json_decode($resultado, true);
-//        //var_dump($json_response);
 //        if ($json_response != NULL) {
 //            if (isset($json_response)) {
 //                if (isset($json_response["results"])) {
@@ -551,7 +549,6 @@ public function getPaquetesPorPrecio($destino_buscado=NULL,$precio_buscado=NULL)
     }
     $resultado = null;
     $db = null;
-    var_dump($paquetes);
 
     return $paquetes;
 }
@@ -613,6 +610,20 @@ public function getPaquetesPorPrecio($destino_buscado=NULL,$precio_buscado=NULL)
         return false;
       }
 
+  }
+
+  public function getImagenes()
+  {
+    $db = new DB();
+    $db = $db->conexionDB();
+    $resultado = $db->prepare("SELECT * FROM imagenes;");
+    $resultado->execute();
+
+    while($img = $resultado->fetch()){
+      $imagenes[] = $img['imagen'];
+    }
+
+    return $imagenes;
   }
 
 }//cierre de la clase paquete

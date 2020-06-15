@@ -12,3 +12,11 @@ function comprobarClave(){
     	alerta.innerHTML ="mal"
     }
 }
+
+function ver(n) {
+  $('#myPopup'+n).css('visibility','visible');
+}
+
+function ocultar(n) {
+  $('#myPopup'+n).css('visibility','hidden');
+}

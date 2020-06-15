@@ -63,7 +63,6 @@ return function (App $app) {
             //Busqueda comun
             $response->getBody()->write($twig->render('listadoDestinos.twig', $destinos));
         }
-//        var_dump($destinos);
         return $response;
     });
 
@@ -94,8 +93,6 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         session_destroy();
-        session_start();
-        // $_SESSION['salida']= 'SI';
         return $response->withHeader('Location', '/EasyTravel/public');
     });
 
@@ -108,7 +105,6 @@ return function (App $app) {
 // para chequear que el nickname no existe
     $app->get('/nickname/{name}', function (Request $request, Response $response, array $args) {
         $name = $args['name'];
-
         $usr = new DTUsuario();
         $usr->setNickname($name);
         $nick = CU::existeNick($usr);
@@ -146,8 +142,8 @@ return function (App $app) {
         // $res->setValoracion($request->getParsedBody()['email']);
        // var_dump($request->getParsedBody()['comentarios']);
     // var_dump($request->getParsedBody()['paquete']);
-      var_dump($request);
-     exit;
+    //  var_dump($request);
+    // exit;
 
         $respuesta = CU::guardarResenia($res);
         if ($respuesta['resenia'] !== '') {
@@ -168,19 +164,19 @@ return function (App $app) {
         $usr->setNickname($request->getParsedBody()['nickname']);
         $usr->setCorreo($request->getParsedBody()['email']);
         $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
-        //$usr->setContrasenia($request->getParsedBody()['password']);
 
         $nickname = CU::guardarUsuario($usr);
+
         if ($nickname['nickname'] !== '') {
             $nickname = CU::login($usr);
             $_SESSION['nuevo'] = 'SI';
             $_SESSION['nick'] = $nickname['nickname'];
-            $_SESSION['mail'] = $usr->getCorreo();
-            return $response->withHeader('Location', '/EasyTravel/public');
+            $_SESSION['mail'] = $nickname['correo'];
         } else {
-            $_SESSION['nick'] = '';
-            return $response->withHeader('Location', '/EasyTravel/public');
+          $_SESSION['nuevo'] = 'NO';
+          $_SESSION['nick'] = '';
         }
+        return $response->withHeader('Location', '/EasyTravel/public');
     });
 
 //Luego que ingresa el usuario y la pass lo redirecciona al index.twig

@@ -121,11 +121,8 @@ class Usuario extends Clase_Base
         $stmt->execute();
         $user = $stmt->fetch();
 
-
-
-        if($user && password_verify($this->contrasenia, $user['password'])){
+        if($user AND ($this->contrasenia == $user['password'])){
             return array('nickname'=> $user['nikname'], 'correo' => $user['correo'], 'idUsuario' => $user['id_usuario']);
-
         }
         else{
                 return  array('nickname'=>'');
