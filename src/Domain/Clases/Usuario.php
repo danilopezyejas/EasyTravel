@@ -116,6 +116,8 @@ class Usuario extends Clase_Base
       try{
         $db = new DB();
         $db = $db->conexionDB();
+        var_dump( $this->contrasenia);
+        exit;
         $stmt = $db->prepare( "SELECT * from  usuario WHERE nikname= :nikname " );
         $stmt->bindParam(':nikname', $this->nickname);
         $stmt->execute();

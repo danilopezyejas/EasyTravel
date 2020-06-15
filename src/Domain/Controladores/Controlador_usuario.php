@@ -47,7 +47,7 @@ class Controlador_Usuario{
   {
     $resenia = new Resenia();
     // $resenia->setIdPaquete($res->getIdPaquete());
-    $resenia->setIdPaquete(12);
+    $resenia->setIdPaquete($res->getIdPaquete());
     $resenia->setIdUsuario($res->getIdUsuario());
     $resenia->setDescripcion($res->getDescripcion());
     $resenia->setValoracion($res->getValoracion());

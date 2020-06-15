@@ -135,21 +135,15 @@ return function (App $app) {
         $usr = $_SESSION['nick'];
         $usuario = CU::getUsuarioLogueado($usr)['id_usuario'];
         $res = new DtResenia();
-        $res->setDescripcion($request->getParsedBody()['comentarios']);
-        $res->setIdPaquete($request->getParsedBody()['paquete']);
-        $res->setIdUsuario($usuario);
-        // $res->setValoracion($request->getParsedBody()['valoracion']);
-        // $res->setValoracion($request->getParsedBody()['email']);
-       // var_dump($request->getParsedBody()['comentarios']);
-    // var_dump($request->getParsedBody()['paquete']);
-    //  var_dump($request);
-    // exit;
+        $res->setDescripcion($_POST['comentario']);
+        $res->setIdPaquete($_POST['paquete']);
+        $res->setIdUsuario($usuario);        
 
         $respuesta = CU::guardarResenia($res);
         if ($respuesta['resenia'] !== '') {
-            return $response->withHeader('Location', '/EasyTravel/public/resenia/16');
+            return $response->withHeader('Location', '/EasyTravel/public/');
         } else {
-            return $response->withHeader('Location', '/EasyTravel/public/resenia');
+            return $response->withHeader('Location', '/EasyTravel/public/resenia/'.$_POST['paquete']);
         }
     });
 
@@ -189,6 +183,9 @@ return function (App $app) {
         $usr->setContrasenia($request->getParsedBody()['password']);
 
         $nickname = CU::login($usr);
+
+        var_dump($nickname);
+        exit;
 
         if ($nickname['nickname'] !== '') {
             // Set session variables
