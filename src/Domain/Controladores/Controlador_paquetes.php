@@ -4,6 +4,7 @@ namespace App\Domain\Controladores;
 
 use App\Domain\Clases\Paquete as Paquete;
 use App\Domain\Clases\PaquetesComprados as PaquetesComprados;
+use App\Domain\Clases\Resenia as Resenia;
 use App\Domain\Clases\Destino;
 
 class Controlador_Paquetes{
@@ -112,6 +113,12 @@ class Controlador_Paquetes{
     return $paquetes;
   }
 
+  public static function getResenias($nickname)
+  {
+    $reseniasHechas = new Resenia();
+    $resenias = array('resenias' => $reseniasHechas->listar($nickname));
+    return $resenias;
+  }
   // public function crearPaquetes()
   // {
   //   foreach ($this->alojamientos as $key => $value) {

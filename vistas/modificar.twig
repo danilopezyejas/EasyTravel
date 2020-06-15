@@ -106,13 +106,44 @@
                 </div>
                 <div id="menu2" class="tab-pane fade">
                     <div class="col-md-12 fh5co-form">
-                    <h3>Reseñas</h3>
-                    <p>Listado de reseñas</p>
+                        {% if resenias.mensaje %}
+                            <h1>{{resenias.mensaje}}</h1>
+                        {% else %}
+
+                            <p>Filtrar por alguna de las columnas:</p>  
+                            <input class="form-control" id="mInput" type="text" placeholder="Filtrar...">
+                            <br>
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Transporte</th>
+                                        <th>Fecha Viaje</th>
+                                        <th>Hotel</th>
+                                        <th>Destino</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="TablaResenia">
+                                    {% for item in resenias.resenias %}
+                                        <tr>
+                                            <td>{{ item.transporte }}</td>
+                                            <td>{{ item.fecha }}</td>
+                                            <td>{{ item.nombre }}</td>
+                                            <td>{{ item.destino }}</td>
+                                            <td>{{ item.resenia }}</td>
+                                            
+
+                                        </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>   
+                        {% endif %} 
                     </div>
                 </div>
             </div>
                     <div class="form-group">
-                            <p>Ya esta registrado? <a href="login">Login</a></p>
+                            <p><a class="btn btn-primary" href="/EasyTravel/public/"">Volver</a></p>
                         </div>
         </div>
 
@@ -136,7 +167,15 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+         $("#mInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#TablaResenia tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
     });
+
+    
     </script>
 
 </body>

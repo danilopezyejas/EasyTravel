@@ -2,7 +2,9 @@
 namespace App\Domain\Controladores;
 
 use App\Domain\Clases\Usuario as Usuario;
+use App\Domain\Clases\Resenia as Resenia;
 use App\Domain\Clases\DtUsuario as DtUsuario;
+use App\Domain\Clases\DtResenia as DtResenia;
 use App\Domain\Clases\Alojamiento;
 use App\Domain\Clases\Vuelo;
 use App\Domain\Clases\Destino;
@@ -41,16 +43,24 @@ class Controlador_Usuario{
   {
 
   }
-  public function listaPaquetesComprados()
+  public static function guardarResenia(DtResenia $res)
   {
+    $resenia = new Resenia();
+    // $resenia->setIdPaquete($res->getIdPaquete());
+    $resenia->setIdPaquete(12);
+    $resenia->setIdUsuario($res->getIdUsuario());
+    $resenia->setDescripcion($res->getDescripcion());
+    $resenia->setValoracion($res->getValoracion());
+    // var_dump($res->getDescripcion());
+    // exit;
+    $resenia->agregar();
 
   }
-  public static function getUsuarioLogueado(DtUsuario $usr)
+  public static function getUsuarioLogueado($usr)
   {
     $usuario = new Usuario();
-    $usuario->setNickname($usr->getNickname());
+    $usuario->setNickname($usr);
 //    $usuario->setNickname(self::$logueado);
-
     return  $usuario->logueado();
 
   }

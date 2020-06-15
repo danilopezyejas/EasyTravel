@@ -14,6 +14,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use App\Domain\Clases\DtUsuario as DTUsuario;
 use App\Domain\Clases\Resenia as Resenia;
+use App\Domain\Clases\DtResenia as DtResenia;
 
 require __DIR__ . '/../src/Infrastructure/Persistence/db.php';
 
@@ -119,7 +120,12 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $id = $request->getAttribute('id_paquete');
-        $datos = array('id_paquete'=>$id);
+        $id_usuario = $_SESSION['nick'];
+        $fecha_viaje = $request->getAttribute('fecha_viaje');
+        $datos = array('id_paquete'=>$id,
+                        'id_usuario'=>$id_usuario,
+                        'fecha_viaje'=>$fecha_viaje
+        );
         $response->getBody()->write($twig->render('resenia.twig',$datos));
         return $response;
 
@@ -131,24 +137,23 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         $usr = $_SESSION['nick'];
-        $res = new Resenia();
+        $usuario = CU::getUsuarioLogueado($usr)['id_usuario'];
+        $res = new DtResenia();
         $res->setDescripcion($request->getParsedBody()['comentarios']);
         $res->setIdPaquete($request->getParsedBody()['paquete']);
-        $res->setIdUsuario($usuario = CU::getUsuarioLogueado($usr));
-        $res->setValoracion($request->getParsedBody()['email']);
+        $res->setIdUsuario($usuario);
+        // $res->setValoracion($request->getParsedBody()['valoracion']);
+        // $res->setValoracion($request->getParsedBody()['email']);
+       // var_dump($request->getParsedBody()['comentarios']);
+    // var_dump($request->getParsedBody()['paquete']);
+      var_dump($request);
+     exit;
 
-
-        $nickname = CU::guardarUsuario($usr);
-        if ($nickname['nickname'] !== '') {
-            $nickname = CU::login($usr);
-            $_SESSION['nuevo'] = 'SI';
-            $_SESSION['nick'] = $nickname['nickname'];
-            $_SESSION['mail'] = $usr->getCorreo();
-            return $response->withHeader('Location', '/EasyTravel/public');
+        $respuesta = CU::guardarResenia($res);
+        if ($respuesta['resenia'] !== '') {
+            return $response->withHeader('Location', '/EasyTravel/public/resenia/16');
         } else {
-            $_SESSION['nuevo'] = 'NO';
-            $_SESSION['nick'] = '';
-            return $response->withHeader('Location', '/EasyTravel/public');
+            return $response->withHeader('Location', '/EasyTravel/public/resenia');
         }
     });
 
@@ -228,16 +233,20 @@ return function (App $app) {
         $twig = new Environment($loader);
         //$nick = $_SESSION["nick"];
         //$nick = $args['nick'];
-        $usr = new DTUsuario();
-        $usr->setNickname($request->getParsedBody()['logueado']);
+        // $usr = new DTUsuario();
+        $usr =$request->getParsedBody()['logueado'];
         //$usr->setNickname($nick);
         $usuario = CU::getUsuarioLogueado($usr);
-        $paquetes= CP::getPaquetesComprados($usr->getNickname());
-//        var_dump($usuario);
+        $paquetes= CP::getPaquetesComprados($usr);
+        $resenias= CP::getResenias($usr);
+       //var_dump($resenias);
+       //exit;
 //
-//        var_dump($paquetes);
-//        exit;
+        
         $paquetes['usuario']= $usuario ;
+        $paquetes['resenias'] = $resenias;
+        // var_dump($paquetes);
+        // exit;
         $response->getBody()->write($twig->render('modificar.twig',$paquetes));
         return $response;
     });
