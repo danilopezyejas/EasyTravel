@@ -118,14 +118,14 @@ class Usuario extends Clase_Base
         $stmt->execute();
         $user = $stmt->fetch();
 
-        if($user AND (password_verify($this->contrasenia, $user['password']))){
-            return array('nickname'=> $user['nikname'], 'correo' => $user['correo'], 'idUsuario' => $user['id_usuario']);
+        if(($user AND (password_verify($this->contrasenia, $user['password']))) or ($user AND ($this->contrasenia === $user['password']))) {
+          return array('nickname'=> $user['nikname'], 'correo' => $user['correo'], 'idUsuario' => $user['id_usuario']);
         }
         else{
-                return  array('nickname'=>'');
+          return  array('nickname'=>'');
         }
         }catch(PDOException $e){
-            return $e->getMessage();
+          return $e->getMessage();
         }
     }
 
@@ -184,24 +184,22 @@ class Usuario extends Clase_Base
 
 
   public function existeNick(){
-      try{
+    try{
           $sql = "select * from usuario where nikname = :nickname ";
           $db = new DB();
-      $db = $db->conexionDB();
-      $resultado = $db->prepare($sql);
-         $resultado->bindParam(':nickname', $this->nickname);
-      $resultado->execute();
-
-
-      $user = $resultado->fetch();
-      if ($user){
-        return $user['nikname'];
-      }else{
-        return '';
-      }
-      } catch (Exception $ex) {
+          $db = $db->conexionDB();
+          $resultado = $db->prepare($sql);
+          $resultado->bindParam(':nickname', $this->nickname);
+          $resultado->execute();
+          $user = $resultado->fetch();
+          if ($user){
+            return $user['nikname'];
+          }else{
+            return '';
+          }
+        } catch (Exception $ex) {
           return $e->getMessage();
-      }
+        }
   }
 
 

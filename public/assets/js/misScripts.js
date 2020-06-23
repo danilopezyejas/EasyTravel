@@ -67,4 +67,20 @@ function guardarResenia(id_paquete) {
   });
 }
 
-// }
+function login(evt) {
+  evt.preventDefault();
+  var datos = $("#datosLogin").serializeArray();
+
+  $.ajax({
+    async: false,
+    url: "/EasyTravel/public/entrar",
+    type: "POST",
+    data: datos
+  })
+  .done(function () {
+    window.location = '/EasyTravel/public';
+  })
+  .fail(function () {
+    alert("Usuario o contraseña erroneos.");
+  });
+}

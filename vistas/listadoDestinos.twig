@@ -8,16 +8,16 @@
 					<div class="resultado">
 						<img src="imagenes/sevilla1.jpg" alt="imagen" class="imgDestino">
 						<div class="descripcion">
-              <h2>Opcion {{ cantOpciones }}:</h2>
-							<p>Región: {{destinos.region}}</p>
-							<p>Latitud: {{destinos.latitud}}</p>
-							<p>Longitud: {{destinos.longitud}}</p>
-							<h2>Hopedate en: </h2>
+              <h2>Opción {{ cantOpciones }}:</h2>
+							<p><b>Región:</b> {{destinos.region}}</p>
+							<p><b>Latitud:</b> {{destinos.latitud}}</p>
+							<p><b>Longitud:</b> {{destinos.longitud}}</p>
+							<h2><b>Hopedate en:</b> </h2>
 							<p><b>Hotel:</b> {{item.nombre}}</p>
 							<P><b>Estrellas:</b> {{item.estrellas}}</p>
 							<p><b>CheckIn:</b> {{item.checkIn}}  <b>CheckOut:</b> {{item.checkOut}}</p>
-							<p><b>Descripcion:</b> {{item.descripcion}}<p>
-							<p><b>Precio total:</b> {{item.precio}}</p>
+							<p><b>Descripción:</b> {{item.descripcion}}<p>
+							<p><b>Precio total: € </b> {{item.precio}}</p>
 							{% if session.nick %}
 							<form id="paquete-{{cantOpciones}}" onsubmit="guardarPaquete({{cantOpciones}});">
 								<div style="display: none;">
@@ -35,6 +35,8 @@
 					</div>
 			{% endfor %}
 				</div>
+				{% else %}
+				<h2>En el momento no tenemos un paquete para ofrecerle. Intente cambiar los parametros de busqueda.</h2>
 	{% endif %}
 
 {% include 'pie.twig' %}

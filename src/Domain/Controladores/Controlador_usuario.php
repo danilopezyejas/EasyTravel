@@ -88,7 +88,6 @@ class Controlador_Usuario{
       $logueado = $usuario->login();
       if ($logueado['nickname'] !== ''){
           self::$logueado = $logueado['nickname'];
-         // $this->usuarioLogueado = $logueado['nickname'];
       }
       return $logueado;
 

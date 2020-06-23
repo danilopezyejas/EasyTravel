@@ -25,7 +25,7 @@
 				<div class="col-md-4">
 
 					<!-- Start Sign In Form -->
-					<form action="entrar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft">
+					<form action="entrar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" id="datosLogin">
 						<h2>Login</h2>
 						<div class="form-group">
 							<label for="username" class="sr-only">Nickname</label>
@@ -42,7 +42,7 @@
 							<p>No estas registrado? <a href="registro">Registrarse</a> | <a href="#">Olvidaste tu password?</a></p>
 						</div>
 						<div class="form-group">
-							<input type="submit" value="Entrar" class="btn btn-primary">
+							<input type="submit" value="Entrar" class="btn btn-primary" onclick="login(event);">
 						</div>
 					</form>
 					<!-- END Sign In Form -->
@@ -50,6 +50,8 @@
 				</div>
 			</div>
 		</div>
+
+			<script src="assets/js/misScripts.js"></script>
 
 	<!-- jQuery -->
 	<script src="assets/login/js/jquery.min.js"></script>
@@ -61,7 +63,8 @@
 	<script src="assets/login/js/jquery.waypoints.min.js"></script>
 	<!-- Main JS -->
 	<script src="assets/login/js/main.js"></script>
-        
+
+
 
 	</body>
 </html>
