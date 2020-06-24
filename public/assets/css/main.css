@@ -260,6 +260,7 @@ body, input, select, textarea {
       font-size: 12pt; } }
 
 a {
+  padding: 0 0.5em 0 .5em;
   -moz-transition: border-bottom-color 0.2s ease, color 0.2s ease;
   -webkit-transition: border-bottom-color 0.2s ease, color 0.2s ease;
   -ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
@@ -672,7 +673,7 @@ textarea {
   -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
   -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
-  background-color: #1cb495;
+  background-color: rgb(210, 145, 21);
   border-radius: 6px;
   border: 0;
   color: #ffffff !important;
@@ -687,13 +688,11 @@ textarea {
   white-space: nowrap; }
 
   .boton_formulario:hover {
-    background-color: #1fcaa7; }
+    background-color: rgb(210, 160, 48); }
   input[type="submit"]:active,
   input[type="reset"]:active,
   input[type="button"]:active,
   button:active,
-  .button:active {
-    background-color: #199e83; }
 
   @media screen and (max-width: 480px) {
     input[type="submit"],
@@ -848,7 +847,7 @@ div#destinoautocomplete-list.autocomplete-items{
     -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
     -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    background-color: #B40404;
+    background-color: #3d37ba;
     border-radius: 6px;
     border: 0;
     color: #ffffff !important;
@@ -868,7 +867,7 @@ div.nav_login{
 }
 
 .registrarse:hover, .login:hover{
-  background-color: #FF0000; }
+  background-color: rgb(8, 59, 147); }
 
 div.banner{
   padding-bottom: 2em;

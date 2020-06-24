@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <!-- Start Sign In Form -->
-                    <form action="guardar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="registro">
+                    <form action="guardar" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInLeft" name="registro" id="datosRegistro">
                         <h2>Registrarse</h2>
                         <div class="form-group">
                             <label for="name" class="sr-only">Nickname</label>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off"required="yes" pattern=".{6,}" onmouseover="ver(5)" onmouseout="ocultar(5);">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off" required="yes" pattern=".{6,}" onmouseover="ver(5)" onmouseout="ocultar(5);">
                             <span class="popuptext" id="myPopup5">Minimo 6 caracteres</span>
                         </div>
                         <div class="form-group">
@@ -68,7 +68,7 @@
                             <p>Ya esta registrado? <a href="login">Login</a></p>
                         </div>
                         <div class="form-group">
-                            <input type="submit" id="guardar" value="Guardar" class="btn btn-primary" >
+                            <input type="submit" id="guardar" value="Guardar" class="btn btn-primary">
                         </div>
                     </form>
 
@@ -76,6 +76,7 @@
             </div>
         </div>
 
+        <script src="assets/js/misScripts.js"></script>
         <!-- jQuery -->
         <script src="assets/login/js/jquery.min.js"></script>
         <!-- Bootstrap -->
@@ -107,50 +108,89 @@
                     }
                 });
                 $(":submit").click(function () {
-                    //$.get('nickname/'+$('#nickname').val(),function(data){
-                    //    console.log('paso  get');
-                    //alert("Envia: " + data );
-                    //});
+                  event.preventDefault();
+                  var datosCompletos = true;
                     $.ajax({
                         url: 'nickname/' + $('#nickname').val(),
                         type: 'get',
                         async: false,
                         success: function (data) {
 
-                            //Swal.fire({title: `${data}`});
-
                             if (data === $('#nickname').val() ){
                                 //aca va si es distinto
                                 Swal.fire({title: 'Nickname: ' + data + ' ya utilizado'});
-                                // alert("Nickname: " + data + " ya utilizado");
                                 $('#nickname').val('');
                                  $('#nickname').focus();
                             } else{
 
                             var p1 = $('#password').val();
                             var p2 = $('#re-password').val();
-                            console.log('paso     ' + p1);
 
                             if (p1 !== p2 ) {
                                 $('#re-password').removeClass('form-control');
                                 $('#re-password').addClass('form-control label-warning');
                                 $('#re-password-check').text("Contraseñas NO Coinciden").show();
-                                $('#re-passwort').focus();
-                                event.preventDefault();
-                            } else {
-                                Swal.fire({title: 'Registro Guardado'});
-                                //event.preventDefault();
-                                //alert("Registro guardado  ");
+                                $('#re-password').focus();
+                                datosCompletos = false;
+                            }else{
+                              if($("#nickname").val() == ""){
+                                $("#nickname").css("background-color","red");
+                                datosCompletos = false;
+                              }else{
+                                $("#nickname").css("background-color","white");
+                              }
+                              if($("#name").val() == ""){
+                                $("#name").css("background-color","red");
+                                datosCompletos = false;
+                              }else{
+                                $("#name").css("background-color","white");
+                              }
+                              if($("#apellido").val() == ""){
+                                $("#apellido").css("background-color","red");
+                                datosCompletos = false;
+                              }else{
+                                $("#apellido").css("background-color","white");
+                              }
+                              if($("#email").val() == ""){
+                                $("#email").css("background-color","red");
+                                datosCompletos = false;
+                              }else{
+                                $("#email").css("background-color","white");
+                              }
+                              if(p1 == ""){
+                                $('#re-password').css("background-color","red");
+                                $('#password').css("background-color","red");
+                                datosCompletos = false;
+                              }else{
+                                $("#password").css("background-color","white");
+                                $("#re-password").css("background-color","white");
+                              }
                             }
                         }
                         },
                         error: function () {
-                            alert("Error");
+                            alert("Ha ocuurido un error.");
                         }
+                    });
+                    if(datosCompletos == true){
+                    var datosRegistro = $("#datosRegistro").serializeArray();
+                    $.ajax({
+                      url: 'guardar',
+                      type: 'post',
+                      async: false,
+                      data: datosRegistro,
+                      success: function () {
+                        Swal.fire({title: 'Registrado correctamente'});
+                        window.location = '/EasyTravel/public';
+                      }
                     })
-
+                    .fail(function () {
+                      alert("Ha ocurrido un error al guardar el usuario.");
+                    });
+                  }else{
+                    alert("Verifique los campos.");
+                  }
                 });
-
             });
 
         </script>

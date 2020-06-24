@@ -10,18 +10,18 @@
                     <div class="resultado">
                         <img src="{{ random(imagenes) }}" alt="imagen" class="imgDestino">
                         <div class="descripcion">
-                            <h2>Opcion {{ cantOpciones }}:</h2>
+                            <h2>Opción {{ cantOpciones }}:</h2>
                             <h1>{{item.ciudad}} {{ item.pais}}</h1>
-                            <p>Región: {{item.region}}</p>
-                            <p>Latitud: {{item.latitud}}</p>
-                            <p>Longitud: {{item.longitud}}</p>
+                            <p><b>Región:</b> {{item.region}}</p>
+                            <p><b>Latitud:</b> {{item.latitud}}</p>
+                            <p><b>Longitud:</b> {{item.longitud}}</p>
                             <p><b>Hotel: </b>{{item.nombre}}</p>
                             <P><b>Estrellas:</b> {{item.estrellas}}</p>
                             <p><b>CheckIn:</b> {{item.checkIn}}  <b>CheckOut:</b> {{item.checkOut}}</p>
-                            <p><b>Descripcion:</b> {{item.descripcion}}<p>
+                            <p><b>Descripción:</b> {{item.descripcion}}<p>
                             <p><b>Vuelo: </b>{{item.id_transporte}}</p>
                             <p><b>Fecha de salida del vuelo: </b>{{item.fechaIda}}</p>
-                            <p><b>Precio: </b>{{item.precio}}</p>
+                            <p><b>Precio: € </b>{{item.precio}}</p>
                             <form id="paquete-{{cantOpciones}}" onsubmit="guardarPaquete({{cantOpciones}});">
                                 <div style="display: none;">
                                     <input type="text" id="idAlojamiento-{{cantOpciones}}" name="idAlojamiento" value="{{item.id_alojamiento}}">

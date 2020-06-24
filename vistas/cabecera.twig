@@ -30,15 +30,7 @@
         <form class="" action="logout" method="get">
         <input type="submit" id="logout" class="login" value="LogOut">
         </form>
-
-        <!--<a href="modificarusr/{{ nickname }}" class="registrarse"> Usuario : {{ nickname }}</a>-->
-        <form class="" action="modificarusr" method="post">
-        <ul class="icons">
-            <!--<li><label for="name" class="login" id="logueado" >Usuario  {{ nickname }}</label></li>-->
-            <li><input type="hidden" name="logueado" value="{{ session.nick }}" id="logueado" >
-            <li><input type="submit" id="modificar" class="login" value="{{ session.nick }}"></li>
-        </ul>
-        </form>
+        <a href="modificarusr/{{ session.nick }}" class="registrarse">{{ session.nick }}</a>
       {% else %}
         <form class="" action="login" method="get">
             <input type="submit" id="login" class="login" value="Login">

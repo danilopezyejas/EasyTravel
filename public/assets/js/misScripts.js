@@ -56,14 +56,31 @@ $(document).ready(function () {
 });
 
 function guardarResenia(id_paquete) {
-  var parametros = { comentario: $("#comentario").val(), paquete: id_paquete };
+  var datos = $(this).serializeArray();
+  var parametros = { "comentario":comentario, "paquete": id_paquete };
 
   $.ajax({
     async: false,
     url: "/EasyTravel/public/resenia/guardar",
     type: "POST",
-    data: parametros
+    data: datos
   });
 }
 
-// }
+function login(evt) {
+  evt.preventDefault();
+  var datos = $("#datosLogin").serializeArray();
+
+  $.ajax({
+    async: false,
+    url: "/EasyTravel/public/entrar",
+    type: "POST",
+    data: datos
+  })
+  .done(function () {
+    window.location = '/EasyTravel/public';
+  })
+  .fail(function () {
+    alert("Usuario o contraseña erroneos.");
+  });
+}

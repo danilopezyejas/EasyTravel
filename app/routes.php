@@ -32,12 +32,9 @@ return function (App $app) {
         }
         $datos = array('listaDestinos' => $destinos,
                         'resenias' => $resenias);
-
         $twig = new Environment($loader);
         $twig->addGlobal('session', $_SESSION);
-
         $response->getBody()->write($twig->render('index.twig', $datos));
-        $_SESSION['nuevo'] = 'NO';
         return $response;
     });
 
@@ -59,6 +56,8 @@ return function (App $app) {
         $twig = new Environment($loader);
         $cp = new CP;
         $destinos = $cp->listarPaquetes($_POST['destino'], $_POST['precio'], $_POST['fecha'], $_POST['tematica']);
+        $_SESSION['nuevo'] = 'NO';
+        $_SESSION['modificado'] = 'NO';
         $twig->addGlobal('session', $_SESSION);
         if (isset($destinos["paquetes"])) {
             //Busqueda por precio
@@ -97,6 +96,9 @@ return function (App $app) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
         session_destroy();
+        session_start();
+        $_SESSION['nuevo'] = 'NO';
+        $_SESSION['modificado'] = 'NO';
         return $response->withHeader('Location', '/EasyTravel/public');
     });
 
@@ -113,6 +115,7 @@ return function (App $app) {
         $usr->setNickname($name);
         $nick = CU::existeNick($usr);
         $response->getBody()->write($nick);
+        $args['name'] = null;
         return $response;
     });
 // para ingresar una reseña del paquete
@@ -139,9 +142,9 @@ return function (App $app) {
         $usr = $_SESSION['nick'];
         $usuario = CU::getUsuarioLogueado($usr)['id_usuario'];
         $res = new DtResenia();
-        // $res->setDescripcion($_POST['comentario']);
+        $res->setDescripcion($_POST['comentarios']);
         $res->setIdPaquete($_POST['paquete']);
-        $res->setIdUsuario($usuario);        
+        $res->setIdUsuario($usuario);
 
         $respuesta = CU::guardarResenia($res);
         if ($respuesta['resenia'] !== '') {
@@ -172,6 +175,7 @@ return function (App $app) {
             $_SESSION['mail'] = $nickname['correo'];
         } else {
           $_SESSION['nuevo'] = 'NO';
+          $_SESSION['modificado'] = 'NO';
           $_SESSION['nick'] = '';
         }
         return $response->withHeader('Location', '/EasyTravel/public');
@@ -188,63 +192,48 @@ return function (App $app) {
 
         $nickname = CU::login($usr);
 
-        // var_dump($nickname);
-        // exit;
-
         if ($nickname['nickname'] !== '') {
             // Set session variables
             $_SESSION['nuevo'] = 'SI';
             $_SESSION["nick"] = $nickname['nickname'];
             $_SESSION['mail'] = $nickname['correo'];
             $_SESSION['idUsuario'] = $nickname['idUsuario'];
-
+            return $response->withHeader('Location', '/EasyTravel/public');
         } else {
-            return $response->withHeader('Location', '/EasyTravel/public/login');
+            return false;
         }
-        return $response->withHeader('Location', '/EasyTravel/public');
     });
 
 //Modifica los datos del usuario que está logueado
     $app->post('/modificar', function (Request $request, Response $response) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-
         $usr = new DTUsuario();
         $usr->setNickname($request->getParsedBody()['nickname']);
         $usr->setNombre($request->getParsedBody()['nombre']);
         $usr->setApellido($request->getParsedBody()['apellido']);
         $usr->setCorreo($request->getParsedBody()['email']);
         $usr->setContrasenia(password_hash($request->getParsedBody()['password'], PASSWORD_DEFAULT));
-
         $_SESSION['nick'] = CU::modificar($usr)['nickname'];
         $_SESSION['mail'] = $usr->getCorreo();
-
         if ($_SESSION['nick'] !== '') {
             $_SESSION['modificado'] = 'SI';
-
         }
         return $response->withHeader('Location', '/EasyTravel/public');
     });
+
 //muestra los datos del usuario que se va a modificar
-    $app->post('/modificarusr', function (Request $request, Response $response, array $args) {
+    $app->get('/modificarusr/{usuario}', function (Request $request, Response $response, array $args) {
         $loader = new FilesystemLoader(__DIR__ . '/../vistas');
         $twig = new Environment($loader);
-        //$nick = $_SESSION["nick"];
-        //$nick = $args['nick'];
-        // $usr = new DTUsuario();
-        $usr =$request->getParsedBody()['logueado'];
-        //$usr->setNickname($nick);
+        $_SESSION['nuevo'] = 'NO';
+        $_SESSION['modificado'] = 'NO';
+        $usr = $request->getAttribute('usuario');
         $usuario = CU::getUsuarioLogueado($usr);
         $paquetes= CP::getPaquetesComprados($usr);
         $resenias= CP::getResenias($usr);
-       //var_dump($resenias);
-       //exit;
-//
-
         $paquetes['usuario']= $usuario ;
         $paquetes['resenias'] = $resenias;
-        // var_dump($paquetes);
-        // exit;
         $response->getBody()->write($twig->render('modificar.twig',$paquetes));
         return $response;
     });

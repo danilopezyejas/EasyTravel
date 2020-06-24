@@ -10,15 +10,15 @@
 
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 
-        <link rel="stylesheet" href="assets/login/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/login/css/animate.css">
-        <link rel="stylesheet" href="assets/login/css/style.css">
+        <link rel="stylesheet" href="../assets/login/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/login/css/animate.css">
+        <link rel="stylesheet" href="../assets/login/css/style.css">
 
 
         <!-- Modernizr JS -->
-        <script src="assets/login/js/modernizr-2.6.2.min.js"></script>
-        <script src="assets/login/js/easytravel.js"></script>
-        <script src="assets/login/js/bootstrap.min.js"></script>
+        <script src="../assets/login/js/modernizr-2.6.2.min.js"></script>
+        <script src="../assets/login/js/easytravel.js"></script>
+        <script src="../assets/login/js/bootstrap.min.js"></script>
 
     </head>
     <body class="style-2">
@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <!-- Start Sign In Form -->
-                            <form action="modificar" method="post" class="fh5co-form" data-animate-effect="fadeInLeft" name="modificar">
+                            <form action="../modificar" method="post" class="fh5co-form" data-animate-effect="fadeInLeft" name="modificar">
                                 <h2>Modificar Datos Usuario</h2>
                                 <div class="form-group">
                                     <label for="name" class="sr-only">Nickname</label>
@@ -94,7 +94,7 @@
                                             <td>{{ item.ciudad }}</td>
                                             <td>{{ item.pais }}</td>
                                             <td>{{ item.nombre }}</td>
-                                            <td> <button id="agregar" name="agregar" class="btn btn-info pull-left" onClick="window.location = 'resenia/{{item.id_paquete}}'">Agregar Reseña</button></td>
+                                            <td> <button id="agregar" name="agregar" class="btn btn-info pull-left" onClick="window.location = '../resenia/{{item.id_paquete}}'">Agregar Reseña</button></td>
 
                                         </tr>
 
@@ -110,7 +110,7 @@
                             <h1>{{resenias.mensaje}}</h1>
                         {% else %}
 
-                            <p>Filtrar por alguna de las columnas:</p>  
+                            <p>Filtrar por alguna de las columnas:</p>
                             <input class="form-control" id="mInput" type="text" placeholder="Filtrar...">
                             <br>
                             <table class="table table-striped table-hover table-bordered">
@@ -132,33 +132,34 @@
                                             <td>{{ item.nombre }}</td>
                                             <td>{{ item.destino }}</td>
                                             <td>{{ item.resenia }}</td>
-                                            
+
 
                                         </tr>
 
                                     {% endfor %}
                                 </tbody>
-                            </table>   
-                        {% endif %} 
+                            </table>
+                        {% endif %}
                     </div>
                 </div>
             </div>
                     <div class="form-group">
-                            <p><a class="btn btn-primary" href="/EasyTravel/public/"">Volver</a></p>
+                            <p><a class="btn btn-primary" href="/EasyTravel/public/">Volver</a></p>
                         </div>
         </div>
 
     </div>
+    
     <!-- jQuery -->
-    <script src="assets/login/js/jquery.min.js"></script>
+    <script src="../assets/login/js/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="assets/login/js/bootstrap.min.js"></script>
+    <script src="../assets/login/js/bootstrap.min.js"></script>
     <!-- Placeholder -->
-    <script src="assets/login/js/jquery.placeholder.min.js"></script>
+    <script src="../assets/login/js/jquery.placeholder.min.js"></script>
     <!-- Waypoints -->
-    <script src="assets/login/js/jquery.waypoints.min.js"></script>
+    <script src="../assets/login/js/jquery.waypoints.min.js"></script>
     <!-- Main JS -->
-    <script src="assets/login/js/main.js"></script>
+    <script src="../assets/login/js/main.js"></script>
     <script type="text/javascript">
 
     $(document).ready(function () {
@@ -176,7 +177,7 @@
         });
     });
 
-    
+
     </script>
 
 </body>
