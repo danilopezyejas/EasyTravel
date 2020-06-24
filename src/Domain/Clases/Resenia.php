@@ -83,7 +83,7 @@ class Resenia extends Clase_Base {
             a.nombre as nombre,
             CONCAT(d.ciudad, '/', d.pais) as destino,
             r.descripcion as resenia 
-        FROM paquetes p,
+        FROM paquetes_comprados p,
             transporte t,
             alojamiento a,
             destino d,
@@ -93,7 +93,8 @@ class Resenia extends Clase_Base {
             AND p.id_alojamiento = a.idAlojamiento
             AND p.id_destino = d.idDestino
             AND p.id_paquete = r.id_paquete
-            AND r.id_usuario = u.id_usuario
+            -- AND r.id_usuario = u.id_usuario
+            and p.id_usuario = u.id_usuario
             AND u.nikname = :nickname ";
         $db = new DB();
         $db = $db->conexionDB();

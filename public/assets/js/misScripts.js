@@ -60,7 +60,7 @@ function guardarResenia(id_paquete) {
 
   $.ajax({
     async: false,
-    url: "/EasyTravel/public/resenia/guardar'",
+    url: "/EasyTravel/public/resenia/guardar",
     type: "POST",
     data: parametros
   });

@@ -139,7 +139,7 @@ return function (App $app) {
         $usr = $_SESSION['nick'];
         $usuario = CU::getUsuarioLogueado($usr)['id_usuario'];
         $res = new DtResenia();
-        $res->setDescripcion($_POST['comentario']);
+        // $res->setDescripcion($_POST['comentario']);
         $res->setIdPaquete($_POST['paquete']);
         $res->setIdUsuario($usuario);        
 
