@@ -77,12 +77,13 @@ class Resenia extends Clase_Base {
     public function listar($nickname){
         $fecha = date("Y-m-d");
     try{
-        $sql = "SELECT
+        $sql = "SELECT distinct 
             CONCAT(t.origenCodigo, '-', t.destinoCodigo) as transporte,
             t.fechaIda as fecha,
             a.nombre as nombre,
             CONCAT(d.ciudad, '/', d.pais) as destino,
-            r.descripcion as resenia
+            r.descripcion as resenia 
+
         FROM paquetes_comprados p,
             transporte t,
             alojamiento a,
@@ -93,7 +94,8 @@ class Resenia extends Clase_Base {
             AND p.id_alojamiento = a.idAlojamiento
             AND p.id_destino = d.idDestino
             AND p.id_paquete = r.id_paquete
-            AND r.id_usuario = u.id_usuario
+            -- AND r.id_usuario = u.id_usuario
+            and p.id_usuario = u.id_usuario
             AND u.nikname = :nickname ";
         $db = new DB();
         $db = $db->conexionDB();
