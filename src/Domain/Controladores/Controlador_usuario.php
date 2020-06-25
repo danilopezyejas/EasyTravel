@@ -46,13 +46,10 @@ class Controlador_Usuario{
   public static function guardarResenia(DtResenia $res)
   {
     $resenia = new Resenia();
-    // $resenia->setIdPaquete($res->getIdPaquete());
     $resenia->setIdPaquete($res->getIdPaquete());
     $resenia->setIdUsuario($res->getIdUsuario());
     $resenia->setDescripcion($res->getDescripcion());
     $resenia->setValoracion($res->getValoracion());
-    // var_dump($res->getDescripcion());
-    // exit;
     $resenia->agregar();
 
   }
@@ -60,7 +57,6 @@ class Controlador_Usuario{
   {
     $usuario = new Usuario();
     $usuario->setNickname($usr);
-//    $usuario->setNickname(self::$logueado);
     return  $usuario->logueado();
 
   }

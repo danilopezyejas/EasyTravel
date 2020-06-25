@@ -144,6 +144,7 @@ return function (App $app) {
         $res = new DtResenia();
         $res->setDescripcion($_POST['comentarios']);
         $res->setIdPaquete($_POST['paquete']);
+        $res->setValoracion($_POST['estrella']);
         $res->setIdUsuario($usuario);
 
         $respuesta = CU::guardarResenia($res);

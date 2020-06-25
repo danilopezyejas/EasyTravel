@@ -56,8 +56,7 @@ $(document).ready(function () {
 });
 
 function guardarResenia(id_paquete) {
-  var datos = $(this).serializeArray();
-  var parametros = { "comentario":comentario, "paquete": id_paquete };
+  var datos = $("#resenia").serializeArray();
 
   $.ajax({
     async: false,
@@ -83,4 +82,13 @@ function login(evt) {
   .fail(function () {
     alert("Usuario o contraseña erroneos.");
   });
+}
+
+function calificar(event, puntaje){
+  event.preventDefault();
+  sessionStorage.setItem("puntaje",puntaje);
+  for (var i = puntaje; i > 1; i--) {
+    $(".estrella #estrella".i).css("background-color","red");
+  }
+
 }

@@ -125,7 +125,12 @@ class Controlador_Paquetes{
   public static function verResenias(){
         $db = new DB();
         $db = $db->conexionDB();
-        $stmt = $db->prepare( "SELECT * FROM resenia r inner join usuario u on r.id_usuario=u.id_usuario order by id_resenia desc LIMIT 4");
+        $stmt = $db->prepare( "SELECT distinct concat(d.ciudad, '-', d.pais) as ciudad, u.nikname as nombre, r.puntos, r.descripcion
+                                FROM resenia r
+                                inner join usuario u on r.id_usuario=u.id_usuario
+                                left join paquetes p on r.id_paquete=p.id_paquete
+                                left join destino d on p.id_destino=d.idDestino
+                                order by id_resenia desc limit 4");
 
         $stmt->execute();
         if($stmt->columnCount() < 1){

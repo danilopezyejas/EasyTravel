@@ -32,14 +32,13 @@
                             <input type="text" class="sr-only" name="paquete" id="paquete" value={{ id_paquete }} >
                             <textarea rows="5" class="form-control" name="comentarios" id="comentarios" placeholder="Ingrese comentarios" autocomplete="off" ></textarea>
                         </div>
-                        <div class="form-group">
-                            <a href="#" class="btn btn-lg" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-                            <a href="#" class="btn btn-lg" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-                            <a href="#" class="btn btn-lg" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-                            <a href="#" class="btn btn-lg" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-                            <a href="#" class="btn btn-lg" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
+                        <div class="form-group rate" >
+                          {% for i in 5..1 %}
+                          <input type="radio" id="estrella{{ i }}" name="estrella" value="{{ i }}" />
+                          <label for="estrella{{ i }}" title="{{ i }}"></label>
+                          {% endfor %}
                         </div>
-
+                        <br>
                         <div class="form-group">
                             <input type="submit" id="guardar" value="Guardar" class="btn btn-info" onclick="guardarResenia({{id_paquete}})">
                         </div>

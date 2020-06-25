@@ -61,7 +61,7 @@ class Resenia extends Clase_Base {
         $resultado->bindParam(':id_usuario', $this->id_usuario);
         $resultado->bindParam(':fecha', $fecha);
         $resultado->bindParam(':descripcion', $this->descripcion);
-        $resultado->bindParam(':puntos', $this->puntos);
+        $resultado->bindParam(':puntos', $this->valoracion);
 
         $resultado->execute();
 
