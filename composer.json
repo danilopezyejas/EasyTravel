@@ -26,7 +26,7 @@
         "ext-json": "*",
         "monolog/monolog": "^1.24",
         "php-di/php-di": "^6.0",
-        "slim/psr7": "^0.5",
+        "slim/psr7": "^1.4",
         "slim/slim": "^4.1",
         "twig/twig": "^3.0",
         "zeuxisoo/slim-whoops": "^0.7.2"
